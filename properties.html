@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>العقارات | رحيب المنازل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="color:var(--gold-deep)"><path d="M20 92 V50 C20 26 34 10 50 10 C66 10 80 26 80 50 V92"/></svg>
+      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">عقارات مختارة بعناية</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+      <a href="properties.html" data-i18n="nav.properties">العقارات</a>
+      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
+      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
+      <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
+      <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
+    </div>
+    <button class="nav-toggle" aria-label="menu">☰</button>
+  </nav>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h1 data-i18n="props.title">كل العقارات</h1>
+      <p data-i18n="props.lead">استخدم الفلاتر لتضييق نتائج البحث.</p>
+    </div>
+
+    <div class="filters">
+      <select id="fType">
+        <option value="" data-i18n="filter.all">الكل</option>
+        <option value="villa" data-i18n="filter.villa">فيلا</option>
+        <option value="apartment" data-i18n="filter.apartment">شقة</option>
+        <option value="land" data-i18n="filter.land">أرض</option>
+      </select>
+      <select id="fCity"></select>
+      <input type="text" id="fSearch" data-i18n-ph="filter.search" placeholder="ابحث بالاسم...">
+      <button id="fApply" data-i18n="filter.apply">تطبيق الفلتر</button>
+    </div>
+
+    <div class="grid" id="propsGrid"></div>
+    <div class="empty-state hide" id="emptyState">
+      <h3 data-i18n="empty.title">لا توجد عقارات مطابقة</h3>
+      <p data-i18n="empty.lead">جرّب تعديل الفلاتر أو أعد تعيينها.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-qr">
+      <svg viewBox="0 0 33 33" shape-rendering="crispEdges"><path stroke="#2A2318" d="M0 0.5h7m1 0h1m1 0h2m1 0h3m2 0h1m3 0h2m2 0h7M0 1.5h1m5 0h1m3 0h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h8m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m5 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h2m4 0h2m1 0h1m3 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h2m2 0h1m2 0h1m1 0h2m4 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m3 0h1m1 0h1m2 0h5M0 8.5h1m3 0h1m1 0h4m5 0h1m1 0h1m2 0h3m1 0h6m2 0h1M1 9.5h2m2 0h1m1 0h3m5 0h3m5 0h1m1 0h1m3 0h3M1 10.5h4m1 0h2m5 0h3m2 0h1m2 0h5m3 0h1m1 0h1M3 11.5h1m1 0h1m2 0h3m1 0h2m1 0h2m2 0h3m1 0h1m1 0h1M0 12.5h2m2 0h1m1 0h4m2 0h2m1 0h2m4 0h3m2 0h1m1 0h2m1 0h1M0 13.5h2m1 0h2m4 0h2m1 0h3m3 0h3m1 0h2m1 0h1m1 0h1m1 0h2M0 14.5h5m1 0h1m1 0h1m1 0h2m3 0h1m1 0h2m1 0h2m1 0h5m3 0h1M1 15.5h1m2 0h1m2 0h1m2 0h1m1 0h2m1 0h3m3 0h1m1 0h6M0 16.5h4m2 0h9m2 0h1m1 0h4m1 0h1m1 0h1m1 0h1m2 0h1M0 17.5h1m3 0h2m1 0h1m1 0h1m5 0h2m1 0h1m1 0h1m2 0h1m1 0h1m3 0h3M0 18.5h3m1 0h1m1 0h1m1 0h4m1 0h5m2 0h2m1 0h1m3 0h1m1 0h1m1 0h1M1 19.5h3m4 0h1m3 0h1m1 0h1m2 0h2m2 0h2m2 0h1m1 0h1m3 0h1M0 20.5h3m1 0h3m2 0h3m2 0h2m2 0h1m1 0h5m1 0h4m1 0h2M0 21.5h1m2 0h3m1 0h4m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M5 22.5h4m1 0h1m2 0h2m1 0h2m1 0h1m3 0h4m1 0h1m2 0h1M2 23.5h4m2 0h3m1 0h2m3 0h1m1 0h7m5 0h1M0 24.5h4m1 0h3m1 0h1m2 0h4m1 0h1m2 0h9m2 0h2M8 25.5h4m1 0h3m1 0h1m6 0h1m3 0h1m1 0h2M0 26.5h7m1 0h2m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1M0 27.5h1m5 0h1m3 0h1m2 0h1m2 0h1m2 0h3m2 0h1m3 0h1m3 0h1M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h5m1 0h1m3 0h2m2 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m2 0h1m1 0h2m5 0h3m2 0h2m1 0h3m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h1m1 0h2m1 0h4m2 0h5M0 31.5h1m5 0h1m3 0h2m1 0h1m1 0h7m1 0h4m2 0h1M0 32.5h7m1 0h5m4 0h1m2 0h3m1 0h3m5 0h1"/></svg>
+      <span data-i18n="footer.qr">امسح لزيارة الموقع من جوالك</span>
+    </div>
+    <div class="footer-bottom">© 2026 رحيب المنازل — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/lang.js"></script>
+<script src="js/main.js"></script>
+<script src="js/effects.js"></script>
+<script>
+  const urlType = new URLSearchParams(location.search).get('type');
+  if(urlType){
+    document.getElementById('fType').value = urlType;
+    document.getElementById('fApply').click();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | رحيب المنازل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="color:var(--gold-deep)"><path d="M20 92 V50 C20 26 34 10 50 10 C66 10 80 26 80 50 V92"/></svg>
+      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">عقارات مختارة بعناية</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+      <a href="properties.html" data-i18n="nav.properties">العقارات</a>
+      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
+      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
+      <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
+      <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
+    </div>
+    <button class="nav-toggle" aria-label="menu">☰</button>
+  </nav>
+</header>
+
+<section>
+  <div class="wrap">
+
+    <div class="admin-gate" id="adminGate">
+      <h1 data-i18n="admin.gate.title">دخول لوحة التحكم</h1>
+      <p style="color:var(--ink-soft); margin-bottom:20px;" data-i18n="admin.gate.lead">هذه لوحة أولية لإدارة الإدراجات محلياً في متصفحك.</p>
+      <div class="field">
+        <label data-i18n="admin.gate.pass">كلمة المرور</label>
+        <input type="password" id="adminPass">
+      </div>
+      <button class="btn" id="adminEnter" style="width:100%;" data-i18n="admin.gate.enter">دخول</button>
+      <p id="adminWrong" class="hide" style="color:#B3402F; margin-top:10px; font-size:.88rem;" data-i18n="admin.gate.wrong">كلمة المرور غير صحيحة</p>
+      <p style="margin-top:20px; font-size:.78rem; color:var(--ink-soft);" dir="ltr">demo password: raheeb2026</p>
+    </div>
+
+    <div class="hide" id="adminPanel">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <h1 style="margin:0;" data-i18n="admin.title">إضافة عقار جديد</h1>
+        <button id="adminLogout" class="btn ghost" data-i18n="admin.logout">خروج</button>
+      </div>
+      <p class="admin-note mt-lg" data-i18n="admin.note">
+        ملاحظة: هذه اللوحة تخزن البيانات في متصفحك فقط (localStorage) وهي مناسبة للتجربة على GitHub Pages. لإدارة حقيقية متعددة المستخدمين، تحتاج لاحقاً ربط الموقع بخادم/قاعدة بيانات — راجع ملف README.
+      </p>
+
+      <form id="adminForm" class="form-grid">
+        <div class="field">
+          <label data-i18n="admin.f.titleAr">العنوان (عربي)</label>
+          <input type="text" name="titleAr" required>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.titleEn">العنوان (إنجليزي)</label>
+          <input type="text" name="titleEn" required>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.type">النوع</label>
+          <select name="type" required>
+            <option value="villa" data-i18n="filter.villa">فيلا</option>
+            <option value="apartment" data-i18n="filter.apartment">شقة</option>
+            <option value="land" data-i18n="filter.land">أرض</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.beds">عدد الغرف</label>
+          <input type="number" name="bedrooms" min="0">
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.city">المدينة (عربي)</label>
+          <input type="text" name="city" required>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.cityEn">المدينة (إنجليزي)</label>
+          <input type="text" name="cityEn" required>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.price">السعر (ريال)</label>
+          <input type="number" name="price" min="0" required>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.area">المساحة (م²)</label>
+          <input type="number" name="area" min="0" required>
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.tag">وسم مميز (اختياري، عربي)</label>
+          <input type="text" name="tag">
+        </div>
+        <div class="field">
+          <label data-i18n="admin.f.tagEn">وسم مميز (اختياري، إنجليزي)</label>
+          <input type="text" name="tagEn">
+        </div>
+        <div class="field full">
+          <label data-i18n="admin.f.image">صورة العقار (اختياري)</label>
+          <input type="file" id="propImageInput" accept="image/*">
+          <img id="propImagePreview" class="hide" alt="" style="margin-top:10px; max-width:220px; border-radius:6px; border:1px solid var(--line);">
+        </div>
+
+        <div class="field full">
+          <label data-i18n="admin.f.descAr">الوصف (عربي)</label>
+          <textarea name="descAr" required></textarea>
+        </div>
+        <div class="field full">
+          <label data-i18n="admin.f.descEn">الوصف (إنجليزي)</label>
+          <textarea name="descEn" required></textarea>
+        </div>
+        <div class="field full">
+          <button type="submit" class="btn" data-i18n="admin.save">حفظ العقار</button>
+          <p id="adminAdded" class="admin-note hide" style="margin-top:14px;" data-i18n="admin.added">تمت إضافة العقار بنجاح.</p>
+        </div>
+      </form>
+
+      <div class="admin-list">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 data-i18n="admin.list.title">العقارات الحالية</h2>
+          <button id="adminReset" class="btn ghost" data-i18n="admin.reset">إعادة تعيين البيانات الافتراضية</button>
+        </div>
+        <div id="adminList" class="mt-lg"></div>
+      </div>
+
+      <div class="admin-list">
+        <h2 data-i18n="admin.settings.title">إعدادات الموقع العامة</h2>
+        <p class="admin-note" data-i18n="admin.settings.note">هذي القيم تظهر بالصفحة الرئيسية وصفحة التواصل — مثل عدد سنوات الخبرة، والمدن المغطاة، ونص "من نحن".</p>
+
+        <form id="settingsForm" class="form-grid">
+          <div class="field">
+            <label data-i18n="admin.settings.years">سنوات الخبرة</label>
+            <input type="number" name="years" min="0" required>
+          </div>
+          <div class="field">
+            <label data-i18n="admin.settings.cities">عدد المدن المغطاة</label>
+            <input type="number" name="cities" min="0" required>
+          </div>
+          <div class="field">
+            <label data-i18n="admin.settings.listings">عدد العقارات المُدرجة</label>
+            <input type="number" name="listings" min="0" required>
+          </div>
+          <div class="field"></div>
+
+          <div class="field">
+            <label data-i18n="admin.settings.email">البريد الإلكتروني</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="field">
+            <label data-i18n="admin.settings.phone">رقم الجوال</label>
+            <input type="text" name="phone" dir="ltr" required>
+          </div>
+
+          <div class="field full">
+            <label data-i18n="admin.settings.aboutTitleAr">عنوان "من نحن" (عربي)</label>
+            <input type="text" name="aboutTitleAr" required>
+          </div>
+          <div class="field full">
+            <label data-i18n="admin.settings.aboutTitleEn">عنوان "من نحن" (إنجليزي)</label>
+            <input type="text" name="aboutTitleEn" required>
+          </div>
+          <div class="field full">
+            <label data-i18n="admin.settings.aboutP1Ar">فقرة أولى (عربي)</label>
+            <textarea name="aboutP1Ar" required></textarea>
+          </div>
+          <div class="field full">
+            <label data-i18n="admin.settings.aboutP1En">فقرة أولى (إنجليزي)</label>
+            <textarea name="aboutP1En" required></textarea>
+          </div>
+          <div class="field full">
+            <label data-i18n="admin.settings.aboutP2Ar">فقرة ثانية (عربي)</label>
+            <textarea name="aboutP2Ar" required></textarea>
+          </div>
+          <div class="field full">
+            <label data-i18n="admin.settings.aboutP2En">فقرة ثانية (إنجليزي)</label>
+            <textarea name="aboutP2En" required></textarea>
+          </div>
+
+          <div class="field full">
+            <button type="submit" class="btn" data-i18n="admin.settings.save">حفظ الإعدادات</button>
+            <p id="settingsSaved" class="admin-note hide" style="margin-top:14px;" data-i18n="admin.settings.saved">تم حفظ الإعدادات بنجاح.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-qr">
+      <svg viewBox="0 0 33 33" shape-rendering="crispEdges"><path stroke="#2A2318" d="M0 0.5h7m1 0h1m1 0h2m1 0h3m2 0h1m3 0h2m2 0h7M0 1.5h1m5 0h1m3 0h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h8m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m5 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h2m4 0h2m1 0h1m3 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h2m2 0h1m2 0h1m1 0h2m4 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m3 0h1m1 0h1m2 0h5M0 8.5h1m3 0h1m1 0h4m5 0h1m1 0h1m2 0h3m1 0h6m2 0h1M1 9.5h2m2 0h1m1 0h3m5 0h3m5 0h1m1 0h1m3 0h3M1 10.5h4m1 0h2m5 0h3m2 0h1m2 0h5m3 0h1m1 0h1M3 11.5h1m1 0h1m2 0h3m1 0h2m1 0h2m2 0h3m1 0h1m1 0h1M0 12.5h2m2 0h1m1 0h4m2 0h2m1 0h2m4 0h3m2 0h1m1 0h2m1 0h1M0 13.5h2m1 0h2m4 0h2m1 0h3m3 0h3m1 0h2m1 0h1m1 0h1m1 0h2M0 14.5h5m1 0h1m1 0h1m1 0h2m3 0h1m1 0h2m1 0h2m1 0h5m3 0h1M1 15.5h1m2 0h1m2 0h1m2 0h1m1 0h2m1 0h3m3 0h1m1 0h6M0 16.5h4m2 0h9m2 0h1m1 0h4m1 0h1m1 0h1m1 0h1m2 0h1M0 17.5h1m3 0h2m1 0h1m1 0h1m5 0h2m1 0h1m1 0h1m2 0h1m1 0h1m3 0h3M0 18.5h3m1 0h1m1 0h1m1 0h4m1 0h5m2 0h2m1 0h1m3 0h1m1 0h1m1 0h1M1 19.5h3m4 0h1m3 0h1m1 0h1m2 0h2m2 0h2m2 0h1m1 0h1m3 0h1M0 20.5h3m1 0h3m2 0h3m2 0h2m2 0h1m1 0h5m1 0h4m1 0h2M0 21.5h1m2 0h3m1 0h4m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M5 22.5h4m1 0h1m2 0h2m1 0h2m1 0h1m3 0h4m1 0h1m2 0h1M2 23.5h4m2 0h3m1 0h2m3 0h1m1 0h7m5 0h1M0 24.5h4m1 0h3m1 0h1m2 0h4m1 0h1m2 0h9m2 0h2M8 25.5h4m1 0h3m1 0h1m6 0h1m3 0h1m1 0h2M0 26.5h7m1 0h2m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1M0 27.5h1m5 0h1m3 0h1m2 0h1m2 0h1m2 0h3m2 0h1m3 0h1m3 0h1M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h5m1 0h1m3 0h2m2 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m2 0h1m1 0h2m5 0h3m2 0h2m1 0h3m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h1m1 0h2m1 0h4m2 0h5M0 31.5h1m5 0h1m3 0h2m1 0h1m1 0h7m1 0h4m2 0h1M0 32.5h7m1 0h5m4 0h1m2 0h3m1 0h3m5 0h1"/></svg>
+      <span data-i18n="footer.qr">امسح لزيارة الموقع من جوالك</span>
+    </div>
+    <div class="footer-bottom">© 2026 رحيب المنازل — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/lang.js"></script>
+<script src="js/main.js"></script>
+<script src="js/effects.js"></script>
+</body>
+</html>

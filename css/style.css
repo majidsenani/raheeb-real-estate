@@ -293,3 +293,11 @@ html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
 .hide{ display:none !important; }
 .center{ text-align:center; }
 .mt-lg{ margin-top:48px; }
+/* شعار الموقع */
+.brand-logo{
+  height:60px;
+  width:auto;
+  display:block;
+  border-radius:6px;
+  object-fit:contain;
+}

@@ -1,53 +1,100 @@
-/* بيانات العقارات — seed data + localStorage persistence
+/* بيانات العقارات والمشاريع — seed data + localStorage persistence
    لاحقاً عند ربط الموقع بسيرفر حقيقي، استبدل هذا الملف بطلبات API */
 
+/* ========== المفاتيح ========== */
 const STORAGE_KEY = 'raheeb_properties';
+const PROJECTS_KEY = 'raheeb_projects';
+const ADMIN_STORAGE_KEY = 'raheeb_admin';
 
+/* ========== الأنواع ========== */
+const TYPES = [
+  { value: 'apartment', ar: 'شقق',   en: 'Apartments' },
+  { value: 'villa',     ar: 'فلل',   en: 'Villas' },
+  { value: 'floor',     ar: 'أدوار', en: 'Floors' }
+];
+
+/* ========== المراحل ========== */
+const STAGES = [
+  { value: 'sale',      ar: 'مرحلة البيع',    en: 'For Sale' },
+  { value: 'finishing', ar: 'مرحلة التشطيب',  en: 'Finishing' },
+  { value: 'structure', ar: 'مرحلة العظم',    en: 'Structure' }
+];
+
+/* ========== الأيقونات ========== */
+const ICONS = {
+  apartment: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 58 V22 L32 6 L54 22 V58"/>
+    <rect x="24" y="40" width="16" height="18"/>
+    <rect x="18" y="26" width="8" height="8"/>
+    <rect x="38" y="26" width="8" height="8"/>
+  </svg>`,
+  villa: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 34 L32 12 L58 34"/>
+    <path d="M14 34 V56 H50 V34"/>
+    <rect x="26" y="42" width="12" height="14"/>
+    <rect x="18" y="36" width="6" height="6"/>
+    <rect x="40" y="36" width="6" height="6"/>
+  </svg>`,
+  floor: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="14" y="8" width="36" height="48"/>
+    <line x1="14" y1="20" x2="50" y2="20"/>
+    <line x1="14" y1="32" x2="50" y2="32"/>
+    <line x1="14" y1="44" x2="50" y2="44"/>
+    <rect x="22" y="12" width="4" height="4"/>
+    <rect x="38" y="12" width="4" height="4"/>
+    <rect x="22" y="24" width="4" height="4"/>
+    <rect x="38" y="24" width="4" height="4"/>
+    <rect x="22" y="36" width="4" height="4"/>
+    <rect x="38" y="36" width="4" height="4"/>
+    <rect x="28" y="46" width="8" height="10"/>
+  </svg>`
+};
+
+/* ========== العقارات الأولية (Seed) ========== */
 const SEED_PROPERTIES = [
   {
-    id: 'p1', type: 'villa', city: 'الرياض', cityEn: 'Riyadh',
-    titleAr: 'فيلا النخيل الفاخرة', titleEn: 'Al Nakheel Luxury Villa',
-    price: 3200000, area: 620, bedrooms: 6, tag: 'مميز', tagEn: 'Featured',
-    descAr: 'فيلا حديثة بتصميم عصري في حي راقٍ، تتضمن مسبحاً خاصاً وحديقة واسعة وموقفين مغطيين، قريبة من الخدمات الرئيسية.',
-    descEn: 'A modern villa in a prestigious district with a private pool, spacious garden, and two covered parking spots, close to key services.'
+    id: 'p1', type: 'floor', city: 'الرياض', cityEn: 'Riyadh',
+    titleAr: 'رحيب ١-٢', titleEn: 'Raheeb 1-2',
+    price: 0, area: 0, bedrooms: null, tag: '', tagEn: '',
+    stage: 'sale',
+    descAr: 'مشروع رحيب ١-٢ — ١٢ دور في حي الملك عبدالله، مرحلة البيع.',
+    descEn: 'Raheeb 1-2 project — 12 floors in King Abdullah district, for sale.'
   },
   {
-    id: 'p2', type: 'apartment', city: 'جدة', cityEn: 'Jeddah',
-    titleAr: 'شقة كورنيش جدة', titleEn: 'Jeddah Corniche Apartment',
-    price: 980000, area: 210, bedrooms: 3, tag: 'إطلالة بحرية', tagEn: 'Sea View',
-    descAr: 'شقة بإطلالة مباشرة على البحر، تشطيب فاخر، ضمن مجمع سكني يضم نادياً صحياً وأمناً على مدار الساعة.',
-    descEn: 'Apartment with a direct sea view, premium finishing, within a residential complex offering a health club and 24-hour security.'
+    id: 'p2', type: 'floor', city: 'الرياض', cityEn: 'Riyadh',
+    titleAr: 'رحيب ٣', titleEn: 'Raheeb 3',
+    price: 0, area: 0, bedrooms: null, tag: '', tagEn: '',
+    stage: 'finishing',
+    descAr: 'مشروع رحيب ٣ — ٩ أدوار في حي الملك فهد، مرحلة التشطيب.',
+    descEn: 'Raheeb 3 project — 9 floors in King Fahd district, finishing stage.'
   },
   {
-    id: 'p3', type: 'land', city: 'الدمام', cityEn: 'Dammam',
-    titleAr: 'أرض تجارية على شارع رئيسي', titleEn: 'Commercial Land on Main Street',
-    price: 1450000, area: 900, bedrooms: null, tag: 'استثماري', tagEn: 'Investment',
-    descAr: 'أرض تجارية بموقع استراتيجي على شارع تجاري رئيسي، مناسبة لإنشاء معارض أو مركز تجاري، صك إلكتروني موثق.',
-    descEn: 'Strategically located commercial land on a main commercial street, suitable for showrooms or a retail center, with a verified digital deed.'
+    id: 'p3', type: 'floor', city: 'الرياض', cityEn: 'Riyadh',
+    titleAr: 'رحيب ٤', titleEn: 'Raheeb 4',
+    price: 0, area: 0, bedrooms: null, tag: '', tagEn: '',
+    stage: 'finishing',
+    descAr: 'مشروع رحيب ٤ — ٦ أدوار في حي النرجس، مرحلة التشطيب.',
+    descEn: 'Raheeb 4 project — 6 floors in Al Narjis district, finishing stage.'
   },
   {
-    id: 'p4', type: 'villa', city: 'الخبر', cityEn: 'Al Khobar',
-    titleAr: 'فيلا دوبلكس بحديقة', titleEn: 'Duplex Villa with Garden',
-    price: 2100000, area: 410, bedrooms: 5, tag: '', tagEn: '',
-    descAr: 'فيلا دوبلكس بتصميم عائلي مريح، خمس غرف نوم، حديقة خلفية، وقريبة من المدارس والأسواق.',
-    descEn: 'A comfortable family duplex villa with five bedrooms, a back garden, close to schools and markets.'
-  },
-  {
-    id: 'p5', type: 'apartment', city: 'الرياض', cityEn: 'Riyadh',
-    titleAr: 'شقة عصرية في حي النرجس', titleEn: 'Modern Apartment in Al Narjis',
-    price: 620000, area: 165, bedrooms: 2, tag: 'جديد', tagEn: 'New',
-    descAr: 'شقة بتصميم عصري وتشطيب سوبر لوكس، ضمن بناية حديثة مزودة بمصعد وموقف خاص.',
-    descEn: 'A modern apartment with super-lux finishing, in a new building equipped with an elevator and private parking.'
-  },
-  {
-    id: 'p6', type: 'land', city: 'مكة المكرمة', cityEn: 'Makkah',
-    titleAr: 'أرض سكنية مخططة', titleEn: 'Planned Residential Land',
-    price: 890000, area: 500, bedrooms: null, tag: '', tagEn: '',
-    descAr: 'أرض سكنية ضمن مخطط معتمد، مطلة على شارع 15م، مناسبة لبناء سكن خاص أو استثمار.',
-    descEn: 'Residential land within an approved plan, facing a 15m street, suitable for private construction or investment.'
+    id: 'p4', type: 'villa', city: 'الرياض', cityEn: 'Riyadh',
+    titleAr: 'رحيب ٥', titleEn: 'Raheeb 5',
+    price: 0, area: 0, bedrooms: null, tag: 'دوبلكس', tagEn: 'Duplex',
+    stage: 'structure',
+    descAr: 'مشروع رحيب ٥ — ٢ دوبلكس في حي الملك سلمان، مرحلة العظم.',
+    descEn: 'Raheeb 5 project — 2 duplexes in King Salman district, structure stage.'
   }
 ];
 
+/* ========== المشاريع (مستقلة) ========== */
+const SEED_PROJECTS = [
+  { id: 'pr1', nameAr: 'رحيب ١-٢', nameEn: 'Raheeb 1-2', type: 'floor', floors: 12, locationAr: 'حي الملك عبدالله', locationEn: 'King Abdullah District', stage: 'sale',      descAr: 'مشروع ١٢ دور',   descEn: '12-floor project' },
+  { id: 'pr2', nameAr: 'رحيب ٣',   nameEn: 'Raheeb 3',   type: 'floor', floors: 9,  locationAr: 'حي الملك فهد',   locationEn: 'King Fahd District',   stage: 'finishing', descAr: 'مشروع ٩ أدوار',  descEn: '9-floor project' },
+  { id: 'pr3', nameAr: 'رحيب ٤',   nameEn: 'Raheeb 4',   type: 'floor', floors: 6,  locationAr: 'حي النرجس',      locationEn: 'Al Narjis District',   stage: 'finishing', descAr: 'مشروع ٦ أدوار',  descEn: '6-floor project' },
+  { id: 'pr4', nameAr: 'رحيب ٥',   nameEn: 'Raheeb 5',   type: 'villa', floors: 2,  locationAr: 'حي الملك سلمان', locationEn: 'King Salman District', stage: 'structure', descAr: '٢ دوبلكس',       descEn: '2 duplexes' }
+];
+
+/* ========== دوال العقارات ========== */
 function getProperties(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -86,34 +133,55 @@ function resetToSeed(){
   saveProperties(SEED_PROPERTIES);
 }
 
-/* إعدادات الموقع العامة (الأرقام، نص "من نحن"، معلومات التواصل) */
-const SETTINGS_KEY = 'raheeb_settings';
-
-const DEFAULT_SETTINGS = {
-  years: 15, cities: 8, listings: 120,
-  aboutTitleAr: 'رحيب المنازل للخدمات العقارية',
-  aboutTitleEn: 'Raheeb Al-Manazil Real Estate Services',
-  aboutP1Ar: 'نعمل منذ سنوات في تسويق العقارات وربط الملاك بالباحثين عن منزل أو فرصة استثمارية، بأسلوب واضح وموثوق.',
-  aboutP1En: 'For years we have connected owners with people looking for a home or investment opportunity, with a clear and reliable approach.',
-  aboutP2Ar: 'فريقنا يتابع كل عقار من الإدراج حتى إتمام الصفقة، مع حرص دائم على دقة المعلومة وسهولة التواصل.',
-  aboutP2En: 'Our team follows each listing from posting through closing, with constant attention to accuracy and easy communication.',
-  email: 'info@raheeb-almanazil.example',
-  phone: '+966 5X XXX XXXX'
-};
-
-function getSettings(){
+/* ========== دوال المشاريع ========== */
+function getProjects(){
   try{
-    const raw = localStorage.getItem(SETTINGS_KEY);
+    const raw = localStorage.getItem(PROJECTS_KEY);
     if(!raw){
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(DEFAULT_SETTINGS));
-      return { ...DEFAULT_SETTINGS };
+      localStorage.setItem(PROJECTS_KEY, JSON.stringify(SEED_PROJECTS));
+      return SEED_PROJECTS.slice();
     }
-    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    return JSON.parse(raw);
   }catch(e){
-    return { ...DEFAULT_SETTINGS };
+    return SEED_PROJECTS.slice();
   }
 }
 
-function saveSettings(settings){
-  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+function saveProjects(list){
+  localStorage.setItem(PROJECTS_KEY, JSON.stringify(list));
+}
+
+function addProject(project){
+  const list = getProjects();
+  project.id = 'pr' + Date.now();
+  list.unshift(project);
+  saveProjects(list);
+  return project;
+}
+
+function deleteProject(id){
+  const list = getProjects().filter(p => p.id !== id);
+  saveProjects(list);
+}
+
+function updateProject(id, updates){
+  const list = getProjects().map(p => p.id === id ? { ...p, ...updates } : p);
+  saveProjects(list);
+}
+
+function resetProjectsToSeed(){
+  saveProjects(SEED_PROJECTS);
+}
+
+/* ========== دوال مساعدة ========== */
+function getTypeLabel(type, lang){
+  const t = TYPES.find(x => x.value === type);
+  if(!t) return type;
+  return lang === 'en' ? t.en : t.ar;
+}
+
+function getStageLabel(stage, lang){
+  const s = STAGES.find(x => x.value === stage);
+  if(!s) return stage;
+  return lang === 'en' ? s.en : s.ar;
 }

@@ -1,10 +1,10 @@
 /* منطق الواجهة المشترك */
 
-/* ---------- أيقونات SVG بخط ذهبي بسيط (بدل صور فوتوغرافية) ---------- */
+/* ---------- أيقونات SVG ---------- */
 const ICONS = {
   villa: `<svg viewBox="0 0 100 80" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 78 V40 L50 12 L90 40 V78 Z"/><path d="M38 78 V52 H62 V78"/><path d="M22 78 V50 H32 V78"/><path d="M68 78 V50 H78 V78"/><path d="M50 12 V2"/></svg>`,
   apartment: `<svg viewBox="0 0 100 80" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="22" y="6" width="56" height="72"/><line x1="22" y1="24" x2="78" y2="24"/><line x1="22" y1="42" x2="78" y2="42"/><line x1="22" y1="60" x2="78" y2="60"/><line x1="40" y1="6" x2="40" y2="78"/><line x1="60" y1="6" x2="60" y2="78"/></svg>`,
-  land: `<svg viewBox="0 0 100 80" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 66 L30 30 L46 50 L62 20 L94 66 Z"/><line x1="6" y1="66" x2="94" y2="66"/></svg>`,
+  floor: `<svg viewBox="0 0 100 80" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="26" y="6" width="48" height="72"/><line x1="26" y1="24" x2="74" y2="24"/><line x1="26" y1="42" x2="74" y2="42"/><line x1="26" y1="60" x2="74" y2="60"/><rect x="34" y="12" width="6" height="6"/><rect x="60" y="12" width="6" height="6"/><rect x="34" y="30" width="6" height="6"/><rect x="60" y="30" width="6" height="6"/><rect x="34" y="48" width="6" height="6"/><rect x="60" y="48" width="6" height="6"/><rect x="44" y="66" width="12" height="12"/></svg>`,
   arch: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 92 V50 C20 26 34 10 50 10 C66 10 80 26 80 50 V92"/></svg>`
 };
 
@@ -13,28 +13,6 @@ function iconFor(type){ return ICONS[type] || ICONS.villa; }
 function formatPrice(n, lang){
   const num = Number(n).toLocaleString(lang === 'ar' ? 'ar-SA' : 'en-US');
   return lang === 'ar' ? `${num} ريال` : `SAR ${num}`;
-}
-
-/* ---------- تطبيق إعدادات الموقع (الأرقام، من نحن، التواصل) ---------- */
-function applySiteSettings(lang){
-  const s = getSettings();
-
-  const statListings = document.getElementById('statListings');
-  const statCities = document.getElementById('statCities');
-  const statYears = document.getElementById('statYears');
-  if(statListings) statListings.textContent = lang === 'ar' ? `+${s.listings}` : `${s.listings}+`;
-  if(statCities) statCities.textContent = lang === 'ar' ? `+${s.cities}` : `${s.cities}+`;
-  if(statYears) statYears.textContent = String(s.years);
-
-  const aboutTitle = document.getElementById('aboutTitle');
-  const aboutP1 = document.getElementById('aboutP1');
-  const aboutP2 = document.getElementById('aboutP2');
-  if(aboutTitle) aboutTitle.textContent = lang === 'ar' ? s.aboutTitleAr : s.aboutTitleEn;
-  if(aboutP1) aboutP1.textContent = lang === 'ar' ? s.aboutP1Ar : s.aboutP1En;
-  if(aboutP2) aboutP2.textContent = lang === 'ar' ? s.aboutP2Ar : s.aboutP2En;
-
-  document.querySelectorAll('.js-email').forEach(el => { el.textContent = s.email; });
-  document.querySelectorAll('.js-phone').forEach(el => { el.textContent = s.phone; });
 }
 
 /* ---------- الشريط العلوي ---------- */
@@ -59,7 +37,7 @@ function cardHTML(p, lang){
   <article class="card">
     <div class="card-media">
       ${tag ? `<span class="card-tag">${tag}</span>` : ''}
-      ${p.image ? `<img src="${p.image}" alt="${title}" loading="lazy">` : iconFor(p.type)}
+      ${iconFor(p.type)}
     </div>
     <div class="card-body">
       <h3>${title}</h3>
@@ -74,7 +52,28 @@ function cardHTML(p, lang){
   </article>`;
 }
 
-/* ---------- الصفحة الرئيسية: عرض عقارات مميزة ---------- */
+/* ---------- بطاقة مشروع ---------- */
+function projectCardHTML(pr, lang){
+  const name = lang === 'ar' ? pr.nameAr : pr.nameEn;
+  const loc = lang === 'ar' ? pr.locationAr : pr.locationEn;
+  const stage = getStageLabel(pr.stage, lang);
+  return `
+  <article class="card project-card">
+    <div class="card-media">
+      <span class="card-tag">${stage}</span>
+      ${iconFor(pr.type)}
+    </div>
+    <div class="card-body">
+      <h3>${name}</h3>
+      <div class="card-loc">${loc}</div>
+      <div class="card-meta">
+        <span>${pr.floors} ${t('projects.floors')}</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ---------- الصفحة الرئيسية: عقارات مميزة ---------- */
 function renderFeatured(){
   const el = document.getElementById('featuredGrid');
   if(!el) return;
@@ -83,7 +82,16 @@ function renderFeatured(){
   el.innerHTML = list.map(p => cardHTML(p, lang)).join('');
 }
 
-/* ---------- صفحة كل العقارات: فلاتر ---------- */
+/* ---------- الصفحة الرئيسية: المشاريع ---------- */
+function renderProjects(){
+  const el = document.getElementById('projectsGrid');
+  if(!el) return;
+  const lang = getLang();
+  const list = getProjects();
+  el.innerHTML = list.map(pr => projectCardHTML(pr, lang)).join('');
+}
+
+/* ---------- صفحة العقارات: فلاتر ---------- */
 function renderPropertiesPage(){
   const grid = document.getElementById('propsGrid');
   if(!grid) return;
@@ -127,14 +135,13 @@ function renderPropertiesPage(){
   document.addEventListener('langchange', () => { populateCities(); draw(); });
 }
 
-/* ---------- صفحة تفاصيل عقار ---------- */
+/* ---------- تفاصيل عقار ---------- */
 function renderPropertyDetail(){
   const root = document.getElementById('detailRoot');
   if(!root) return;
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
   const p = getPropertyById(id);
-  const lang = getLang();
 
   if(!p){
     root.innerHTML = `<div class="empty-state"><h3>${t('empty.title')}</h3></div>`;
@@ -150,7 +157,7 @@ function renderPropertyDetail(){
       <a class="card-link" href="properties.html" style="margin-bottom:20px;">${t('detail.back')}</a>
       <div class="detail-grid mt-lg">
         <div>
-          <div class="detail-media">${p.image ? `<img src="${p.image}" alt="${title}">` : iconFor(p.type)}</div>
+          <div class="detail-media">${iconFor(p.type)}</div>
           <div class="detail-facts">
             <div class="fact"><b>${p.area}</b><span>${t('detail.facts.area')} (${t('detail.sqm')})</span></div>
             <div class="fact"><b>${p.bedrooms || '—'}</b><span>${t('detail.facts.beds')}</span></div>
@@ -169,7 +176,7 @@ function renderPropertyDetail(){
   document.addEventListener('langchange', draw);
 }
 
-/* ---------- نموذج التواصل (عرض تجريبي بدون خادم) ---------- */
+/* ---------- نموذج التواصل ---------- */
 function initContactForm(){
   const form = document.getElementById('contactForm');
   if(!form) return;
@@ -183,7 +190,7 @@ function initContactForm(){
 }
 
 /* ---------- لوحة التحكم ---------- */
-const ADMIN_PASSWORD = 'raheeb2026'; // ⚠️ عرض تجريبي فقط — غيّرها لاحقاً وانقل التحقق لخادم حقيقي
+const ADMIN_PASSWORD = 'raheeb2026';
 
 function initAdmin(){
   const gate = document.getElementById('adminGate');
@@ -199,10 +206,17 @@ function initAdmin(){
   const resetBtn = document.getElementById('adminReset');
   const addedMsg = document.getElementById('adminAdded');
 
+  // مشاريع
+  const projForm = document.getElementById('adminProjectForm');
+  const projListEl = document.getElementById('adminProjectList');
+  const projAddedMsg = document.getElementById('adminProjectAdded');
+  const projResetBtn = document.getElementById('adminProjectsReset');
+
   function showPanel(){
     gate.classList.add('hide');
     panel.classList.remove('hide');
     renderList();
+    renderProjectList();
   }
 
   if(sessionStorage.getItem('raheeb_admin_ok') === '1') showPanel();
@@ -222,6 +236,7 @@ function initAdmin(){
     gate.classList.remove('hide');
   });
 
+  /* --- قائمة العقارات --- */
   function renderList(){
     const lang = getLang();
     const list = getProperties();
@@ -229,7 +244,7 @@ function initAdmin(){
       <div class="admin-row">
         <div class="info">
           <b>${lang === 'ar' ? p.titleAr : p.titleEn}</b>
-          <span>${lang === 'ar' ? p.city : p.cityEn} · ${formatPrice(p.price, lang)}</span>
+          <span>${getTypeLabel(p.type, lang)} · ${lang === 'ar' ? p.city : p.cityEn} · ${formatPrice(p.price, lang)}</span>
         </div>
         <div class="actions">
           <button class="danger" data-id="${p.id}">${t('admin.delete')}</button>
@@ -243,45 +258,6 @@ function initAdmin(){
     });
   }
 
-  /* رفع صورة العقار: نضغطها عبر canvas ونخزنها Base64 داخل localStorage */
-  const imageInput = document.getElementById('propImageInput');
-  const imagePreview = document.getElementById('propImagePreview');
-  let pendingImage = null;
-
-  function compressImage(file, maxWidth, quality){
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        const img = new Image();
-        img.onerror = reject;
-        img.onload = () => {
-          const scale = Math.min(1, maxWidth / img.width);
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL('image/jpeg', quality));
-        };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  if(imageInput){
-    imageInput.addEventListener('change', async () => {
-      const file = imageInput.files[0];
-      if(!file) return;
-      try{
-        pendingImage = await compressImage(file, 800, 0.72);
-        imagePreview.src = pendingImage;
-        imagePreview.classList.remove('hide');
-      }catch(e){ pendingImage = null; }
-    });
-  }
-
   form.addEventListener('submit', e => {
     e.preventDefault();
     const fd = new FormData(form);
@@ -290,15 +266,12 @@ function initAdmin(){
       city: fd.get('city'), cityEn: fd.get('cityEn'),
       titleAr: fd.get('titleAr'), titleEn: fd.get('titleEn'),
       price: Number(fd.get('price')), area: Number(fd.get('area')),
-      bedrooms: fd.get('type') === 'land' ? null : Number(fd.get('bedrooms') || 0),
+      bedrooms: fd.get('bedrooms') ? Number(fd.get('bedrooms')) : null,
+      stage: fd.get('stage') || '',
       descAr: fd.get('descAr'), descEn: fd.get('descEn'),
-      tag: fd.get('tag') || '', tagEn: fd.get('tagEn') || '',
-      image: pendingImage || null
+      tag: fd.get('tag') || '', tagEn: fd.get('tagEn') || ''
     });
     form.reset();
-    pendingImage = null;
-    imagePreview.classList.add('hide');
-    imagePreview.src = '';
     addedMsg.classList.remove('hide');
     renderList();
     setTimeout(() => addedMsg.classList.add('hide'), 3000);
@@ -309,43 +282,66 @@ function initAdmin(){
     renderList();
   });
 
-  document.addEventListener('langchange', () => { if(!panel.classList.contains('hide')) renderList(); });
-
-  /* نموذج إعدادات الموقع */
-  const settingsForm = document.getElementById('settingsForm');
-  if(settingsForm){
-    function fillSettingsForm(){
-      const s = getSettings();
-      Object.keys(s).forEach(key => {
-        const input = settingsForm.elements[key];
-        if(input) input.value = s[key];
+  /* --- قائمة المشاريع --- */
+  function renderProjectList(){
+    if(!projListEl) return;
+    const lang = getLang();
+    const list = getProjects();
+    projListEl.innerHTML = list.map(pr => `
+      <div class="admin-row">
+        <div class="info">
+          <b>${lang === 'ar' ? pr.nameAr : pr.nameEn}</b>
+          <span>${lang === 'ar' ? pr.locationAr : pr.locationEn} · ${pr.floors} ${t('projects.floors')} · ${getStageLabel(pr.stage, lang)}</span>
+        </div>
+        <div class="actions">
+          <button class="danger" data-id="${pr.id}">${t('admin.delete')}</button>
+        </div>
+      </div>`).join('');
+    projListEl.querySelectorAll('button.danger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        deleteProject(btn.getAttribute('data-id'));
+        renderProjectList();
       });
-    }
-    fillSettingsForm();
-    enterBtn.addEventListener('click', fillSettingsForm);
-
-    settingsForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const fd = new FormData(settingsForm);
-      const s = {
-        years: Number(fd.get('years')), cities: Number(fd.get('cities')), listings: Number(fd.get('listings')),
-        email: fd.get('email'), phone: fd.get('phone'),
-        aboutTitleAr: fd.get('aboutTitleAr'), aboutTitleEn: fd.get('aboutTitleEn'),
-        aboutP1Ar: fd.get('aboutP1Ar'), aboutP1En: fd.get('aboutP1En'),
-        aboutP2Ar: fd.get('aboutP2Ar'), aboutP2En: fd.get('aboutP2En')
-      };
-      saveSettings(s);
-      applySiteSettings(getLang());
-      const savedMsg = document.getElementById('settingsSaved');
-      savedMsg.classList.remove('hide');
-      setTimeout(() => savedMsg.classList.add('hide'), 3000);
     });
   }
+
+  if(projForm){
+    projForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const fd = new FormData(projForm);
+      addProject({
+        nameAr: fd.get('nameAr'), nameEn: fd.get('nameEn'),
+        type: fd.get('type'),
+        floors: Number(fd.get('floors')),
+        locationAr: fd.get('locationAr'), locationEn: fd.get('locationEn'),
+        stage: fd.get('stage'),
+        descAr: fd.get('descAr') || '', descEn: fd.get('descEn') || ''
+      });
+      projForm.reset();
+      if(projAddedMsg){
+        projAddedMsg.classList.remove('hide');
+        setTimeout(() => projAddedMsg.classList.add('hide'), 3000);
+      }
+      renderProjectList();
+    });
+  }
+
+  if(projResetBtn){
+    projResetBtn.addEventListener('click', () => {
+      resetProjectsToSeed();
+      renderProjectList();
+    });
+  }
+
+  document.addEventListener('langchange', () => {
+    if(!panel.classList.contains('hide')){ renderList(); renderProjectList(); }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   renderFeatured();
+  renderProjects();
   renderPropertiesPage();
   renderPropertyDetail();
   initContactForm();
@@ -353,4 +349,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 document.addEventListener('langchange', () => {
   renderFeatured();
+  renderProjects();
 });

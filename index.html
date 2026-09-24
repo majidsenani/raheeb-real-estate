@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رحيب المنازل | عقارات مختارة بعناية</title>
-<meta name="description" content="رحيب المنازل — منصة عقارية لتصفح الفلل والشقق والأراضي في أرقى المدن.">
+<title>رحيب المنازل للتطوير العقاري | عقارات مختارة بعناية</title>
+<meta name="description" content="رحيب المنازل للتطوير العقاري — منصة عقارية لتصفح الفلل والشقق والأدوار في أرقى المدن.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,10 +14,28 @@
 <header class="site">
   <nav class="nav">
     <a class="brand" href="index.html">
-      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="color:var(--gold-deep)">
-        <path d="M20 92 V50 C20 26 34 10 50 10 C66 10 80 26 80 50 V92"/>
+      <!-- الشعار الجديد: قوس + مبنى بألوان الشعار -->
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <clipPath id="archClip">
+            <path d="M12 92 V50 C12 26 28 8 50 8 C72 8 88 26 88 50 V92 Z"/>
+          </clipPath>
+        </defs>
+        <!-- إطار القوس -->
+        <path d="M12 92 V50 C12 26 28 8 50 8 C72 8 88 26 88 50 V92" stroke="#7C5E20" stroke-width="3" fill="none"/>
+        <!-- المبنى داخل القوس -->
+        <g clip-path="url(#archClip)">
+          <!-- الجزء الزيتي (يسار) -->
+          <rect x="20" y="30" width="26" height="62" fill="#5A5A2E"/>
+          <rect x="24" y="42" width="18" height="6" fill="#F5EEDD"/>
+          <rect x="24" y="60" width="18" height="6" fill="#F5EEDD"/>
+          <!-- الجزء البني الطوبي (يمين) -->
+          <rect x="46" y="42" width="34" height="50" fill="#8B3A1F"/>
+          <path d="M52 92 V72 C52 64 56 60 62 60 C68 60 72 64 72 72 V92" fill="#1E3A34"/>
+          <rect x="78" y="50" width="4" height="14" fill="#1E3A34"/>
+        </g>
       </svg>
-      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">عقارات مختارة بعناية</small></span>
+      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">للتطوير العقاري</small></span>
     </a>
     <div class="nav-links">
       <a href="index.html" data-i18n="nav.home">الرئيسية</a>
@@ -36,7 +54,7 @@
     <div>
       <div class="eyebrow-line"><span class="rule"></span><span data-i18n="hero.eyebrow">رحيب المنازل</span></div>
       <h1 data-i18n="hero.title">حيث يبدأ بيتك القادم</h1>
-      <p class="lead" data-i18n="hero.lead">نساعدك على إيجاد الفيلا أو الشقة أو الأرض التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.</p>
+      <p class="lead" data-i18n="hero.lead">نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.</p>
       <div class="hero-actions">
         <a class="btn" href="properties.html" data-i18n="hero.cta1">تصفح العقارات</a>
         <a class="btn ghost" href="contact.html" data-i18n="hero.cta2">تواصل معنا</a>
@@ -62,7 +80,6 @@
 
         <circle class="sky-sun" cx="335" cy="64" r="26" fill="url(#skyGoldLight)"/>
 
-        <!-- مبنى شاهق خلفي -->
         <g class="sky-building" style="animation-delay:.05s">
           <rect x="30" y="90" width="58" height="230" fill="url(#skyGold)"/>
           <g fill="#F5EEDD" opacity=".55">
@@ -74,7 +91,6 @@
           </g>
         </g>
 
-        <!-- برج متوسط -->
         <g class="sky-building" style="animation-delay:.16s">
           <rect x="100" y="130" width="46" height="190" fill="url(#skyGoldLight)"/>
           <g fill="#7C5E20" opacity=".5">
@@ -85,7 +101,6 @@
           </g>
         </g>
 
-        <!-- فيلا بقوس أمامية -->
         <g class="sky-building" style="animation-delay:.3s">
           <path d="M150 320 V235 C150 205 168 188 193 188 C218 188 236 205 236 235 V320 Z" fill="url(#skyGold)"/>
           <path d="M178 320 V255 C178 240 184 231 193 231 C202 231 208 240 208 255 V320" fill="#F5EEDD" opacity=".8"/>
@@ -93,7 +108,6 @@
           <rect x="214" y="270" width="14" height="18" fill="#F5EEDD" opacity=".55"/>
         </g>
 
-        <!-- مبنى أمامي عريض -->
         <g class="sky-building" style="animation-delay:.42s">
           <rect x="250" y="170" width="90" height="150" fill="url(#skyGoldLight)"/>
           <g fill="#5B4F3F" opacity=".45">
@@ -110,7 +124,8 @@
   </div>
 </section>
 
-<section class="cats">
+<!-- ================= التصنيفات ================= -->
+<section>
   <div class="wrap">
     <div class="section-head">
       <span class="kicker" data-i18n="cats.kicker">التصنيفات</span>
@@ -128,15 +143,28 @@
         <h3 data-i18n="cat.apartment">شقق</h3>
         <p data-i18n="cat.apartment.d">شقق سكنية بمساحات وتشطيبات متنوعة</p>
       </a>
-      <a class="arch-frame cat-card" href="properties.html?type=land">
-        <div class="arch-icon" id="iconLand"></div>
-        <h3 data-i18n="cat.land">أراضٍ</h3>
-        <p data-i18n="cat.land.d">أراضٍ سكنية وتجارية للاستثمار والبناء</p>
+      <a class="arch-frame cat-card" href="properties.html?type=floor">
+        <div class="arch-icon" id="iconFloor"></div>
+        <h3 data-i18n="cat.floor">أدوار</h3>
+        <p data-i18n="cat.floor.d">عمارات سكنية بأدوار متعددة في مواقع مميزة</p>
       </a>
     </div>
   </div>
 </section>
 
+<!-- ================= مشاريعنا ================= -->
+<section class="projects-section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker" data-i18n="projects.kicker">مشاريعنا</span>
+      <h2 data-i18n="projects.title">مشاريعنا العقارية</h2>
+      <p data-i18n="projects.lead">مشاريعنا الحالية في مختلف مراحل التطوير.</p>
+    </div>
+    <div class="grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- ================= أحدث الإدراجات ================= -->
 <section>
   <div class="wrap">
     <div class="section-head">
@@ -151,14 +179,15 @@
   </div>
 </section>
 
+<!-- ================= من نحن ================= -->
 <section id="about">
   <div class="wrap">
     <div class="divider"><span class="rule"></span><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 92 V50 C20 26 34 10 50 10 C66 10 80 26 80 50 V92"/></svg><span class="rule"></span></div>
     <div class="section-head center" style="margin:0 auto;">
       <span class="kicker" data-i18n="about.kicker">من نحن</span>
-      <h2 id="aboutTitle">رحيب المنازل للخدمات العقارية</h2>
-      <p id="aboutP1">نعمل منذ سنوات في تسويق العقارات وربط الملاك بالباحثين عن منزل أو فرصة استثمارية، بأسلوب واضح وموثوق.</p>
-      <p id="aboutP2">فريقنا يتابع كل عقار من الإدراج حتى إتمام الصفقة، مع حرص دائم على دقة المعلومة وسهولة التواصل.</p>
+      <h2 id="aboutTitle" data-i18n="about.title">رحيب المنازل للتطوير العقاري</h2>
+      <p id="aboutP1" data-i18n="about.p1">نعمل منذ سنوات في تسويق العقارات وربط الملاك بالباحثين عن منزل أو فرصة استثمارية، بأسلوب واضح وموثوق.</p>
+      <p id="aboutP2" data-i18n="about.p2">فريقنا يتابع كل عقار من الإدراج حتى إتمام الصفقة، مع حرص دائم على دقة المعلومة وسهولة التواصل.</p>
     </div>
   </div>
 </section>
@@ -166,7 +195,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-grid">
-      <div><h4>رحيب المنازل</h4><p data-i18n="footer.about" style="max-width:34ch;">شركة رحيب المنازل للخدمات العقارية.</p></div>
+      <div><h4>رحيب المنازل</h4><p data-i18n="footer.about" style="max-width:34ch;">شركة رحيب المنازل للتطوير العقاري.</p></div>
       <div><h4 data-i18n="footer.links">روابط</h4><ul>
         <li><a href="properties.html" data-i18n="nav.properties">العقارات</a></li>
         <li><a href="contact.html" data-i18n="nav.contact">تواصل معنا</a></li>
@@ -181,7 +210,7 @@
       <svg viewBox="0 0 33 33" shape-rendering="crispEdges"><path stroke="#2A2318" d="M0 0.5h7m1 0h1m1 0h2m1 0h3m2 0h1m3 0h2m2 0h7M0 1.5h1m5 0h1m3 0h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h8m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m5 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m1 0h2m4 0h2m1 0h1m3 0h1m2 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m1 0h2m1 0h2m2 0h1m2 0h1m1 0h2m4 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m3 0h1m1 0h1m2 0h5M0 8.5h1m3 0h1m1 0h4m5 0h1m1 0h1m2 0h3m1 0h6m2 0h1M1 9.5h2m2 0h1m1 0h3m5 0h3m5 0h1m1 0h1m3 0h3M1 10.5h4m1 0h2m5 0h3m2 0h1m2 0h5m3 0h1m1 0h1M3 11.5h1m1 0h1m2 0h3m1 0h2m1 0h2m2 0h3m1 0h1m1 0h1M0 12.5h2m2 0h1m1 0h4m2 0h2m1 0h2m4 0h3m2 0h1m1 0h2m1 0h1M0 13.5h2m1 0h2m4 0h2m1 0h3m3 0h3m1 0h2m1 0h1m1 0h1m1 0h2M0 14.5h5m1 0h1m1 0h1m1 0h2m3 0h1m1 0h2m1 0h2m1 0h5m3 0h1M1 15.5h1m2 0h1m2 0h1m2 0h1m1 0h2m1 0h3m3 0h1m1 0h6M0 16.5h4m2 0h9m2 0h1m1 0h4m1 0h1m1 0h1m1 0h1m2 0h1M0 17.5h1m3 0h2m1 0h1m1 0h1m5 0h2m1 0h1m1 0h1m2 0h1m1 0h1m3 0h3M0 18.5h3m1 0h1m1 0h1m1 0h4m1 0h5m2 0h2m1 0h1m3 0h1m1 0h1m1 0h1M1 19.5h3m4 0h1m3 0h1m1 0h1m2 0h2m2 0h2m2 0h1m1 0h1m3 0h1M0 20.5h3m1 0h3m2 0h3m2 0h2m2 0h1m1 0h5m1 0h4m1 0h2M0 21.5h1m2 0h3m1 0h4m1 0h2m2 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M5 22.5h4m1 0h1m2 0h2m1 0h2m1 0h1m3 0h4m1 0h1m2 0h1M2 23.5h4m2 0h3m1 0h2m3 0h1m1 0h7m5 0h1M0 24.5h4m1 0h3m1 0h1m2 0h4m1 0h1m2 0h9m2 0h2M8 25.5h4m1 0h3m1 0h1m6 0h1m3 0h1m1 0h2M0 26.5h7m1 0h2m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1m1 0h1m1 0h2m1 0h1M0 27.5h1m5 0h1m3 0h1m2 0h1m2 0h1m2 0h3m2 0h1m3 0h1m3 0h1M0 28.5h1m1 0h3m1 0h1m1 0h1m1 0h5m1 0h1m3 0h2m2 0h6m1 0h2M0 29.5h1m1 0h3m1 0h1m2 0h1m1 0h2m5 0h3m2 0h2m1 0h3m1 0h1M0 30.5h1m1 0h3m1 0h1m2 0h1m2 0h1m2 0h1m1 0h2m1 0h4m2 0h5M0 31.5h1m5 0h1m3 0h2m1 0h1m1 0h7m1 0h4m2 0h1M0 32.5h7m1 0h5m4 0h1m2 0h3m1 0h3m5 0h1"/></svg>
       <span data-i18n="footer.qr">امسح لزيارة الموقع من جوالك</span>
     </div>
-    <div class="footer-bottom">© 2026 رحيب المنازل — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
+    <div class="footer-bottom">© 2026 رحيب المنازل للتطوير العقاري — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
   </div>
 </footer>
 
@@ -190,9 +219,15 @@
 <script src="js/main.js"></script>
 <script src="js/effects.js"></script>
 <script>
-  document.getElementById('iconVilla').innerHTML = ICONS.villa;
-  document.getElementById('iconApartment').innerHTML = ICONS.apartment;
-  document.getElementById('iconLand').innerHTML = ICONS.land;
+  // حقن الأيقونات في بطاقات التصنيفات
+  document.addEventListener('DOMContentLoaded', () => {
+    const v = document.getElementById('iconVilla');
+    const a = document.getElementById('iconApartment');
+    const f = document.getElementById('iconFloor');
+    if(v) v.innerHTML = ICONS.villa;
+    if(a) a.innerHTML = ICONS.apartment;
+    if(f) f.innerHTML = ICONS.floor;
+  });
 </script>
 </body>
 </html>

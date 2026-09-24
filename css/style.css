@@ -73,9 +73,9 @@ header.site{
 }
 .brand{ display:flex; align-items:center; gap:10px; }
 .brand svg{ width:34px; height:34px; }
-.brand .name{ font-family:var(--serif-ar); font-size:1.3rem; color:var(--ink); }
+.brand .name{ font-family:var(--serif-ar); font-size:1.7rem; color:var(--ink); }
 html[lang="en"] .brand .name{ font-family:var(--serif-en); font-size:1.4rem; }
-.brand .name small{ display:block; font-family:var(--sans-ar); font-size:.6rem; letter-spacing:.04em; color:var(--ink-soft); }
+.brand .name small{ display:block; font-family:var(--sans-ar); font-size:.8rem; letter-spacing:.04em; color:var(--ink-soft); }
 html[lang="en"] .brand .name small{ font-family:var(--sans-en); }
 
 .nav-links{ display:flex; gap:28px; align-items:center; }

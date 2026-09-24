@@ -4,7 +4,6 @@
 /* ========== المفاتيح ========== */
 const STORAGE_KEY = 'raheeb_properties';
 const PROJECTS_KEY = 'raheeb_projects';
-const ADMIN_STORAGE_KEY = 'raheeb_admin';
 
 /* ========== الأنواع ========== */
 const TYPES = [
@@ -19,36 +18,6 @@ const STAGES = [
   { value: 'finishing', ar: 'مرحلة التشطيب',  en: 'Finishing' },
   { value: 'structure', ar: 'مرحلة العظم',    en: 'Structure' }
 ];
-
-/* ========== الأيقونات ========== */
-const ICONS = {
-  apartment: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M10 58 V22 L32 6 L54 22 V58"/>
-    <rect x="24" y="40" width="16" height="18"/>
-    <rect x="18" y="26" width="8" height="8"/>
-    <rect x="38" y="26" width="8" height="8"/>
-  </svg>`,
-  villa: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 34 L32 12 L58 34"/>
-    <path d="M14 34 V56 H50 V34"/>
-    <rect x="26" y="42" width="12" height="14"/>
-    <rect x="18" y="36" width="6" height="6"/>
-    <rect x="40" y="36" width="6" height="6"/>
-  </svg>`,
-  floor: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="14" y="8" width="36" height="48"/>
-    <line x1="14" y1="20" x2="50" y2="20"/>
-    <line x1="14" y1="32" x2="50" y2="32"/>
-    <line x1="14" y1="44" x2="50" y2="44"/>
-    <rect x="22" y="12" width="4" height="4"/>
-    <rect x="38" y="12" width="4" height="4"/>
-    <rect x="22" y="24" width="4" height="4"/>
-    <rect x="38" y="24" width="4" height="4"/>
-    <rect x="22" y="36" width="4" height="4"/>
-    <rect x="38" y="36" width="4" height="4"/>
-    <rect x="28" y="46" width="8" height="10"/>
-  </svg>`
-};
 
 /* ========== العقارات الأولية (Seed) ========== */
 const SEED_PROPERTIES = [
@@ -86,12 +55,20 @@ const SEED_PROPERTIES = [
   }
 ];
 
-/* ========== المشاريع (مستقلة) ========== */
+/* ========== المشاريع ========== */
 const SEED_PROJECTS = [
-  { id: 'pr1', nameAr: 'رحيب ١-٢', nameEn: 'Raheeb 1-2', type: 'floor', floors: 12, locationAr: 'حي الملك عبدالله', locationEn: 'King Abdullah District', stage: 'sale',      descAr: 'مشروع ١٢ دور',   descEn: '12-floor project' },
-  { id: 'pr2', nameAr: 'رحيب ٣',   nameEn: 'Raheeb 3',   type: 'floor', floors: 9,  locationAr: 'حي الملك فهد',   locationEn: 'King Fahd District',   stage: 'finishing', descAr: 'مشروع ٩ أدوار',  descEn: '9-floor project' },
-  { id: 'pr3', nameAr: 'رحيب ٤',   nameEn: 'Raheeb 4',   type: 'floor', floors: 6,  locationAr: 'حي النرجس',      locationEn: 'Al Narjis District',   stage: 'finishing', descAr: 'مشروع ٦ أدوار',  descEn: '6-floor project' },
-  { id: 'pr4', nameAr: 'رحيب ٥',   nameEn: 'Raheeb 5',   type: 'villa', floors: 2,  locationAr: 'حي الملك سلمان', locationEn: 'King Salman District', stage: 'structure', descAr: '٢ دوبلكس',       descEn: '2 duplexes' }
+  { id: 'pr1', nameAr: 'رحيب ١-٢', nameEn: 'Raheeb 1-2', type: 'floor', floors: 12,
+    locationAr: 'حي الملك عبدالله', locationEn: 'King Abdullah District',
+    stage: 'sale',      descAr: 'مشروع ١٢ دور',  descEn: '12-floor project' },
+  { id: 'pr2', nameAr: 'رحيب ٣',   nameEn: 'Raheeb 3',   type: 'floor', floors: 9,
+    locationAr: 'حي الملك فهد',   locationEn: 'King Fahd District',
+    stage: 'finishing', descAr: 'مشروع ٩ أدوار', descEn: '9-floor project' },
+  { id: 'pr3', nameAr: 'رحيب ٤',   nameEn: 'Raheeb 4',   type: 'floor', floors: 6,
+    locationAr: 'حي النرجس',      locationEn: 'Al Narjis District',
+    stage: 'finishing', descAr: 'مشروع ٦ أدوار', descEn: '6-floor project' },
+  { id: 'pr4', nameAr: 'رحيب ٥',   nameEn: 'Raheeb 5',   type: 'villa', floors: 2,
+    locationAr: 'حي الملك سلمان', locationEn: 'King Salman District',
+    stage: 'structure', descAr: '٢ دوبلكس',      descEn: '2 duplexes' }
 ];
 
 /* ========== دوال العقارات ========== */
@@ -161,11 +138,6 @@ function addProject(project){
 
 function deleteProject(id){
   const list = getProjects().filter(p => p.id !== id);
-  saveProjects(list);
-}
-
-function updateProject(id, updates){
-  const list = getProjects().map(p => p.id === id ? { ...p, ...updates } : p);
   saveProjects(list);
 }
 

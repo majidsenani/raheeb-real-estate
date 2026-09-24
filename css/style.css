@@ -16,8 +16,7 @@
   --deep-soft: #2E4E46;
   --white:     #FFFFFF;
 
-  --serif-ar:  'Amiri', 'Noto Naskh Arabic', serif;
-  --sans-ar:   'Cairo', sans-serif;
+  --serif-ar:  'Cairo', sans-serif;  --sans-ar:   'Cairo', sans-serif;
   --serif-en:  'Cormorant Garamond', serif;
   --sans-en:   'Jost', sans-serif;
 

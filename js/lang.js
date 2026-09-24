@@ -4,11 +4,11 @@ const DICT = {
   ar: {
     'nav.home': 'الرئيسية', 'nav.properties': 'العقارات', 'nav.about': 'من نحن',
     'nav.contact': 'تواصل معنا', 'nav.admin': 'لوحة التحكم', 'lang.switch': 'English',
-    'brand.tagline': 'عقارات مختارة بعناية',
+    'brand.tagline': 'للتطوير العقاري',
 
     'hero.eyebrow': 'رحيب المنازل',
-    'hero.title': 'حيث يبدأ بيتك القادم',
-    'hero.lead': 'نساعدك على إيجاد الفيلا أو الشقة أو الأرض التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.',
+    'hero.title': 'حيث رحابة السكن',
+    'hero.lead': 'نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء.',
     'hero.cta1': 'تصفح العقارات', 'hero.cta2': 'تواصل معنا',
     'hero.stat1n': '+120', 'hero.stat1l': 'عقار مُدرج',
     'hero.stat2n': '+8', 'hero.stat2l': 'مدن مغطاة',
@@ -18,13 +18,18 @@ const DICT = {
     'cats.lead': 'ثلاث فئات رئيسية تغطي معظم احتياجات عملائنا.',
     'cat.villa': 'فلل', 'cat.villa.d': 'فلل عائلية ودوبلكسات في أحياء راقية',
     'cat.apartment': 'شقق', 'cat.apartment.d': 'شقق سكنية بمساحات وتشطيبات متنوعة',
-    'cat.land': 'أراضٍ', 'cat.land.d': 'أراضٍ سكنية وتجارية للاستثمار والبناء',
+    'cat.floor': 'أدوار', 'cat.floor.d': 'عمارات سكنية بأدوار متعددة في مواقع مميزة',
+
+    'projects.kicker': 'مشاريعنا', 'projects.title': 'مشاريعنا العقارية',
+    'projects.lead': 'مشاريعنا الحالية في مختلف مراحل التطوير.',
+    'projects.floors': 'دور',
+    'projects.location': 'الموقع',
 
     'featured.kicker': 'عقارات مختارة', 'featured.title': 'أحدث الإدراجات',
     'featured.lead': 'نماذج من العقارات المتوفرة حالياً ضمن قائمتنا.',
     'featured.viewall': 'عرض جميع العقارات',
 
-    'about.kicker': 'من نحن', 'about.title': 'رحيب المنازل للخدمات العقارية',
+    'about.kicker': 'من نحن', 'about.title': 'رحيب المنازل للتطوير العقاري',
     'about.p1': 'نعمل منذ سنوات في تسويق العقارات وربط الملاك بالباحثين عن منزل أو فرصة استثمارية، بأسلوب واضح وموثوق.',
     'about.p2': 'فريقنا يتابع كل عقار من الإدراج حتى إتمام الصفقة، مع حرص دائم على دقة المعلومة وسهولة التواصل.',
 
@@ -36,7 +41,8 @@ const DICT = {
     'contact.sent': 'تم استلام رسالتك، سنتواصل معك قريباً.',
 
     'props.title': 'كل العقارات', 'props.lead': 'استخدم الفلاتر لتضييق نتائج البحث.',
-    'filter.type': 'النوع', 'filter.all': 'الكل', 'filter.villa': 'فيلا', 'filter.apartment': 'شقة', 'filter.land': 'أرض',
+    'filter.type': 'النوع', 'filter.all': 'الكل',
+    'filter.villa': 'فيلا', 'filter.apartment': 'شقة', 'filter.floor': 'أدوار',
     'filter.city': 'المدينة', 'filter.search': 'ابحث بالاسم...', 'filter.apply': 'تطبيق الفلتر',
     'card.bedrooms': 'غرف', 'card.area': 'م²', 'card.details': 'التفاصيل ←',
     'empty.title': 'لا توجد عقارات مطابقة', 'empty.lead': 'جرّب تعديل الفلاتر أو أعد تعيينها.',
@@ -53,42 +59,41 @@ const DICT = {
     'admin.f.titleAr': 'العنوان (عربي)', 'admin.f.titleEn': 'العنوان (إنجليزي)',
     'admin.f.type': 'النوع', 'admin.f.city': 'المدينة (عربي)', 'admin.f.cityEn': 'المدينة (إنجليزي)',
     'admin.f.price': 'السعر (ريال)', 'admin.f.area': 'المساحة (م²)', 'admin.f.beds': 'عدد الغرف',
+    'admin.f.stage': 'المرحلة',
     'admin.f.descAr': 'الوصف (عربي)', 'admin.f.descEn': 'الوصف (إنجليزي)',
     'admin.f.tag': 'وسم مميز (اختياري، عربي)', 'admin.f.tagEn': 'وسم مميز (اختياري، إنجليزي)',
     'admin.save': 'حفظ العقار', 'admin.reset': 'إعادة تعيين البيانات الافتراضية',
     'admin.delete': 'حذف', 'admin.logout': 'خروج',
     'admin.added': 'تمت إضافة العقار بنجاح.',
 
-    'footer.about': 'شركة رحيب المنازل للخدمات العقارية — عقارات مختارة في أرقى المدن.',
-    'footer.links': 'روابط', 'footer.contact': 'تواصل',
-    'footer.rights': 'جميع الحقوق محفوظة',
-    'footer.qr': 'امسح لزيارة الموقع من جوالك',
+    // المشاريع
+    'admin.project.title': 'إضافة مشروع جديد',
+    'admin.project.list.title': 'المشاريع الحالية',
+    'admin.project.f.nameAr': 'اسم المشروع (عربي)',
+    'admin.project.f.nameEn': 'اسم المشروع (إنجليزي)',
+    'admin.project.f.type': 'النوع',
+    'admin.project.f.floors': 'عدد الأدوار',
+    'admin.project.f.locationAr': 'الموقع (عربي)',
+    'admin.project.f.locationEn': 'الموقع (إنجليزي)',
+    'admin.project.f.stage': 'المرحلة',
+    'admin.project.f.descAr': 'وصف مختصر (عربي)',
+    'admin.project.f.descEn': 'وصف مختصر (إنجليزي)',
+    'admin.project.save': 'حفظ المشروع',
+    'admin.project.reset': 'إعادة تعيين المشاريع الافتراضية',
+    'admin.project.added': 'تمت إضافة المشروع بنجاح.',
 
-    'admin.f.image': 'صورة العقار (اختياري)',
-    'admin.settings.title': 'إعدادات الموقع العامة',
-    'admin.settings.note': 'هذي القيم تظهر بالصفحة الرئيسية وصفحة التواصل — مثل عدد سنوات الخبرة، والمدن المغطاة، ونص "من نحن".',
-    'admin.settings.years': 'سنوات الخبرة',
-    'admin.settings.cities': 'عدد المدن المغطاة',
-    'admin.settings.listings': 'عدد العقارات المُدرجة',
-    'admin.settings.email': 'البريد الإلكتروني',
-    'admin.settings.phone': 'رقم الجوال',
-    'admin.settings.aboutTitleAr': 'عنوان "من نحن" (عربي)',
-    'admin.settings.aboutTitleEn': 'عنوان "من نحن" (إنجليزي)',
-    'admin.settings.aboutP1Ar': 'فقرة أولى (عربي)',
-    'admin.settings.aboutP1En': 'فقرة أولى (إنجليزي)',
-    'admin.settings.aboutP2Ar': 'فقرة ثانية (عربي)',
-    'admin.settings.aboutP2En': 'فقرة ثانية (إنجليزي)',
-    'admin.settings.save': 'حفظ الإعدادات',
-    'admin.settings.saved': 'تم حفظ الإعدادات بنجاح.'
+    'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى المدن.',
+    'footer.links': 'روابط', 'footer.contact': 'تواصل',
+    'footer.rights': 'جميع الحقوق محفوظة'
   },
   en: {
     'nav.home': 'Home', 'nav.properties': 'Properties', 'nav.about': 'About',
     'nav.contact': 'Contact', 'nav.admin': 'Admin', 'lang.switch': 'العربية',
-    'brand.tagline': 'Carefully curated properties',
+    'brand.tagline': 'Real Estate Development',
 
     'hero.eyebrow': 'Raheeb Al-Manazil',
     'hero.title': 'Where your next home begins',
-    'hero.lead': 'We help you find the villa, apartment, or land that fits your life, from a curated selection across the finest neighborhoods and cities.',
+    'hero.lead': 'We help you find the villa, apartment, or floor that fits your life, from a curated selection across the finest neighborhoods and cities.',
     'hero.cta1': 'Browse properties', 'hero.cta2': 'Contact us',
     'hero.stat1n': '120+', 'hero.stat1l': 'Listings',
     'hero.stat2n': '8+', 'hero.stat2l': 'Cities covered',
@@ -98,13 +103,18 @@ const DICT = {
     'cats.lead': 'Three core categories covering most of our clients\u2019 needs.',
     'cat.villa': 'Villas', 'cat.villa.d': 'Family villas and duplexes in prestigious areas',
     'cat.apartment': 'Apartments', 'cat.apartment.d': 'Residential apartments of varied sizes and finishing',
-    'cat.land': 'Land', 'cat.land.d': 'Residential and commercial land for building or investment',
+    'cat.floor': 'Floors', 'cat.floor.d': 'Residential buildings with multiple floors in prime locations',
+
+    'projects.kicker': 'Our projects', 'projects.title': 'Our real estate projects',
+    'projects.lead': 'Our current projects across various development stages.',
+    'projects.floors': 'floors',
+    'projects.location': 'Location',
 
     'featured.kicker': 'Featured', 'featured.title': 'Latest listings',
     'featured.lead': 'Examples of properties currently available on our list.',
     'featured.viewall': 'View all properties',
 
-    'about.kicker': 'About us', 'about.title': 'Raheeb Al-Manazil Real Estate Services',
+    'about.kicker': 'About us', 'about.title': 'Raheeb Al-Manazil Real Estate Development',
     'about.p1': 'For years we have connected owners with people looking for a home or investment opportunity, with a clear and reliable approach.',
     'about.p2': 'Our team follows each listing from posting through closing, with constant attention to accuracy and easy communication.',
 
@@ -116,7 +126,8 @@ const DICT = {
     'contact.sent': 'Your message has been received, we will be in touch soon.',
 
     'props.title': 'All properties', 'props.lead': 'Use the filters to narrow your search.',
-    'filter.type': 'Type', 'filter.all': 'All', 'filter.villa': 'Villa', 'filter.apartment': 'Apartment', 'filter.land': 'Land',
+    'filter.type': 'Type', 'filter.all': 'All',
+    'filter.villa': 'Villa', 'filter.apartment': 'Apartment', 'filter.floor': 'Floors',
     'filter.city': 'City', 'filter.search': 'Search by name...', 'filter.apply': 'Apply filters',
     'card.bedrooms': 'beds', 'card.area': 'sqm', 'card.details': 'Details →',
     'empty.title': 'No matching properties', 'empty.lead': 'Try adjusting or resetting the filters.',
@@ -133,33 +144,31 @@ const DICT = {
     'admin.f.titleAr': 'Title (Arabic)', 'admin.f.titleEn': 'Title (English)',
     'admin.f.type': 'Type', 'admin.f.city': 'City (Arabic)', 'admin.f.cityEn': 'City (English)',
     'admin.f.price': 'Price (SAR)', 'admin.f.area': 'Area (sqm)', 'admin.f.beds': 'Bedrooms',
+    'admin.f.stage': 'Stage',
     'admin.f.descAr': 'Description (Arabic)', 'admin.f.descEn': 'Description (English)',
     'admin.f.tag': 'Highlight tag (optional, Arabic)', 'admin.f.tagEn': 'Highlight tag (optional, English)',
     'admin.save': 'Save property', 'admin.reset': 'Reset to default data',
     'admin.delete': 'Delete', 'admin.logout': 'Log out',
     'admin.added': 'Property added successfully.',
 
-    'footer.about': 'Raheeb Al-Manazil Real Estate Services — curated properties across the finest cities.',
-    'footer.links': 'Links', 'footer.contact': 'Contact',
-    'footer.rights': 'All rights reserved',
-    'footer.qr': 'Scan to visit the site on your phone',
+    'admin.project.title': 'Add a new project',
+    'admin.project.list.title': 'Current projects',
+    'admin.project.f.nameAr': 'Project name (Arabic)',
+    'admin.project.f.nameEn': 'Project name (English)',
+    'admin.project.f.type': 'Type',
+    'admin.project.f.floors': 'Number of floors',
+    'admin.project.f.locationAr': 'Location (Arabic)',
+    'admin.project.f.locationEn': 'Location (English)',
+    'admin.project.f.stage': 'Stage',
+    'admin.project.f.descAr': 'Short description (Arabic)',
+    'admin.project.f.descEn': 'Short description (English)',
+    'admin.project.save': 'Save project',
+    'admin.project.reset': 'Reset default projects',
+    'admin.project.added': 'Project added successfully.',
 
-    'admin.f.image': 'Property photo (optional)',
-    'admin.settings.title': 'General site settings',
-    'admin.settings.note': 'These values appear on the home and contact pages — years of experience, cities covered, and the "About us" text.',
-    'admin.settings.years': 'Years of experience',
-    'admin.settings.cities': 'Cities covered',
-    'admin.settings.listings': 'Listed properties',
-    'admin.settings.email': 'Email address',
-    'admin.settings.phone': 'Phone number',
-    'admin.settings.aboutTitleAr': 'About title (Arabic)',
-    'admin.settings.aboutTitleEn': 'About title (English)',
-    'admin.settings.aboutP1Ar': 'First paragraph (Arabic)',
-    'admin.settings.aboutP1En': 'First paragraph (English)',
-    'admin.settings.aboutP2Ar': 'Second paragraph (Arabic)',
-    'admin.settings.aboutP2En': 'Second paragraph (English)',
-    'admin.settings.save': 'Save settings',
-    'admin.settings.saved': 'Settings saved successfully.'
+    'footer.about': 'Raheeb Al-Manazil Real Estate Development — curated properties across the finest cities.',
+    'footer.links': 'Links', 'footer.contact': 'Contact',
+    'footer.rights': 'All rights reserved'
   }
 };
 
@@ -176,8 +185,6 @@ function applyLang(lang){
     const key = el.getAttribute('data-i18n-ph');
     if(DICT[lang][key] !== undefined) el.setAttribute('placeholder', DICT[lang][key]);
   });
-  if(typeof applySiteSettings === 'function') applySiteSettings(lang);
-
   localStorage.setItem('raheeb_lang', lang);
   document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
 }

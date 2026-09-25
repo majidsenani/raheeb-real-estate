@@ -69,17 +69,19 @@ header.site{
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
 }
-..nav{
-  display:flex; align-items:center; justify-content:space-between;
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   padding:12px 32px;
-  gap:20px;
+  gap:24px;
   width:100%;
 }
 
 /* الشعار */
 .brand{
   display:flex; align-items:center; gap:10px;
-  order:1;
+  flex-shrink:0;
 }
 .brand-logo{
   height:52px;
@@ -93,24 +95,24 @@ header.site{
   font-size:1.15rem;
   color:var(--ink);
   line-height:1.1;
+  white-space:nowrap;
 }
 .brand .name small{
   display:block;
   font-family:var(--sans-ar);
-  font-size:.95rem;
+  font-size:.75rem;
   letter-spacing:.04em;
   color:var(--ink-soft);
   font-weight:400;
 }
 
-/* روابط الهيدر — كمبيوتر */
+/* روابط الهيدر — وسط */
 .nav-links-desktop{
   display:flex;
-  gap:26px;
+  gap:28px;
   align-items:center;
-  order:2;
-  margin-inline-start:auto;
-  margin-inline-end:auto;
+  flex:1;
+  justify-content:center;
 }
 .nav-links-desktop a{
   font-size:.95rem;
@@ -118,6 +120,7 @@ header.site{
   padding:6px 2px;
   position:relative;
   transition:color .25s ease;
+  white-space:nowrap;
 }
 .nav-links-desktop a::after{
   content:'';
@@ -138,12 +141,12 @@ header.site{
   inset-inline-start:0;
 }
 
-/* الجهة اليسرى — رقم + EN + دخول */
+/* الجهة اليسرى */
 .nav-right-desktop{
   display:flex;
   align-items:center;
   gap:14px;
-  order:3;
+  flex-shrink:0;
 }
 .nav-phone{
   display:flex;
@@ -152,6 +155,7 @@ header.site{
   font-size:.88rem;
   color:var(--ink-soft);
   transition:color .25s ease;
+  white-space:nowrap;
 }
 .nav-phone:hover{ color:var(--gold-deep); }
 .nav-phone svg{ width:16px; height:16px; }
@@ -181,6 +185,7 @@ header.site{
   font-size:.85rem;
   border:1px solid var(--gold-deep);
   transition:background .25s ease, transform .25s ease;
+  white-space:nowrap;
 }
 .btn-login:hover{
   background:var(--deep);
@@ -198,7 +203,6 @@ header.site{
   align-items:center; justify-content:center;
   color:var(--gold-deep);
   border-radius:4px;
-  order:0;
   transition:transform .25s ease, color .25s ease, background .25s ease;
 }
 .nav-toggle svg{ width:26px; height:26px; }
@@ -213,26 +217,22 @@ header.site{
    RESPONSIVE — الجوال
    ========================================================= */
 @media (max-width:900px){
-  /* أخفِ روابط الكمبيوتر */
+  .nav{
+    padding:12px 16px;
+  }
   .nav-links-desktop,
   .nav-right-desktop{
     display:none;
   }
-
-  /* أظهر ☰ */
   .nav-toggle{
     display:flex;
-    order:1;
   }
-
-  /* الشعار يصير على اليمين */
   .brand{
-    order:2;
     margin-inline-start:auto;
   }
   .brand-logo{ height:46px; }
   .brand .name{ font-size:1rem; }
-  .brand .name small{ font-size:.8rem; }
+  .brand .name small{ font-size:.65rem; }
 }
 
 /* =========================================================

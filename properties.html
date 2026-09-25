@@ -3,51 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العقارات | رحيب المنازل</title>
+<title>كل العقارات | رحيب المنازل للتطوير العقاري</title>
+<meta name="description" content="تصفح كل العقارات المتوفرة — فلل، شقق، أدوار.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header class="site">
-  <nav class="nav">
-    <a class="brand" href="index.html">
-      <img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo">
-      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">عقارات مختارة بعناية</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
-      <a href="properties.html" data-i18n="nav.properties">العقارات</a>
-      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
-      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
-      <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
-      <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
-    </div>
-    <button class="nav-toggle" aria-label="menu">☰</button>
-  </nav>
-</header>
+<div id="siteHeader"></div>
 
+<!-- ============ كل العقارات ============ -->
 <section>
   <div class="wrap">
     <div class="section-head">
-      <h1 data-i18n="props.title">كل العقارات</h1>
-      <p data-i18n="props.lead">استخدم الفلاتر لتضييق نتائج البحث.</p>
+      <span class="kicker" data-i18n="props.title">كل العقارات</span>
+      <h2 data-i18n="props.lead">استخدم الفلاتر لتضييق نتائج البحث.</h2>
     </div>
 
+    <!-- الفلاتر -->
     <div class="filters">
       <select id="fType">
         <option value="" data-i18n="filter.all">الكل</option>
         <option value="villa" data-i18n="filter.villa">فيلا</option>
         <option value="apartment" data-i18n="filter.apartment">شقة</option>
-        <option value="land" data-i18n="filter.land">أرض</option>
+        <option value="floor" data-i18n="filter.floor">أدوار</option>
       </select>
       <select id="fCity"></select>
       <input type="text" id="fSearch" data-i18n-ph="filter.search" placeholder="ابحث بالاسم...">
       <button id="fApply" data-i18n="filter.apply">تطبيق الفلتر</button>
     </div>
 
+    <!-- شبكة العقارات -->
     <div class="grid" id="propsGrid"></div>
+
+    <!-- حالة "لا توجد نتائج" -->
     <div class="empty-state hide" id="emptyState">
       <h3 data-i18n="empty.title">لا توجد عقارات مطابقة</h3>
       <p data-i18n="empty.lead">جرّب تعديل الفلاتر أو أعد تعيينها.</p>
@@ -57,7 +48,19 @@
 
 <footer>
   <div class="wrap">
-    <div class="footer-bottom">© 2026 رحيب المنازل — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
+    <div class="footer-grid">
+      <div><h4>رحيب المنازل</h4><p data-i18n="footer.about" style="max-width:34ch;">شركة رحيب المنازل للتطوير العقاري.</p></div>
+      <div><h4 data-i18n="footer.links">روابط</h4><ul>
+        <li><a href="properties.html" data-i18n="nav.properties">العقارات</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">تواصل معنا</a></li>
+        <li><a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a></li>
+      </ul></div>
+      <div><h4 data-i18n="footer.contact">تواصل</h4><ul>
+        <li class="js-email">info@raheeb-almanazil.example</li>
+        <li class="js-phone" dir="ltr" style="text-align:end;">+966 5X XXX XXXX</li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">© 2026 رحيب المنازل للتطوير العقاري — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
   </div>
 </footer>
 
@@ -65,12 +68,5 @@
 <script src="js/lang.js"></script>
 <script src="js/main.js"></script>
 <script src="js/effects.js"></script>
-<script>
-  const urlType = new URLSearchParams(location.search).get('type');
-  if(urlType){
-    document.getElementById('fType').value = urlType;
-    document.getElementById('fApply').click();
-  }
-</script>
 </body>
 </html>

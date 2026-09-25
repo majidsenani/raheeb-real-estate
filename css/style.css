@@ -697,4 +697,71 @@ html[lang="en"] .card-price{ font-family:var(--serif-en); }
 html[lang="en"] .fact b{ font-family:var(--serif-en); }
 .fact span{ font-size:.78rem; color:var(--ink-soft); }
 .side-card{ background:var(--bg-alt); border:1px solid var(--line); border-radius:6px; padding:24px; }
-.side-card .price{ font-family:var(--serif-ar); font-size:1.6rem; color:var(--gold-deep); margin-bottom:14px;
+.side-card .price{ font-family:var(--serif-ar); font-size:1.6rem; color:var(--gold-deep); margin-bottom:14px; }
+html[lang="en"] .side-card .price{ font-family:var(--serif-en); }
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:680px){ .form-grid{ grid-template-columns:1fr; } }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field.full{ grid-column:1/-1; }
+.field label{ font-size:.85rem; color:var(--ink-soft); }
+.field input, .field select, .field textarea{
+  padding:11px 12px; border:1px solid var(--line); border-radius:4px;
+  background:var(--white); font-family:inherit; color:var(--ink); font-size:.95rem;
+}
+.field textarea{ min-height:110px; resize:vertical; }
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+.admin-gate{ max-width:380px; margin:80px auto; text-align:center; }
+.admin-gate .field{ margin-bottom:16px; text-align:start; }
+.admin-note{
+  background:var(--gold-pale); border:1px solid var(--gold); padding:12px 16px;
+  border-radius:4px; font-size:.85rem; color:var(--gold-deep); margin-bottom:26px;
+}
+.admin-list{ margin-top:36px; }
+.admin-row{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:14px 16px; border:1px solid var(--line); border-radius:4px; margin-bottom:10px; background:var(--bg-alt);
+}
+.admin-row .info b{ display:block; }
+.admin-row .info span{ color:var(--ink-soft); font-size:.85rem; }
+.admin-row .actions{ display:flex; gap:8px; }
+.admin-row button{ border:1px solid var(--line); background:var(--white); padding:7px 12px; border-radius:4px; font-size:.82rem; }
+.admin-row button.danger{ border-color:#B3402F; color:#B3402F; }
+
+/* أقسام لوحة التحكم */
+.admin-block{
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:28px 24px;
+  margin-top:32px;
+}
+.admin-block > h2{
+  margin-top:0;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:24px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+footer{ border-top:1px solid var(--line); margin-top:60px; padding:40px 0 28px; color:var(--ink-soft); }
+.footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:24px; }
+.footer-grid h4{ font-family:var(--serif-ar); color:var(--ink); margin:0 0 10px; font-size:1.05rem; }
+html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
+.footer-grid ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; font-size:.9rem; }
+.footer-bottom{ border-top:1px solid var(--line); padding-top:18px; font-size:.82rem; text-align:center; }
+
+/* =========================================================
+   UTILITY
+   ========================================================= */
+.hide{ display:none !important; }
+.center{ text-align:center; }
+.mt-lg{ margin-top:48px; }

@@ -639,3 +639,149 @@ html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
 .hide{ display:none !important; }
 .center{ text-align:center; }
 .mt-lg{ margin-top:48px; }
+/* =========================================================
+   HERO — مع فيديو خلفية
+   ========================================================= */
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:calc(100vh - 80px);
+  display:flex;
+  align-items:center;
+  padding:0;
+  background:var(--deep); /* لون احتياطي قبل ما يحمّل الفيديو */
+}
+
+/* الفيديو خلفية كاملة */
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+/* overlay داكن */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    rgba(30,58,52,.75) 0%,
+    rgba(30,58,52,.55) 40%,
+    rgba(30,58,52,.35) 100%
+  );
+  z-index:1;
+}
+
+/* المحتوى فوق */
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:var(--max);
+  width:100%;
+  margin:0 auto;
+  padding:100px 24px;
+  color:var(--white);
+}
+
+.hero-content .eyebrow-line{
+  color:var(--gold-pale);
+  opacity:0;
+  animation:riseIn .6s ease forwards;
+  animation-delay:.05s;
+}
+.hero-content .eyebrow-line span.rule{
+  background:var(--gold-pale);
+}
+
+.hero-content h1{
+  color:var(--white);
+  font-size:clamp(2.2rem, 5vw, 4rem);
+  max-width:16ch;
+  margin-bottom:20px;
+  opacity:0;
+  animation:riseIn .6s ease forwards;
+  animation-delay:.16s;
+  text-shadow:0 2px 20px rgba(0,0,0,.35);
+}
+
+.hero-content p.lead{
+  color:var(--gold-pale);
+  max-width:52ch;
+  font-size:1.15rem;
+  margin-bottom:32px;
+  opacity:0;
+  animation:riseIn .6s ease forwards;
+  animation-delay:.3s;
+  text-shadow:0 1px 10px rgba(0,0,0,.3);
+}
+
+.hero-content .hero-actions{
+  opacity:0;
+  animation:riseIn .6s ease forwards;
+  animation-delay:.42s;
+}
+
+/* الأزرار داخل Hero */
+.hero-content .btn{
+  background:var(--gold-deep);
+  border-color:var(--gold-deep);
+  color:var(--white);
+}
+.hero-content .btn:hover{
+  background:var(--gold);
+  border-color:var(--gold);
+}
+.hero-content .btn.ghost{
+  background:rgba(255,255,255,.08);
+  border-color:var(--white);
+  color:var(--white);
+  backdrop-filter:blur(6px);
+}
+.hero-content .btn.ghost:hover{
+  background:var(--white);
+  color:var(--deep);
+}
+
+/* الإحصائيات داخل Hero */
+.hero-content .stats{
+  opacity:0;
+  animation:riseIn .6s ease forwards;
+  animation-delay:.54s;
+  border-top-color:rgba(255,255,255,.2);
+  margin-top:56px;
+  padding-top:30px;
+}
+.hero-content .stat b{
+  color:var(--white);
+}
+.hero-content .stat span{
+  color:var(--gold-pale);
+}
+
+/* الجوال */
+@media (max-width:900px){
+  .hero{
+    min-height:auto;
+    padding:0;
+  }
+  .hero-content{
+    padding:80px 24px 60px;
+  }
+  .hero-content h1{
+    font-size:clamp(1.8rem, 7vw, 2.6rem);
+  }
+  .hero-content p.lead{
+    font-size:1rem;
+  }
+  .hero-content .stats{
+    flex-direction:column;
+    gap:20px;
+  }
+  .hero-content .stat{
+    padding-inline-end:0;
+    text-align:start;
+  }
+}

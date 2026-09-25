@@ -69,10 +69,11 @@ header.site{
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
 }
-.nav{
+..nav{
   display:flex; align-items:center; justify-content:space-between;
-  padding:12px 24px; max-width:var(--max); margin:0 auto;
+  padding:12px 32px;
   gap:20px;
+  width:100%;
 }
 
 /* الشعار */

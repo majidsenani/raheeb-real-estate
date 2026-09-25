@@ -3,38 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تفاصيل العقار | رحيب المنازل</title>
+<title>تفاصيل العقار | رحيب المنازل للتطوير العقاري</title>
+<meta name="description" content="تفاصيل العقار — رحيب المنازل للتطوير العقاري.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header class="site">
-  <nav class="nav">
-    <a class="brand" href="index.html">
-      <img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo">
-      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">عقارات مختارة بعناية</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
-      <a href="properties.html" data-i18n="nav.properties">العقارات</a>
-      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
-      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
-      <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
-      <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
-    </div>
-    <button class="nav-toggle" aria-label="menu">☰</button>
-  </nav>
-</header>
+<div id="siteHeader"></div>
 
+<!-- ============ تفاصيل العقار ============ -->
 <section>
-  <div class="wrap" id="detailRoot"></div>
+  <div class="wrap" id="detailRoot">
+    <!-- يُعبّأ تلقائياً من main.js -->
+  </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div class="footer-bottom">© 2026 رحيب المنازل — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
+    <div class="footer-grid">
+      <div><h4>رحيب المنازل</h4><p data-i18n="footer.about" style="max-width:34ch;">شركة رحيب المنازل للتطوير العقاري.</p></div>
+      <div><h4 data-i18n="footer.links">روابط</h4><ul>
+        <li><a href="properties.html" data-i18n="nav.properties">العقارات</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">تواصل معنا</a></li>
+        <li><a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a></li>
+      </ul></div>
+      <div><h4 data-i18n="footer.contact">تواصل</h4><ul>
+        <li class="js-email">info@raheeb-almanazil.example</li>
+        <li class="js-phone" dir="ltr" style="text-align:end;">+966 5X XXX XXXX</li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">© 2026 رحيب المنازل للتطوير العقاري — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
   </div>
 </footer>
 

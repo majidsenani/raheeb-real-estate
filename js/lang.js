@@ -11,8 +11,9 @@ const DICT = {
     'nav.faq': 'الأسئلة الشائعة',
     'nav.contact': 'تواصل معنا',
     'nav.admin': 'لوحة التحكم',
-    'lang.switch': 'English',
+    'lang.switch': 'EN',
     'brand.tagline': 'للتطوير العقاري',
+    'header.login': 'تسجيل الدخول',
     'drawer.login': 'تسجيل الدخول',
 
     'hero.eyebrow': 'رحيب المنازل',
@@ -106,6 +107,7 @@ const DICT = {
     'nav.admin': 'Admin',
     'lang.switch': 'العربية',
     'brand.tagline': 'Real Estate Development',
+    'header.login': 'Sign In',
     'drawer.login': 'Sign In',
 
     'hero.eyebrow': 'Raheeb Al-Manazil',

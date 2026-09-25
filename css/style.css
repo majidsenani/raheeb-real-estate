@@ -448,7 +448,7 @@ body.drawer-open{ overflow:hidden; }
 .hero-bg{
   position:absolute;
   inset:0;
-  background-image:url('hero.jpg');
+  background-image:url('../hero.jpg');
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;

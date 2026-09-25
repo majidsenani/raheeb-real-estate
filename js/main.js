@@ -15,15 +15,55 @@ function formatPrice(n, lang){
   return lang === 'ar' ? `${num} ريال` : `SAR ${num}`;
 }
 
-/* ---------- الشريط العلوي ---------- */
+/* ---------- الشريط العلوي + القائمة الجانبية ---------- */
 function initNav(){
-  const toggle = document.querySelector('.nav-toggle');
-  const links = document.querySelector('.nav-links');
-  if(toggle && links){
-    toggle.addEventListener('click', () => links.classList.toggle('open'));
+  const toggle = document.getElementById('navToggle');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const closeBtn = document.getElementById('drawerClose');
+
+  if(!toggle || !drawer || !overlay) return;
+
+  function openDrawer(){
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('drawer-open');
   }
+
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('drawer-open');
+  }
+
+  // فتح القائمة
+  toggle.addEventListener('click', openDrawer);
+
+  // إغلاق بزر X
+  if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+  // إغلاق بالضغط على overlay
+  overlay.addEventListener('click', closeDrawer);
+
+  // إغلاق بزر Esc
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && drawer.classList.contains('open')){
+      closeDrawer();
+    }
+  });
+
+  // إغلاق عند الضغط على أي رابط في القائمة (عدا اللي فيها سهم منسدل)
+  drawer.querySelectorAll('.drawer-nav a:not(.has-children), .drawer-login').forEach(link => {
+    link.addEventListener('click', () => {
+      setTimeout(closeDrawer, 150);
+    });
+  });
+
+  // تفعيل الرابط الحالي (active)
   const path = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a => {
+  drawer.querySelectorAll('.drawer-nav a').forEach(a => {
     if(a.getAttribute('href') === path) a.classList.add('active');
   });
 }

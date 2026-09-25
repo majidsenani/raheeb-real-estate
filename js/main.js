@@ -15,7 +15,101 @@ function formatPrice(n, lang){
   return lang === 'ar' ? `${num} ريال` : `SAR ${num}`;
 }
 
-/* ---------- الشريط العلوي + القائمة الجانبية ---------- */
+/* ---------- بناء الهيدر والقائمة الجانبية تلقائياً ---------- */
+function buildHeader(){
+  const host = document.getElementById('siteHeader');
+  if(!host) return;
+
+  host.innerHTML = `
+  <header class="site">
+    <nav class="nav">
+
+      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <a class="brand" href="index.html">
+        <img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo">
+        <span class="name">رحيب المنازل<small data-i18n="brand.tagline">للتطوير العقاري</small></span>
+      </a>
+
+      <div class="nav-links-desktop">
+        <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+        <a href="index.html#projects" data-i18n="nav.projects">مشاريعنا</a>
+        <a href="index.html#about" data-i18n="nav.about">من نحن</a>
+        <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
+      </div>
+
+      <div class="nav-right-desktop">
+        <a href="tel:+966920031118" class="nav-phone" dir="ltr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>+966 9200 31118</span>
+        </a>
+        <button class="lang-btn" id="langBtn" data-i18n="lang.switch">EN</button>
+        <a href="admin.html" class="btn-login" data-i18n="header.login">تسجيل الدخول</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawerClose" aria-label="إغلاق القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="drawer-brand">
+      <img src="logo.png" alt="رحيب المنازل" class="drawer-logo">
+      <div class="drawer-brand-text">
+        <strong>رحيب المنازل</strong>
+        <small>للتطوير العقاري</small>
+      </div>
+    </div>
+
+    <nav class="drawer-nav">
+      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+      <a href="index.html#projects" class="has-children">
+        <span data-i18n="nav.projects">مشاريعنا</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
+      <a href="#" data-i18n="nav.media">المركز الإعلامي</a>
+      <a href="#" data-i18n="nav.interest">سجل اهتمامك</a>
+      <a href="#" data-i18n="nav.faq">الأسئلة الشائعة</a>
+    </nav>
+
+    <a href="admin.html" class="drawer-login">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <polyline points="10 17 15 12 10 7"/>
+        <line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      <span data-i18n="drawer.login">تسجيل الدخول</span>
+    </a>
+
+    <div class="drawer-social">
+      <a href="#" aria-label="Twitter" class="social-btn twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="#" aria-label="Instagram" class="social-btn instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </aside>
+  `;
+}
+
+/* ---------- تشغيل القائمة الجانبية ---------- */
 function initNav(){
   const toggle = document.getElementById('navToggle');
   const drawer = document.getElementById('drawer');
@@ -38,30 +132,22 @@ function initNav(){
     document.body.classList.remove('drawer-open');
   }
 
-  // فتح القائمة
   toggle.addEventListener('click', openDrawer);
-
-  // إغلاق بزر X
   if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
-
-  // إغلاق بالضغط على overlay
   overlay.addEventListener('click', closeDrawer);
 
-  // إغلاق بزر Esc
   document.addEventListener('keydown', (e) => {
     if(e.key === 'Escape' && drawer.classList.contains('open')){
       closeDrawer();
     }
   });
 
-  // إغلاق عند الضغط على أي رابط في القائمة (عدا اللي فيها سهم منسدل)
   drawer.querySelectorAll('.drawer-nav a:not(.has-children), .drawer-login').forEach(link => {
     link.addEventListener('click', () => {
       setTimeout(closeDrawer, 150);
     });
   });
 
-  // تفعيل الرابط الحالي (active)
   const path = location.pathname.split('/').pop() || 'index.html';
   drawer.querySelectorAll('.drawer-nav a').forEach(a => {
     if(a.getAttribute('href') === path) a.classList.add('active');
@@ -246,7 +332,6 @@ function initAdmin(){
   const resetBtn = document.getElementById('adminReset');
   const addedMsg = document.getElementById('adminAdded');
 
-  // مشاريع
   const projForm = document.getElementById('adminProjectForm');
   const projListEl = document.getElementById('adminProjectList');
   const projAddedMsg = document.getElementById('adminProjectAdded');
@@ -276,7 +361,6 @@ function initAdmin(){
     gate.classList.remove('hide');
   });
 
-  /* --- قائمة العقارات --- */
   function renderList(){
     const lang = getLang();
     const list = getProperties();
@@ -322,7 +406,6 @@ function initAdmin(){
     renderList();
   });
 
-  /* --- قائمة المشاريع --- */
   function renderProjectList(){
     if(!projListEl) return;
     const lang = getLang();
@@ -378,7 +461,9 @@ function initAdmin(){
   });
 }
 
+/* ---------- التشغيل عند تحميل الصفحة ---------- */
 document.addEventListener('DOMContentLoaded', () => {
+  buildHeader();   // ← يبني الهيدر والقائمة الجانبية
   initNav();
   renderFeatured();
   renderProjects();

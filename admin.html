@@ -5,29 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة التحكم | رحيب المنازل للتطوير العقاري</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header class="site">
-  <nav class="nav">
-    <a class="brand" href="index.html">
-      <!-- الشعار الجديد -->
-      <img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo">
-      <span class="name">رحيب المنازل<small data-i18n="brand.tagline">للتطوير العقاري</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
-      <a href="properties.html" data-i18n="nav.properties">العقارات</a>
-      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
-      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
-      <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
-      <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
-    </div>
-    <button class="nav-toggle" aria-label="menu">☰</button>
-  </nav>
-</header>
+<div id="siteHeader"></div>
 
 <section>
   <div class="wrap">
@@ -102,7 +86,6 @@
             <input type="number" name="area" min="0" required>
           </div>
 
-          <!-- المرحلة -->
           <div class="field">
             <label data-i18n="admin.f.stage">المرحلة</label>
             <select name="stage">

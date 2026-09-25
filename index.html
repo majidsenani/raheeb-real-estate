@@ -6,30 +6,88 @@
 <title>رحيب المنازل للتطوير العقاري</title>
 <meta name="description" content="رحيب المنازل للتطوير العقاري — منصة عقارية لتصفح الفلل والشقق والأدوار في أرقى المدن.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="site">
   <nav class="nav">
+    <!-- زر القائمة ☰ (يسار) -->
+    <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+    <!-- الشعار (وسط/يمين) -->
     <a class="brand" href="index.html">
-      <!-- الشعار الجديد: قوس + مبنى بألوان الشعار -->
       <img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo">
       <span class="name">رحيب المنازل<small data-i18n="brand.tagline">للتطوير العقاري</small></span>
     </a>
-    <div class="nav-links">
-      <a href="index.html" data-i18n="nav.home">الرئيسية</a>
-      <a href="properties.html" data-i18n="nav.properties">العقارات</a>
-      <a href="index.html#about" data-i18n="nav.about">من نحن</a>
-      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
-      <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
-      <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
-    </div>
-    <button class="nav-toggle" aria-label="menu">☰</button>
+
+    <!-- زر اللغة (يمين على الديسكتوب) -->
+    <button class="lang-btn" id="langBtn" data-i18n="lang.switch">English</button>
   </nav>
 </header>
 
+<!-- ============ القائمة الجانبية ============ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <!-- زر الإغلاق -->
+  <button class="drawer-close" id="drawerClose" aria-label="إغلاق القائمة">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="6" y1="6" x2="18" y2="18"/>
+      <line x1="18" y1="6" x2="6" y2="18"/>
+    </svg>
+  </button>
+
+  <!-- الشعار -->
+  <div class="drawer-brand">
+    <img src="logo.png" alt="رحيب المنازل" class="drawer-logo">
+    <div class="drawer-brand-text">
+      <strong>رحيب المنازل</strong>
+      <small>للتطوير العقاري</small>
+    </div>
+  </div>
+
+  <!-- الروابط -->
+  <nav class="drawer-nav">
+    <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+
+    <a href="#projects" class="has-children">
+      <span data-i18n="nav.projects">مشاريعنا</span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
+
+    <a href="index.html#about" data-i18n="nav.about">من نحن</a>
+    <a href="#" data-i18n="nav.media">المركز الإعلامي</a>
+    <a href="#" data-i18n="nav.interest">سجل اهتمامك</a>
+    <a href="#" data-i18n="nav.faq">الأسئلة الشائعة</a>
+  </nav>
+
+  <!-- زر تسجيل الدخول -->
+  <a href="admin.html" class="drawer-login">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+    <span data-i18n="drawer.login">تسجيل الدخول</span>
+  </a>
+
+  <!-- السوشيال -->
+  <div class="drawer-social">
+    <a href="#" aria-label="Twitter" class="social-btn twitter">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="#" aria-label="Instagram" class="social-btn instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+  </div>
+</aside>
+
+<!-- ============ Hero ============ -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
@@ -58,54 +116,37 @@
             <stop offset="1" stop-color="#A9822F"/>
           </linearGradient>
         </defs>
-
         <circle class="sky-sun" cx="335" cy="64" r="26" fill="url(#skyGoldLight)"/>
-
         <g class="sky-building" style="animation-delay:.05s">
           <rect x="30" y="90" width="58" height="230" fill="url(#skyGold)"/>
           <g fill="#F5EEDD" opacity=".55">
             <rect x="40" y="106" width="10" height="14"/><rect x="58" y="106" width="10" height="14"/><rect x="76" y="106" width="10" height="14"/>
             <rect x="40" y="130" width="10" height="14"/><rect x="58" y="130" width="10" height="14"/><rect x="76" y="130" width="10" height="14"/>
             <rect x="40" y="154" width="10" height="14"/><rect x="58" y="154" width="10" height="14"/><rect x="76" y="154" width="10" height="14"/>
-            <rect x="40" y="178" width="10" height="14"/><rect x="58" y="178" width="10" height="14"/><rect x="76" y="178" width="10" height="14"/>
-            <rect x="40" y="202" width="10" height="14"/><rect x="58" y="202" width="10" height="14"/><rect x="76" y="202" width="10" height="14"/>
           </g>
         </g>
-
         <g class="sky-building" style="animation-delay:.16s">
           <rect x="100" y="130" width="46" height="190" fill="url(#skyGoldLight)"/>
           <g fill="#7C5E20" opacity=".5">
             <rect x="108" y="144" width="8" height="12"/><rect x="122" y="144" width="8" height="12"/><rect x="136" y="144" width="8" height="12"/>
             <rect x="108" y="166" width="8" height="12"/><rect x="122" y="166" width="8" height="12"/><rect x="136" y="166" width="8" height="12"/>
-            <rect x="108" y="188" width="8" height="12"/><rect x="122" y="188" width="8" height="12"/><rect x="136" y="188" width="8" height="12"/>
-            <rect x="108" y="210" width="8" height="12"/><rect x="122" y="210" width="8" height="12"/><rect x="136" y="210" width="8" height="12"/>
           </g>
         </g>
-
         <g class="sky-building" style="animation-delay:.3s">
           <path d="M150 320 V235 C150 205 168 188 193 188 C218 188 236 205 236 235 V320 Z" fill="url(#skyGold)"/>
           <path d="M178 320 V255 C178 240 184 231 193 231 C202 231 208 240 208 255 V320" fill="#F5EEDD" opacity=".8"/>
-          <rect x="158" y="270" width="14" height="18" fill="#F5EEDD" opacity=".55"/>
-          <rect x="214" y="270" width="14" height="18" fill="#F5EEDD" opacity=".55"/>
         </g>
-
         <g class="sky-building" style="animation-delay:.42s">
           <rect x="250" y="170" width="90" height="150" fill="url(#skyGoldLight)"/>
-          <g fill="#5B4F3F" opacity=".45">
-            <rect x="262" y="186" width="14" height="16"/><rect x="284" y="186" width="14" height="16"/><rect x="306" y="186" width="14" height="16"/>
-            <rect x="262" y="212" width="14" height="16"/><rect x="284" y="212" width="14" height="16"/><rect x="306" y="212" width="14" height="16"/>
-            <rect x="262" y="238" width="14" height="16"/><rect x="284" y="238" width="14" height="16"/><rect x="306" y="238" width="14" height="16"/>
-          </g>
           <rect x="284" y="270" width="22" height="50" fill="#F5EEDD" opacity=".7"/>
         </g>
-
         <line x1="14" y1="320" x2="386" y2="320" stroke="#A9822F" stroke-width="2"/>
       </svg>
     </div>
   </div>
 </section>
 
-<!-- ================= التصنيفات ================= -->
+<!-- ============ التصنيفات ============ -->
 <section>
   <div class="wrap">
     <div class="section-head">
@@ -133,8 +174,8 @@
   </div>
 </section>
 
-<!-- ================= مشاريعنا ================= -->
-<section class="projects-section">
+<!-- ============ مشاريعنا ============ -->
+<section class="projects-section" id="projects">
   <div class="wrap">
     <div class="section-head">
       <span class="kicker" data-i18n="projects.kicker">مشاريعنا</span>
@@ -145,7 +186,7 @@
   </div>
 </section>
 
-<!-- ================= أحدث الإدراجات ================= -->
+<!-- ============ أحدث الإدراجات ============ -->
 <section>
   <div class="wrap">
     <div class="section-head">
@@ -160,10 +201,14 @@
   </div>
 </section>
 
-<!-- ================= من نحن ================= -->
+<!-- ============ من نحن ============ -->
 <section id="about">
   <div class="wrap">
-    <div class="divider"><span class="rule"></span><img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo"><span class="rule"></span></div>
+    <div class="divider">
+      <span class="rule"></span>
+      <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 92 V50 C20 26 34 10 50 10 C66 10 80 26 80 50 V92"/></svg>
+      <span class="rule"></span>
+    </div>
     <div class="section-head center" style="margin:0 auto;">
       <span class="kicker" data-i18n="about.kicker">من نحن</span>
       <h2 id="aboutTitle" data-i18n="about.title">رحيب المنازل للتطوير العقاري</h2>
@@ -196,7 +241,6 @@
 <script src="js/main.js"></script>
 <script src="js/effects.js"></script>
 <script>
-  // حقن الأيقونات في بطاقات التصنيفات
   document.addEventListener('DOMContentLoaded', () => {
     const v = document.getElementById('iconVilla');
     const a = document.getElementById('iconApartment');

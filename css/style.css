@@ -96,7 +96,7 @@ header.site{
 .brand .name small{
   display:block;
   font-family:var(--sans-ar);
-  font-size:.65rem;
+  font-size:.95rem;
   letter-spacing:.04em;
   color:var(--ink-soft);
   font-weight:400;

@@ -2,9 +2,18 @@
 
 const DICT = {
   ar: {
-    'nav.home': 'الرئيسية', 'nav.properties': 'العقارات', 'nav.about': 'من نحن',
-    'nav.contact': 'تواصل معنا', 'nav.admin': 'لوحة التحكم', 'lang.switch': 'English',
+    'nav.home': 'الرئيسية',
+    'nav.properties': 'العقارات',
+    'nav.projects': 'مشاريعنا',
+    'nav.about': 'من نحن',
+    'nav.media': 'المركز الإعلامي',
+    'nav.interest': 'سجل اهتمامك',
+    'nav.faq': 'الأسئلة الشائعة',
+    'nav.contact': 'تواصل معنا',
+    'nav.admin': 'لوحة التحكم',
+    'lang.switch': 'English',
     'brand.tagline': 'للتطوير العقاري',
+    'drawer.login': 'تسجيل الدخول',
 
     'hero.eyebrow': 'رحيب المنازل',
     'hero.title': 'حيث رحابة السكن',
@@ -66,7 +75,6 @@ const DICT = {
     'admin.delete': 'حذف', 'admin.logout': 'خروج',
     'admin.added': 'تمت إضافة العقار بنجاح.',
 
-    // المشاريع
     'admin.project.title': 'إضافة مشروع جديد',
     'admin.project.list.title': 'المشاريع الحالية',
     'admin.project.f.nameAr': 'اسم المشروع (عربي)',
@@ -87,12 +95,21 @@ const DICT = {
     'footer.rights': 'جميع الحقوق محفوظة'
   },
   en: {
-    'nav.home': 'Home', 'nav.properties': 'Properties', 'nav.about': 'About',
-    'nav.contact': 'Contact', 'nav.admin': 'Admin', 'lang.switch': 'العربية',
+    'nav.home': 'Home',
+    'nav.properties': 'Properties',
+    'nav.projects': 'Our Projects',
+    'nav.about': 'About',
+    'nav.media': 'Media Center',
+    'nav.interest': 'Register Interest',
+    'nav.faq': 'FAQ',
+    'nav.contact': 'Contact',
+    'nav.admin': 'Admin',
+    'lang.switch': 'العربية',
     'brand.tagline': 'Real Estate Development',
+    'drawer.login': 'Sign In',
 
     'hero.eyebrow': 'Raheeb Al-Manazil',
-    'hero.title': 'Where your next home begins',
+    'hero.title': 'Where the spaciousness of living is',
     'hero.lead': 'We help you find the villa, apartment, or floor that fits your life, from a curated selection across the finest neighborhoods and cities.',
     'hero.cta1': 'Browse properties', 'hero.cta2': 'Contact us',
     'hero.stat1n': '120+', 'hero.stat1l': 'Listings',

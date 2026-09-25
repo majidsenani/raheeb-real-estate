@@ -734,7 +734,6 @@ html[lang="en"] .side-card .price{ font-family:var(--serif-en); }
 .admin-row button{ border:1px solid var(--line); background:var(--white); padding:7px 12px; border-radius:4px; font-size:.82rem; }
 .admin-row button.danger{ border-color:#B3402F; color:#B3402F; }
 
-/* أقسام لوحة التحكم */
 .admin-block{
   background:var(--bg-alt);
   border:1px solid var(--line);

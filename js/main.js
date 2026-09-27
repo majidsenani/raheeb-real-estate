@@ -49,7 +49,7 @@ function buildHeader(){
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
           </svg>
-          <span>+966 55 214 9994</span>
+          <span>+966 9200 31118</span>
         </a>
         <button class="lang-btn" id="langBtn" data-i18n="lang.switch">EN</button>
         <a href="admin.html" class="btn-login" data-i18n="header.login">تسجيل الدخول</a>
@@ -178,23 +178,42 @@ function cardHTML(p, lang){
   </article>`;
 }
 
-/* ---------- بطاقة مشروع ---------- */
+/* ---------- بطاقة مشروع (جديدة — بصورة غلاف) ---------- */
 function projectCardHTML(pr, lang){
   const name = lang === 'ar' ? pr.nameAr : pr.nameEn;
   const loc = lang === 'ar' ? pr.locationAr : pr.locationEn;
   const stage = getStageLabel(pr.stage, lang);
+
+  // صورة الغلاف — لو موجودة
+  const coverImg = pr.cover
+    ? `<img src="${pr.cover}" alt="${name}" class="card-cover">`
+    : iconFor(pr.type);
+
+  // سطر السعر والمساحة (لو موجودين)
+  const priceLine = pr.price > 0
+    ? `<div class="card-price">${formatPrice(pr.price, lang)}</div>`
+    : '';
+  const areaLine = pr.area > 0
+    ? `<span>${pr.area} ${t('card.area')}</span>`
+    : '';
+
   return `
   <article class="card project-card">
-    <div class="card-media">
-      <span class="card-tag">${stage}</span>
-      ${iconFor(pr.type)}
-    </div>
+    <a href="project.html?id=${pr.id}" class="card-cover-link">
+      <div class="card-media">
+        <span class="card-tag">${stage}</span>
+        ${coverImg}
+      </div>
+    </a>
     <div class="card-body">
-      <h3>${name}</h3>
+      <h3><a href="project.html?id=${pr.id}">${name}</a></h3>
       <div class="card-loc">${loc}</div>
       <div class="card-meta">
         <span>${pr.floors} ${t('projects.floors')}</span>
+        ${areaLine}
       </div>
+      ${priceLine}
+      <a class="card-link" href="project.html?id=${pr.id}">${t('card.details')}</a>
     </div>
   </article>`;
 }
@@ -302,6 +321,67 @@ function renderPropertyDetail(){
   document.addEventListener('langchange', draw);
 }
 
+/* ---------- تفاصيل مشروع (جديدة) ---------- */
+function renderProjectDetail(){
+  const root = document.getElementById('projectDetailRoot');
+  if(!root) return;
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const pr = getProjectById(id);
+
+  if(!pr){
+    root.innerHTML = `<div class="empty-state"><h3>${t('empty.title')}</h3></div>`;
+    return;
+  }
+
+  function draw(){
+    const lang = getLang();
+    const name = lang === 'ar' ? pr.nameAr : pr.nameEn;
+    const loc = lang === 'ar' ? pr.locationAr : pr.locationEn;
+    const desc = lang === 'ar' ? pr.descAr : pr.descEn;
+    const stage = getStageLabel(pr.stage, lang);
+
+    // كل الصور (الغلاف + الباقي)
+    const allImages = [];
+    if(pr.cover) allImages.push(pr.cover);
+    if(pr.images && pr.images.length) allImages.push(...pr.images);
+
+    const galleryHTML = allImages.length
+      ? `<div class="project-gallery">
+          ${allImages.map(img => `<img src="${img}" alt="${name}" loading="lazy">`).join('')}
+        </div>`
+      : `<div class="detail-media">${iconFor(pr.type)}</div>`;
+
+    const priceHTML = pr.price > 0
+      ? `<div class="project-price">${formatPrice(pr.price, lang)}</div>`
+      : '';
+    const areaHTML = pr.area > 0
+      ? `<div class="fact"><b>${pr.area}</b><span>${t('projects.area')} (${t('detail.sqm')})</span></div>`
+      : '';
+
+    root.innerHTML = `
+      <a class="card-link" href="index.html#projects" style="margin-bottom:20px;">${t('projects.back')}</a>
+      <div class="project-detail-head mt-lg">
+        <h1>${name}</h1>
+        <span class="project-stage">${stage}</span>
+      </div>
+      <div class="detail-facts" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));">
+        <div class="fact"><b>${loc}</b><span>${t('projects.location')}</span></div>
+        <div class="fact"><b>${pr.floors}</b><span>${t('projects.floors')}</span></div>
+        ${areaHTML}
+      </div>
+      ${galleryHTML}
+      ${priceHTML}
+      ${desc ? `<p class="project-desc">${desc}</p>` : ''}
+      <div style="margin-top:30px;">
+        <a class="btn" href="contact.html">${t('detail.request')}</a>
+      </div>
+    `;
+  }
+  draw();
+  document.addEventListener('langchange', draw);
+}
+
 /* ---------- نموذج التواصل ---------- */
 function initContactForm(){
   const form = document.getElementById('contactForm');
@@ -361,6 +441,7 @@ function initAdmin(){
     gate.classList.remove('hide');
   });
 
+  /* --- قائمة العقارات --- */
   function renderList(){
     const lang = getLang();
     const list = getProperties();
@@ -406,6 +487,7 @@ function initAdmin(){
     renderList();
   });
 
+  /* --- قائمة المشاريع --- */
   function renderProjectList(){
     if(!projListEl) return;
     const lang = getLang();
@@ -432,14 +514,26 @@ function initAdmin(){
     projForm.addEventListener('submit', e => {
       e.preventDefault();
       const fd = new FormData(projForm);
+
+      // تحويل حقل الصور من نص إلى مصفوفة
+      const imagesText = (fd.get('images') || '').trim();
+      const imagesArr = imagesText
+        ? imagesText.split('\n').map(s => s.trim()).filter(s => s)
+        : [];
+
       addProject({
         nameAr: fd.get('nameAr'), nameEn: fd.get('nameEn'),
         type: fd.get('type'),
         floors: Number(fd.get('floors')),
         locationAr: fd.get('locationAr'), locationEn: fd.get('locationEn'),
         stage: fd.get('stage'),
+        price: Number(fd.get('price')) || 0,
+        area: Number(fd.get('area')) || 0,
+        cover: (fd.get('cover') || '').trim(),
+        images: imagesArr,
         descAr: fd.get('descAr') || '', descEn: fd.get('descEn') || ''
       });
+
       projForm.reset();
       if(projAddedMsg){
         projAddedMsg.classList.remove('hide');
@@ -463,12 +557,13 @@ function initAdmin(){
 
 /* ---------- التشغيل عند تحميل الصفحة ---------- */
 document.addEventListener('DOMContentLoaded', () => {
-  buildHeader();   // ← يبني الهيدر والقائمة الجانبية
+  buildHeader();
   initNav();
   renderFeatured();
   renderProjects();
   renderPropertiesPage();
   renderPropertyDetail();
+  renderProjectDetail();
   initContactForm();
   initAdmin();
 });

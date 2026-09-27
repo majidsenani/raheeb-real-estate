@@ -774,3 +774,109 @@ html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
 .hide{ display:none !important; }
 .center{ text-align:center; }
 .mt-lg{ margin-top:48px; }
+/* =========================================================
+   PROJECT CARD — صورة الغلاف والسعر
+   ========================================================= */
+.project-card .card-cover-link{
+  display:block;
+}
+
+.card-cover{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .4s ease;
+}
+
+.project-card:hover .card-cover{
+  transform:scale(1.05);
+}
+
+.project-card .card-media{
+  overflow:hidden;
+}
+
+.project-card .card-body h3 a{
+  color:inherit;
+  transition:color .25s ease;
+}
+.project-card .card-body h3 a:hover{
+  color:var(--gold-deep);
+}
+
+/* =========================================================
+   PROJECT DETAIL — صفحة تفاصيل المشروع
+   ========================================================= */
+.project-detail-head{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-bottom:24px;
+}
+.project-detail-head h1{
+  margin:0;
+  font-size:clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.project-stage{
+  display:inline-block;
+  background:var(--deep);
+  color:var(--white);
+  font-size:.78rem;
+  padding:6px 14px;
+  border-radius:2px;
+  white-space:nowrap;
+}
+
+/* شبكة صور المشروع */
+.project-gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:14px;
+  margin:24px 0;
+}
+
+.project-gallery img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid var(--line);
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.project-gallery img:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 32px -18px rgba(42,35,24,.45);
+}
+
+@media (max-width:620px){
+  .project-gallery{
+    grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
+    gap:10px;
+  }
+}
+
+/* سعر المشروع */
+.project-price{
+  font-family:var(--serif-ar);
+  font-size:1.6rem;
+  color:var(--gold-deep);
+  margin:20px 0;
+  padding:14px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+
+/* وصف المشروع */
+.project-desc{
+  color:var(--ink-soft);
+  font-size:1.02rem;
+  line-height:1.8;
+  max-width:70ch;
+  margin:20px 0;
+}

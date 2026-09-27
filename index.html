@@ -15,9 +15,9 @@
 <!-- الهيدر يبنى تلقائياً من main.js -->
 <div id="siteHeader"></div>
 
-<!-- ============ Hero — صورة ثابتة خلفية ============ -->
+<!-- ============ Hero — صور متبدلة ============ -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
 
   <div class="wrap hero-content">
@@ -139,6 +139,33 @@
     if(v) v.innerHTML = ICONS.villa;
     if(a) a.innerHTML = ICONS.apartment;
     if(f) f.innerHTML = ICONS.floor;
+  });
+
+  // ============ تبديل صور الخلفية ============
+  document.addEventListener('DOMContentLoaded', () => {
+    const heroBg = document.getElementById('heroBg');
+    if(!heroBg) return;
+
+    const TOTAL_IMAGES = 7;      // عدد الصور
+    const INTERVAL = 5000;       // 5 ثواني
+
+    const slides = [];
+    for(let i = 1; i <= TOTAL_IMAGES; i++){
+      const div = document.createElement('div');
+      div.className = 'hero-slide';
+      div.style.backgroundImage = `url('hero-${i}.jpg')`;
+      heroBg.appendChild(div);
+      slides.push(div);
+    }
+
+    let current = 0;
+    slides[0].classList.add('active');
+
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, INTERVAL);
   });
 </script>
 </body>

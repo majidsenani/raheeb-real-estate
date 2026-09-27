@@ -55,20 +55,72 @@ const SEED_PROPERTIES = [
   }
 ];
 
-/* ========== المشاريع ========== */
+/* ========== المشاريع الأولية ========== */
 const SEED_PROJECTS = [
-  { id: 'pr1', nameAr: 'رحيب ١-٢', nameEn: 'Raheeb 1-2', type: 'floor', floors: 12,
-    locationAr: 'حي الملك عبدالله', locationEn: 'King Abdullah District',
-    stage: 'sale',      descAr: 'مشروع ١٢ دور',  descEn: '12-floor project' },
-  { id: 'pr2', nameAr: 'رحيب ٣',   nameEn: 'Raheeb 3',   type: 'floor', floors: 9,
-    locationAr: 'حي الملك فهد',   locationEn: 'King Fahd District',
-    stage: 'finishing', descAr: 'مشروع ٩ أدوار', descEn: '9-floor project' },
-  { id: 'pr3', nameAr: 'رحيب ٤',   nameEn: 'Raheeb 4',   type: 'floor', floors: 6,
-    locationAr: 'حي النرجس',      locationEn: 'Al Narjis District',
-    stage: 'finishing', descAr: 'مشروع ٦ أدوار', descEn: '6-floor project' },
-  { id: 'pr4', nameAr: 'رحيب ٥',   nameEn: 'Raheeb 5',   type: 'villa', floors: 2,
-    locationAr: 'حي الملك سلمان', locationEn: 'King Salman District',
-    stage: 'structure', descAr: '٢ دوبلكس',      descEn: '2 duplexes' }
+  {
+    id: 'pr1',
+    nameAr: 'رحيب ١-٢',
+    nameEn: 'Raheeb 1-2',
+    type: 'floor',
+    floors: 12,
+    locationAr: 'حي الملك عبدالله',
+    locationEn: 'King Abdullah District',
+    stage: 'sale',
+    price: 0,
+    area: 0,
+    cover: '',        // صورة الغلاف
+    images: [],       // باقي الصور
+    descAr: 'مشروع ١٢ دور',
+    descEn: '12-floor project'
+  },
+  {
+    id: 'pr2',
+    nameAr: 'رحيب ٣',
+    nameEn: 'Raheeb 3',
+    type: 'floor',
+    floors: 9,
+    locationAr: 'حي الملك فهد',
+    locationEn: 'King Fahd District',
+    stage: 'finishing',
+    price: 0,
+    area: 0,
+    cover: '',
+    images: [],
+    descAr: 'مشروع ٩ أدوار',
+    descEn: '9-floor project'
+  },
+  {
+    id: 'pr3',
+    nameAr: 'رحيب ٤',
+    nameEn: 'Raheeb 4',
+    type: 'floor',
+    floors: 6,
+    locationAr: 'حي النرجس',
+    locationEn: 'Al Narjis District',
+    stage: 'finishing',
+    price: 0,
+    area: 0,
+    cover: '',
+    images: [],
+    descAr: 'مشروع ٦ أدوار',
+    descEn: '6-floor project'
+  },
+  {
+    id: 'pr4',
+    nameAr: 'رحيب ٥',
+    nameEn: 'Raheeb 5',
+    type: 'villa',
+    floors: 2,
+    locationAr: 'حي الملك سلمان',
+    locationEn: 'King Salman District',
+    stage: 'structure',
+    price: 0,
+    area: 0,
+    cover: '',
+    images: [],
+    descAr: '٢ دوبلكس',
+    descEn: '2 duplexes'
+  }
 ];
 
 /* ========== دوال العقارات ========== */
@@ -139,6 +191,15 @@ function addProject(project){
 function deleteProject(id){
   const list = getProjects().filter(p => p.id !== id);
   saveProjects(list);
+}
+
+function updateProject(id, updates){
+  const list = getProjects().map(p => p.id === id ? { ...p, ...updates } : p);
+  saveProjects(list);
+}
+
+function getProjectById(id){
+  return getProjects().find(p => p.id === id);
 }
 
 function resetProjectsToSeed(){

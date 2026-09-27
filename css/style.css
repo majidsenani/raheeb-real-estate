@@ -433,7 +433,7 @@ header.site{
 body.drawer-open{ overflow:hidden; }
 
 /* =========================================================
-   HERO — صورة ثابتة خلفية
+   HERO — صور متبدلة (Slideshow)
    ========================================================= */
 .hero{
   position:relative;
@@ -448,11 +448,21 @@ body.drawer-open{ overflow:hidden; }
 .hero-bg{
   position:absolute;
   inset:0;
-  background-image:url('../hero.jpg');
+  z-index:0;
+}
+
+/* كل صورة - طبقة فوق بعض */
+.hero-bg .hero-slide{
+  position:absolute;
+  inset:0;
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  z-index:0;
+  opacity:0;
+  transition:opacity 1.5s ease-in-out;
+}
+.hero-bg .hero-slide.active{
+  opacity:1;
 }
 
 .hero-overlay{
@@ -464,12 +474,12 @@ body.drawer-open{ overflow:hidden; }
     rgba(30,58,52,.55) 40%,
     rgba(30,58,52,.35) 100%
   );
-  z-index:1;
+  z-index:2;
 }
 
 .hero-content{
   position:relative;
-  z-index:2;
+  z-index:3;
   max-width:var(--max);
   width:100%;
   margin:0 auto;
@@ -586,7 +596,7 @@ body.drawer-open{ overflow:hidden; }
 }
 .arch-icon{ width:64px; height:64px; margin:0 auto 14px; color:var(--gold-deep); }
 
-/* ---------- hero entrance sequence (يستخدم في Hero) ---------- */
+/* ---------- hero entrance sequence ---------- */
 @keyframes riseIn{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
 
 /* =========================================================

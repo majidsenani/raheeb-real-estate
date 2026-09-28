@@ -880,3 +880,23 @@ html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
   max-width:70ch;
   margin:20px 0;
 }
+/* معاينة الصور في لوحة التحكم */
+.upload-preview{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:10px;
+}
+.upload-preview img{
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border-radius:4px;
+  border:1px solid var(--line);
+}
+.field input[type="file"]{
+  padding:8px;
+  background:var(--white);
+  border:1px dashed var(--line);
+  cursor:pointer;
+}

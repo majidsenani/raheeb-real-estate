@@ -3,7 +3,7 @@
    ========================================================= */
 
 /* 🔑 مفاتيح Supabase */
-const SUPABASE_URL = 'https://cvnunhxzmvwnqdmgxnwu.supabase.co';
+const SUPABASE_URL = 'https://cvnunhxzmywnqdmgxnwu.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_ZN1YR0IZHurmaPOB7n7T5A_Qncq3bc0';
 const STORAGE_BUCKET = 'raheeb-real-estate';
 

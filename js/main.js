@@ -1,4 +1,4 @@
-/* منطق الواجهة المشترك */
+/* منطق الواجهة المشترك — Supabase version */
 
 /* ---------- أيقونات SVG ---------- */
 const ICONS = {
@@ -15,7 +15,7 @@ function formatPrice(n, lang){
   return lang === 'ar' ? `${num} ريال` : `SAR ${num}`;
 }
 
-/* ---------- بناء الهيدر والقائمة الجانبية تلقائياً ---------- */
+/* ---------- بناء الهيدر ---------- */
 function buildHeader(){
   const host = document.getElementById('siteHeader');
   if(!host) return;
@@ -23,7 +23,6 @@ function buildHeader(){
   host.innerHTML = `
   <header class="site">
     <nav class="nav">
-
       <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"/>
@@ -31,19 +30,16 @@ function buildHeader(){
           <line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
       </button>
-
       <a class="brand" href="index.html">
-        <img src="logo.png" alt="رحيب المنازل للتطوير العقاري" class="brand-logo">
+        <img src="logo.png" alt="رحيب المنازل" class="brand-logo">
         <span class="name">رحيب المنازل<small data-i18n="brand.tagline">للتطوير العقاري</small></span>
       </a>
-
       <div class="nav-links-desktop">
         <a href="index.html" data-i18n="nav.home">الرئيسية</a>
         <a href="index.html#projects" data-i18n="nav.projects">مشاريعنا</a>
         <a href="index.html#about" data-i18n="nav.about">من نحن</a>
         <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
       </div>
-
       <div class="nav-right-desktop">
         <a href="tel:+966920031118" class="nav-phone" dir="ltr">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -54,20 +50,16 @@ function buildHeader(){
         <button class="lang-btn" id="langBtn" data-i18n="lang.switch">EN</button>
         <a href="admin.html" class="btn-login" data-i18n="header.login">تسجيل الدخول</a>
       </div>
-
     </nav>
   </header>
 
   <div class="drawer-overlay" id="drawerOverlay"></div>
-
   <aside class="drawer" id="drawer" aria-hidden="true">
-    <button class="drawer-close" id="drawerClose" aria-label="إغلاق القائمة">
+    <button class="drawer-close" id="drawerClose" aria-label="إغلاق">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="6" y1="6" x2="18" y2="18"/>
-        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>
       </svg>
     </button>
-
     <div class="drawer-brand">
       <img src="logo.png" alt="رحيب المنازل" class="drawer-logo">
       <div class="drawer-brand-text">
@@ -75,7 +67,6 @@ function buildHeader(){
         <small>للتطوير العقاري</small>
       </div>
     </div>
-
     <nav class="drawer-nav">
       <a href="index.html" data-i18n="nav.home">الرئيسية</a>
       <a href="index.html#projects" class="has-children">
@@ -87,7 +78,6 @@ function buildHeader(){
       <a href="#" data-i18n="nav.interest">سجل اهتمامك</a>
       <a href="#" data-i18n="nav.faq">الأسئلة الشائعة</a>
     </nav>
-
     <a href="admin.html" class="drawer-login">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
@@ -96,7 +86,6 @@ function buildHeader(){
       </svg>
       <span data-i18n="drawer.login">تسجيل الدخول</span>
     </a>
-
     <div class="drawer-social">
       <a href="#" aria-label="Twitter" class="social-btn twitter">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -109,48 +98,32 @@ function buildHeader(){
   `;
 }
 
-/* ---------- تشغيل القائمة الجانبية ---------- */
 function initNav(){
   const toggle = document.getElementById('navToggle');
   const drawer = document.getElementById('drawer');
   const overlay = document.getElementById('drawerOverlay');
   const closeBtn = document.getElementById('drawerClose');
-
   if(!toggle || !drawer || !overlay) return;
 
   function openDrawer(){
     drawer.classList.add('open');
     overlay.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('drawer-open');
   }
-
   function closeDrawer(){
     drawer.classList.remove('open');
     overlay.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('drawer-open');
   }
 
   toggle.addEventListener('click', openDrawer);
   if(closeBtn) closeBtn.addEventListener('click', closeDrawer);
   overlay.addEventListener('click', closeDrawer);
-
   document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && drawer.classList.contains('open')){
-      closeDrawer();
-    }
+    if(e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
   });
-
   drawer.querySelectorAll('.drawer-nav a:not(.has-children), .drawer-login').forEach(link => {
-    link.addEventListener('click', () => {
-      setTimeout(closeDrawer, 150);
-    });
-  });
-
-  const path = location.pathname.split('/').pop() || 'index.html';
-  drawer.querySelectorAll('.drawer-nav a').forEach(a => {
-    if(a.getAttribute('href') === path) a.classList.add('active');
+    link.addEventListener('click', () => setTimeout(closeDrawer, 150));
   });
 }
 
@@ -178,24 +151,20 @@ function cardHTML(p, lang){
   </article>`;
 }
 
-/* ---------- بطاقة مشروع (جديدة — بصورة غلاف) ---------- */
+/* ---------- بطاقة مشروع ---------- */
 function projectCardHTML(pr, lang){
   const name = lang === 'ar' ? pr.nameAr : pr.nameEn;
   const loc = lang === 'ar' ? pr.locationAr : pr.locationEn;
   const stage = getStageLabel(pr.stage, lang);
 
-  // صورة الغلاف — لو موجودة
   const coverImg = pr.cover
     ? `<img src="${pr.cover}" alt="${name}" class="card-cover">`
     : iconFor(pr.type);
 
-  // سطر السعر والمساحة (لو موجودين)
   const priceLine = pr.price > 0
-    ? `<div class="card-price">${formatPrice(pr.price, lang)}</div>`
-    : '';
+    ? `<div class="card-price">${formatPrice(pr.price, lang)}</div>` : '';
   const areaLine = pr.area > 0
-    ? `<span>${pr.area} ${t('card.area')}</span>`
-    : '';
+    ? `<span>${pr.area} ${t('card.area')}</span>` : '';
 
   return `
   <article class="card project-card">
@@ -218,26 +187,25 @@ function projectCardHTML(pr, lang){
   </article>`;
 }
 
-/* ---------- الصفحة الرئيسية: عقارات مميزة ---------- */
-function renderFeatured(){
+/* ---------- الصفحة الرئيسية ---------- */
+async function renderFeatured(){
   const el = document.getElementById('featuredGrid');
   if(!el) return;
   const lang = getLang();
-  const list = getProperties().slice(0, 3);
-  el.innerHTML = list.map(p => cardHTML(p, lang)).join('');
+  const list = await getProperties();
+  el.innerHTML = list.slice(0, 3).map(p => cardHTML(p, lang)).join('');
 }
 
-/* ---------- الصفحة الرئيسية: المشاريع ---------- */
-function renderProjects(){
+async function renderProjects(){
   const el = document.getElementById('projectsGrid');
   if(!el) return;
   const lang = getLang();
-  const list = getProjects();
+  const list = await getProjects();
   el.innerHTML = list.map(pr => projectCardHTML(pr, lang)).join('');
 }
 
-/* ---------- صفحة العقارات: فلاتر ---------- */
-function renderPropertiesPage(){
+/* ---------- صفحة العقارات ---------- */
+async function renderPropertiesPage(){
   const grid = document.getElementById('propsGrid');
   if(!grid) return;
 
@@ -247,16 +215,18 @@ function renderPropertiesPage(){
   const applyBtn = document.getElementById('fApply');
   const emptyState = document.getElementById('emptyState');
 
+  let allList = await getProperties();
+
   function populateCities(){
     const lang = getLang();
-    const cities = [...new Set(getProperties().map(p => lang === 'ar' ? p.city : p.cityEn))];
+    const cities = [...new Set(allList.map(p => lang === 'ar' ? p.city : p.cityEn))];
     citySel.innerHTML = `<option value="">${t('filter.all')}</option>` +
       cities.map(c => `<option value="${c}">${c}</option>`).join('');
   }
 
   function draw(){
     const lang = getLang();
-    let list = getProperties();
+    let list = allList;
     const type = typeSel.value;
     const city = citySel.value;
     const q = (searchInput.value || '').trim();
@@ -281,12 +251,12 @@ function renderPropertiesPage(){
 }
 
 /* ---------- تفاصيل عقار ---------- */
-function renderPropertyDetail(){
+async function renderPropertyDetail(){
   const root = document.getElementById('detailRoot');
   if(!root) return;
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
-  const p = getPropertyById(id);
+  const p = await getPropertyById(id);
 
   if(!p){
     root.innerHTML = `<div class="empty-state"><h3>${t('empty.title')}</h3></div>`;
@@ -321,13 +291,13 @@ function renderPropertyDetail(){
   document.addEventListener('langchange', draw);
 }
 
-/* ---------- تفاصيل مشروع (جديدة) ---------- */
-function renderProjectDetail(){
+/* ---------- تفاصيل مشروع ---------- */
+async function renderProjectDetail(){
   const root = document.getElementById('projectDetailRoot');
   if(!root) return;
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
-  const pr = getProjectById(id);
+  const pr = await getProjectById(id);
 
   if(!pr){
     root.innerHTML = `<div class="empty-state"><h3>${t('empty.title')}</h3></div>`;
@@ -341,23 +311,16 @@ function renderProjectDetail(){
     const desc = lang === 'ar' ? pr.descAr : pr.descEn;
     const stage = getStageLabel(pr.stage, lang);
 
-    // كل الصور (الغلاف + الباقي)
     const allImages = [];
     if(pr.cover) allImages.push(pr.cover);
     if(pr.images && pr.images.length) allImages.push(...pr.images);
 
     const galleryHTML = allImages.length
-      ? `<div class="project-gallery">
-          ${allImages.map(img => `<img src="${img}" alt="${name}" loading="lazy">`).join('')}
-        </div>`
+      ? `<div class="project-gallery">${allImages.map(img => `<img src="${img}" alt="${name}" loading="lazy">`).join('')}</div>`
       : `<div class="detail-media">${iconFor(pr.type)}</div>`;
 
-    const priceHTML = pr.price > 0
-      ? `<div class="project-price">${formatPrice(pr.price, lang)}</div>`
-      : '';
-    const areaHTML = pr.area > 0
-      ? `<div class="fact"><b>${pr.area}</b><span>${t('projects.area')} (${t('detail.sqm')})</span></div>`
-      : '';
+    const priceHTML = pr.price > 0 ? `<div class="project-price">${formatPrice(pr.price, lang)}</div>` : '';
+    const areaHTML = pr.area > 0 ? `<div class="fact"><b>${pr.area}</b><span>${t('projects.area')} (${t('detail.sqm')})</span></div>` : '';
 
     root.innerHTML = `
       <a class="card-link" href="index.html#projects" style="margin-bottom:20px;">${t('projects.back')}</a>
@@ -375,8 +338,7 @@ function renderProjectDetail(){
       ${desc ? `<p class="project-desc">${desc}</p>` : ''}
       <div style="margin-top:30px;">
         <a class="btn" href="contact.html">${t('detail.request')}</a>
-      </div>
-    `;
+      </div>`;
   }
   draw();
   document.addEventListener('langchange', draw);
@@ -398,7 +360,7 @@ function initContactForm(){
 /* ---------- لوحة التحكم ---------- */
 const ADMIN_PASSWORD = 'raheeb2026';
 
-function initAdmin(){
+async function initAdmin(){
   const gate = document.getElementById('adminGate');
   const panel = document.getElementById('adminPanel');
   if(!gate || !panel) return;
@@ -409,27 +371,25 @@ function initAdmin(){
   const logoutBtn = document.getElementById('adminLogout');
   const form = document.getElementById('adminForm');
   const listEl = document.getElementById('adminList');
-  const resetBtn = document.getElementById('adminReset');
   const addedMsg = document.getElementById('adminAdded');
 
   const projForm = document.getElementById('adminProjectForm');
   const projListEl = document.getElementById('adminProjectList');
   const projAddedMsg = document.getElementById('adminProjectAdded');
-  const projResetBtn = document.getElementById('adminProjectsReset');
 
-  function showPanel(){
+  async function showPanel(){
     gate.classList.add('hide');
     panel.classList.remove('hide');
-    renderList();
-    renderProjectList();
+    await renderList();
+    await renderProjectList();
   }
 
-  if(sessionStorage.getItem('raheeb_admin_ok') === '1') showPanel();
+  if(sessionStorage.getItem('raheeb_admin_ok') === '1') await showPanel();
 
-  enterBtn.addEventListener('click', () => {
+  enterBtn.addEventListener('click', async () => {
     if(passInput.value === ADMIN_PASSWORD){
       sessionStorage.setItem('raheeb_admin_ok', '1');
-      showPanel();
+      await showPanel();
     } else {
       wrongMsg.classList.remove('hide');
     }
@@ -442,9 +402,9 @@ function initAdmin(){
   });
 
   /* --- قائمة العقارات --- */
-  function renderList(){
+  async function renderList(){
     const lang = getLang();
-    const list = getProperties();
+    const list = await getProperties();
     listEl.innerHTML = list.map(p => `
       <div class="admin-row">
         <div class="info">
@@ -456,42 +416,41 @@ function initAdmin(){
         </div>
       </div>`).join('');
     listEl.querySelectorAll('button.danger').forEach(btn => {
-      btn.addEventListener('click', () => {
-        deleteProperty(btn.getAttribute('data-id'));
-        renderList();
+      btn.addEventListener('click', async () => {
+        try{
+          await deleteProperty(btn.getAttribute('data-id'));
+          await renderList();
+        }catch(e){ alert('فشل الحذف: ' + e.message); }
       });
     });
   }
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(form);
-    addProperty({
-      type: fd.get('type'),
-      city: fd.get('city'), cityEn: fd.get('cityEn'),
-      titleAr: fd.get('titleAr'), titleEn: fd.get('titleEn'),
-      price: Number(fd.get('price')), area: Number(fd.get('area')),
-      bedrooms: fd.get('bedrooms') ? Number(fd.get('bedrooms')) : null,
-      stage: fd.get('stage') || '',
-      descAr: fd.get('descAr'), descEn: fd.get('descEn'),
-      tag: fd.get('tag') || '', tagEn: fd.get('tagEn') || ''
-    });
-    form.reset();
-    addedMsg.classList.remove('hide');
-    renderList();
-    setTimeout(() => addedMsg.classList.add('hide'), 3000);
-  });
-
-  resetBtn.addEventListener('click', () => {
-    resetToSeed();
-    renderList();
+    try{
+      await addProperty({
+        type: fd.get('type'),
+        city: fd.get('city'), cityEn: fd.get('cityEn'),
+        titleAr: fd.get('titleAr'), titleEn: fd.get('titleEn'),
+        price: Number(fd.get('price')), area: Number(fd.get('area')),
+        bedrooms: fd.get('bedrooms') ? Number(fd.get('bedrooms')) : null,
+        stage: fd.get('stage') || '',
+        descAr: fd.get('descAr'), descEn: fd.get('descEn'),
+        tag: fd.get('tag') || '', tagEn: fd.get('tagEn') || ''
+      });
+      form.reset();
+      addedMsg.classList.remove('hide');
+      await renderList();
+      setTimeout(() => addedMsg.classList.add('hide'), 3000);
+    }catch(e){ alert('فشل الإضافة: ' + e.message); }
   });
 
   /* --- قائمة المشاريع --- */
-  function renderProjectList(){
+  async function renderProjectList(){
     if(!projListEl) return;
     const lang = getLang();
-    const list = getProjects();
+    const list = await getProjects();
     projListEl.innerHTML = list.map(pr => `
       <div class="admin-row">
         <div class="info">
@@ -503,71 +462,98 @@ function initAdmin(){
         </div>
       </div>`).join('');
     projListEl.querySelectorAll('button.danger').forEach(btn => {
-      btn.addEventListener('click', () => {
-        deleteProject(btn.getAttribute('data-id'));
-        renderProjectList();
+      btn.addEventListener('click', async () => {
+        try{
+          await deleteProject(btn.getAttribute('data-id'));
+          await renderProjectList();
+        }catch(e){ alert('فشل الحذف: ' + e.message); }
       });
     });
   }
 
   if(projForm){
-    projForm.addEventListener('submit', e => {
+    projForm.addEventListener('submit', async e => {
       e.preventDefault();
       const fd = new FormData(projForm);
 
-      // تحويل حقل الصور من نص إلى مصفوفة
-      const imagesText = (fd.get('images') || '').trim();
-      const imagesArr = imagesText
-        ? imagesText.split('\n').map(s => s.trim()).filter(s => s)
-        : [];
+      // ⬇️ رفع الصور
+      const coverFile = fd.get('coverFile');
+      const galleryFiles = fd.get('galleryFiles');
 
-      addProject({
-        nameAr: fd.get('nameAr'), nameEn: fd.get('nameEn'),
-        type: fd.get('type'),
-        floors: Number(fd.get('floors')),
-        locationAr: fd.get('locationAr'), locationEn: fd.get('locationEn'),
-        stage: fd.get('stage'),
-        price: Number(fd.get('price')) || 0,
-        area: Number(fd.get('area')) || 0,
-        cover: (fd.get('cover') || '').trim(),
-        images: imagesArr,
-        descAr: fd.get('descAr') || '', descEn: fd.get('descEn') || ''
-      });
+      const btn = projForm.querySelector('button[type="submit"]');
+      const origText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'جاري الرفع...';
 
-      projForm.reset();
-      if(projAddedMsg){
-        projAddedMsg.classList.remove('hide');
-        setTimeout(() => projAddedMsg.classList.add('hide'), 3000);
+      try{
+        let coverUrl = '';
+        let imagesArr = [];
+
+        // رفع صورة الغلاف
+        if(coverFile && coverFile.size > 0){
+          coverUrl = await sbUpload(coverFile);
+        }
+
+        // رفع باقي الصور
+        if(galleryFiles && galleryFiles.length > 0){
+          for(const file of galleryFiles){
+            if(file.size > 0){
+              const url = await sbUpload(file);
+              imagesArr.push(url);
+            }
+          }
+        }
+
+        await addProject({
+          nameAr: fd.get('nameAr'), nameEn: fd.get('nameEn'),
+          type: fd.get('type'),
+          floors: Number(fd.get('floors')),
+          locationAr: fd.get('locationAr'), locationEn: fd.get('locationEn'),
+          stage: fd.get('stage'),
+          price: Number(fd.get('price')) || 0,
+          area: Number(fd.get('area')) || 0,
+          cover: coverUrl,
+          images: imagesArr,
+          descAr: fd.get('descAr') || '', descEn: fd.get('descEn') || ''
+        });
+
+        projForm.reset();
+        if(projAddedMsg){
+          projAddedMsg.classList.remove('hide');
+          setTimeout(() => projAddedMsg.classList.add('hide'), 3000);
+        }
+        await renderProjectList();
+      }catch(err){
+        alert('فشل الإضافة: ' + err.message);
+      }finally{
+        btn.disabled = false;
+        btn.textContent = origText;
       }
-      renderProjectList();
     });
   }
 
-  if(projResetBtn){
-    projResetBtn.addEventListener('click', () => {
-      resetProjectsToSeed();
-      renderProjectList();
-    });
-  }
-
-  document.addEventListener('langchange', () => {
-    if(!panel.classList.contains('hide')){ renderList(); renderProjectList(); }
+  document.addEventListener('langchange', async () => {
+    if(!panel.classList.contains('hide')){
+      await renderList();
+      await renderProjectList();
+    }
   });
 }
 
-/* ---------- التشغيل عند تحميل الصفحة ---------- */
-document.addEventListener('DOMContentLoaded', () => {
+/* ---------- التشغيل ---------- */
+document.addEventListener('DOMContentLoaded', async () => {
   buildHeader();
   initNav();
-  renderFeatured();
-  renderProjects();
-  renderPropertiesPage();
-  renderPropertyDetail();
-  renderProjectDetail();
+  await renderFeatured();
+  await renderProjects();
+  await renderPropertiesPage();
+  await renderPropertyDetail();
+  await renderProjectDetail();
   initContactForm();
-  initAdmin();
+  await initAdmin();
 });
-document.addEventListener('langchange', () => {
-  renderFeatured();
-  renderProjects();
+
+document.addEventListener('langchange', async () => {
+  await renderFeatured();
+  await renderProjects();
 });

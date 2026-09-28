@@ -4,7 +4,7 @@
 
 /* 🔑 مفاتيح Supabase */
 const SUPABASE_URL = 'https://cvnunhxzmywnqdmgxnwu.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_ZN1YR0IZHurmaPOB7n7T5A_Qncq3bc0';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2bnVuaHh6bXl3bnFkbWd4bnd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MzAzNjAsImV4cCI6MjEwNjEwNjM2MH0.Sj3ZuVjIe6S0h-FaWK3clnb-06SPPVSGRPsEyT01xsw';
 const STORAGE_BUCKET = 'raheeb-real-estate';
 
 /* =========================================================

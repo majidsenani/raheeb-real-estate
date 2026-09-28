@@ -1,9 +1,4 @@
-/* بيانات العقارات والمشاريع — seed data + localStorage persistence
-   لاحقاً عند ربط الموقع بسيرفر حقيقي، استبدل هذا الملف بطلبات API */
-
-/* ========== المفاتيح ========== */
-const STORAGE_KEY = 'raheeb_properties';
-const PROJECTS_KEY = 'raheeb_projects';
+/* بيانات العقارات والمشاريع — Supabase version */
 
 /* ========== الأنواع ========== */
 const TYPES = [
@@ -19,194 +14,141 @@ const STAGES = [
   { value: 'structure', ar: 'مرحلة العظم',    en: 'Structure' }
 ];
 
-/* ========== العقارات الأولية (Seed) ========== */
-const SEED_PROPERTIES = [
-  {
-    id: 'p1', type: 'floor', city: 'الرياض', cityEn: 'Riyadh',
-    titleAr: 'رحيب ١-٢', titleEn: 'Raheeb 1-2',
-    price: 0, area: 0, bedrooms: null, tag: '', tagEn: '',
-    stage: 'sale',
-    descAr: 'مشروع رحيب ١-٢ — ١٢ دور في حي الملك عبدالله، مرحلة البيع.',
-    descEn: 'Raheeb 1-2 project — 12 floors in King Abdullah district, for sale.'
-  },
-  {
-    id: 'p2', type: 'floor', city: 'الرياض', cityEn: 'Riyadh',
-    titleAr: 'رحيب ٣', titleEn: 'Raheeb 3',
-    price: 0, area: 0, bedrooms: null, tag: '', tagEn: '',
-    stage: 'finishing',
-    descAr: 'مشروع رحيب ٣ — ٩ أدوار في حي الملك فهد، مرحلة التشطيب.',
-    descEn: 'Raheeb 3 project — 9 floors in King Fahd district, finishing stage.'
-  },
-  {
-    id: 'p3', type: 'floor', city: 'الرياض', cityEn: 'Riyadh',
-    titleAr: 'رحيب ٤', titleEn: 'Raheeb 4',
-    price: 0, area: 0, bedrooms: null, tag: '', tagEn: '',
-    stage: 'finishing',
-    descAr: 'مشروع رحيب ٤ — ٦ أدوار في حي النرجس، مرحلة التشطيب.',
-    descEn: 'Raheeb 4 project — 6 floors in Al Narjis district, finishing stage.'
-  },
-  {
-    id: 'p4', type: 'villa', city: 'الرياض', cityEn: 'Riyadh',
-    titleAr: 'رحيب ٥', titleEn: 'Raheeb 5',
-    price: 0, area: 0, bedrooms: null, tag: 'دوبلكس', tagEn: 'Duplex',
-    stage: 'structure',
-    descAr: 'مشروع رحيب ٥ — ٢ دوبلكس في حي الملك سلمان، مرحلة العظم.',
-    descEn: 'Raheeb 5 project — 2 duplexes in King Salman district, structure stage.'
-  }
-];
+/* ========== كاش داخلي (لتقليل الطلبات) ========== */
+let _propertiesCache = null;
+let _projectsCache = null;
 
-/* ========== المشاريع الأولية ========== */
-const SEED_PROJECTS = [
-  {
-    id: 'pr1',
-    nameAr: 'رحيب ١-٢',
-    nameEn: 'Raheeb 1-2',
-    type: 'floor',
-    floors: 12,
-    locationAr: 'حي الملك عبدالله',
-    locationEn: 'King Abdullah District',
-    stage: 'sale',
-    price: 0,
-    area: 0,
-    cover: '',        // صورة الغلاف
-    images: [],       // باقي الصور
-    descAr: 'مشروع ١٢ دور',
-    descEn: '12-floor project'
-  },
-  {
-    id: 'pr2',
-    nameAr: 'رحيب ٣',
-    nameEn: 'Raheeb 3',
-    type: 'floor',
-    floors: 9,
-    locationAr: 'حي الملك فهد',
-    locationEn: 'King Fahd District',
-    stage: 'finishing',
-    price: 0,
-    area: 0,
-    cover: '',
-    images: [],
-    descAr: 'مشروع ٩ أدوار',
-    descEn: '9-floor project'
-  },
-  {
-    id: 'pr3',
-    nameAr: 'رحيب ٤',
-    nameEn: 'Raheeb 4',
-    type: 'floor',
-    floors: 6,
-    locationAr: 'حي النرجس',
-    locationEn: 'Al Narjis District',
-    stage: 'finishing',
-    price: 0,
-    area: 0,
-    cover: '',
-    images: [],
-    descAr: 'مشروع ٦ أدوار',
-    descEn: '6-floor project'
-  },
-  {
-    id: 'pr4',
-    nameAr: 'رحيب ٥',
-    nameEn: 'Raheeb 5',
-    type: 'villa',
-    floors: 2,
-    locationAr: 'حي الملك سلمان',
-    locationEn: 'King Salman District',
-    stage: 'structure',
-    price: 0,
-    area: 0,
-    cover: '',
-    images: [],
-    descAr: '٢ دوبلكس',
-    descEn: '2 duplexes'
-  }
-];
+/* =========================================================
+   دوال العقارات
+   ========================================================= */
 
-/* ========== دوال العقارات ========== */
-function getProperties(){
+async function getProperties(){
+  if(_propertiesCache) return _propertiesCache;
   try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_PROPERTIES));
-      return SEED_PROPERTIES.slice();
-    }
-    return JSON.parse(raw);
+    const data = await sbSelect('properties');
+    // حوّل أسماء الأعمدة من snake_case إلى camelCase
+    _propertiesCache = data.map(p => ({
+      id: p.id,
+      type: p.type,
+      city: p.city, cityEn: p.city_en,
+      titleAr: p.title_ar, titleEn: p.title_en,
+      price: p.price, area: p.area,
+      bedrooms: p.bedrooms,
+      tag: p.tag, tagEn: p.tag_en,
+      stage: p.stage,
+      descAr: p.desc_ar, descEn: p.desc_en
+    }));
+    return _propertiesCache;
   }catch(e){
-    return SEED_PROPERTIES.slice();
+    console.error('getProperties:', e);
+    return [];
   }
 }
 
-function saveProperties(list){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-}
-
-function addProperty(prop){
-  const list = getProperties();
-  prop.id = 'p' + Date.now();
-  list.unshift(prop);
-  saveProperties(list);
-  return prop;
-}
-
-function deleteProperty(id){
-  const list = getProperties().filter(p => p.id !== id);
-  saveProperties(list);
-}
-
-function getPropertyById(id){
-  return getProperties().find(p => p.id === id);
-}
-
-function resetToSeed(){
-  saveProperties(SEED_PROPERTIES);
-}
-
-/* ========== دوال المشاريع ========== */
-function getProjects(){
+async function addProperty(prop){
   try{
-    const raw = localStorage.getItem(PROJECTS_KEY);
-    if(!raw){
-      localStorage.setItem(PROJECTS_KEY, JSON.stringify(SEED_PROJECTS));
-      return SEED_PROJECTS.slice();
-    }
-    return JSON.parse(raw);
+    const row = {
+      title_ar: prop.titleAr, title_en: prop.titleEn,
+      city: prop.city, city_en: prop.cityEn,
+      price: prop.price || 0, area: prop.area || 0,
+      bedrooms: prop.bedrooms || null,
+      type: prop.type,
+      stage: prop.stage || '',
+      tag: prop.tag || '', tag_en: prop.tagEn || '',
+      desc_ar: prop.descAr || '', desc_en: prop.descEn || ''
+    };
+    const result = await sbInsert('properties', row);
+    _propertiesCache = null; // امسح الكاش
+    return result;
   }catch(e){
-    return SEED_PROJECTS.slice();
+    console.error('addProperty:', e);
+    throw e;
   }
 }
 
-function saveProjects(list){
-  localStorage.setItem(PROJECTS_KEY, JSON.stringify(list));
+async function deleteProperty(id){
+  try{
+    await sbDelete('properties', id);
+    _propertiesCache = null;
+  }catch(e){
+    console.error('deleteProperty:', e);
+    throw e;
+  }
 }
 
-function addProject(project){
-  const list = getProjects();
-  project.id = 'pr' + Date.now();
-  list.unshift(project);
-  saveProjects(list);
-  return project;
+async function getPropertyById(id){
+  const list = await getProperties();
+  return list.find(p => String(p.id) === String(id));
 }
 
-function deleteProject(id){
-  const list = getProjects().filter(p => p.id !== id);
-  saveProjects(list);
+/* =========================================================
+   دوال المشاريع
+   ========================================================= */
+
+async function getProjects(){
+  if(_projectsCache) return _projectsCache;
+  try{
+    const data = await sbSelect('projects');
+    _projectsCache = data.map(p => ({
+      id: p.id,
+      nameAr: p.name_ar, nameEn: p.name_en,
+      type: p.type, floors: p.floors,
+      locationAr: p.location_ar, locationEn: p.location_en,
+      stage: p.stage,
+      price: p.price || 0, area: p.area || 0,
+      cover: p.cover || '',
+      images: p.images ? p.images.split('\n').filter(s => s.trim()) : [],
+      descAr: p.desc_ar, descEn: p.desc_en
+    }));
+    return _projectsCache;
+  }catch(e){
+    console.error('getProjects:', e);
+    return [];
+  }
 }
 
-function updateProject(id, updates){
-  const list = getProjects().map(p => p.id === id ? { ...p, ...updates } : p);
-  saveProjects(list);
+async function addProject(project){
+  try{
+    const row = {
+      name_ar: project.nameAr, name_en: project.nameEn,
+      type: project.type,
+      floors: project.floors,
+      location_ar: project.locationAr, location_en: project.locationEn,
+      stage: project.stage,
+      price: project.price || 0,
+      area: project.area || 0,
+      cover: project.cover || '',
+      images: Array.isArray(project.images) ? project.images.join('\n') : (project.images || ''),
+      desc_ar: project.descAr || '', desc_en: project.descEn || ''
+    };
+    const result = await sbInsert('projects', row);
+    _projectsCache = null;
+    return result;
+  }catch(e){
+    console.error('addProject:', e);
+    throw e;
+  }
 }
 
-function getProjectById(id){
-  return getProjects().find(p => p.id === id);
+async function deleteProject(id){
+  try{
+    await sbDelete('projects', id);
+    _projectsCache = null;
+  }catch(e){
+    console.error('deleteProject:', e);
+    throw e;
+  }
 }
 
-function resetProjectsToSeed(){
-  saveProjects(SEED_PROJECTS);
+async function getProjectById(id){
+  const list = await getProjects();
+  return list.find(p => String(p.id) === String(id));
 }
 
-/* ========== دوال مساعدة ========== */
+/* =========================================================
+   دوال مساعدة
+   ========================================================= */
+
 function getTypeLabel(type, lang){
   const t = TYPES.find(x => x.value === type);
   if(!t) return type;
@@ -217,4 +159,12 @@ function getStageLabel(stage, lang){
   const s = STAGES.find(x => x.value === stage);
   if(!s) return stage;
   return lang === 'en' ? s.en : s.ar;
+}
+
+/* =========================================================
+   إعادة تعيين الكاش يدوياً
+   ========================================================= */
+function clearCache(){
+  _propertiesCache = null;
+  _projectsCache = null;
 }

@@ -13,10 +13,9 @@
 </head>
 <body>
 
-<!-- الهيدر يبنى تلقائياً -->
 <div id="siteHeader"></div>
 
-<!-- ============ Hero — صور متبدلة ============ -->
+<!-- ============ Hero — صور متبدلة من Supabase ============ -->
 <section class="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
@@ -26,7 +25,7 @@
     <h1 data-i18n="hero.title">حيث رحابة السكن</h1>
     <p class="lead" data-i18n="hero.lead">نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.</p>
     <div class="hero-actions">
-      <a class="btn" href="#projects" data-i18n="hero.cta1">تصفح العقارات</a>
+      <a class="btn" href="#projects" data-i18n="hero.cta1">تصفح المشاريع</a>
       <a class="btn ghost" href="contact.html" data-i18n="hero.cta2">تواصل معنا</a>
     </div>
     <div class="stats">
@@ -119,6 +118,7 @@
 <script src="js/main.js"></script>
 <script src="js/effects.js"></script>
 <script>
+  // ============ أيقونات التصنيفات ============
   document.addEventListener('DOMContentLoaded', () => {
     const v = document.getElementById('iconVilla');
     const a = document.getElementById('iconApartment');
@@ -128,22 +128,29 @@
     if(f) f.innerHTML = ICONS.floor;
   });
 
-  // ============ تبديل صور الخلفية ============
-  document.addEventListener('DOMContentLoaded', () => {
+  // ============ Hero: صور متبدلة من Supabase ============
+  document.addEventListener('DOMContentLoaded', async () => {
     const heroBg = document.getElementById('heroBg');
     if(!heroBg) return;
 
-    const TOTAL_IMAGES = 7;
+    const images = await getHeroImages();
+
+    if(!images.length){
+      // ما فيه صور — نعرض لون داكن فقط
+      heroBg.style.background = 'var(--deep)';
+      return;
+    }
+
     const INTERVAL = 5000;
 
     const slides = [];
-    for(let i = 1; i <= TOTAL_IMAGES; i++){
+    images.forEach(img => {
       const div = document.createElement('div');
       div.className = 'hero-slide';
-      div.style.backgroundImage = `url('hero-${i}.jpg')`;
+      div.style.backgroundImage = `url('${img.url}')`;
       heroBg.appendChild(div);
       slides.push(div);
-    }
+    });
 
     let current = 0;
     slides[0].classList.add('active');

@@ -96,7 +96,7 @@ const DICT = {
     'admin.delete': 'حذف',
     'admin.logout': 'خروج',
 
-    'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى المدن.',
+    'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى الاحياء.',
     'footer.links': 'روابط', 'footer.contact': 'تواصل',
     'footer.follow': 'تابعنا',
     'footer.rights': 'جميع الحقوق محفوظة'

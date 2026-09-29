@@ -478,8 +478,7 @@ async function initAdmin(){
 
       // ⬇️ رفع الصور
       const coverFile = fd.get('coverFile');
-      const galleryFiles = fd.get('galleryFiles');
-
+const galleryFiles = fd.getAll('galleryFiles');
       const btn = projForm.querySelector('button[type="submit"]');
       const origText = btn.textContent;
       btn.disabled = true;

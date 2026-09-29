@@ -886,3 +886,34 @@ html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
 
 /* riseIn */
 @keyframes riseIn{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:translateY(0); } }
+/* =========================================================
+   أزرار الفلترة
+   ========================================================= */
+.filter-tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+  padding:14px;
+  background:var(--bg-alt);
+  border:1px solid var(--line);
+  border-radius:6px;
+}
+.filter-tabs button{
+  padding:9px 22px;
+  border:1px solid var(--line);
+  background:var(--white);
+  color:var(--ink-soft);
+  border-radius:4px;
+  font-size:.92rem;
+  transition:all .25s ease;
+}
+.filter-tabs button:hover{
+  border-color:var(--gold);
+  color:var(--gold-deep);
+}
+.filter-tabs button.active{
+  background:var(--gold-deep);
+  color:var(--white);
+  border-color:var(--gold-deep);
+}

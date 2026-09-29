@@ -127,30 +127,6 @@ function initNav(){
   });
 }
 
-/* ---------- بطاقة عقار ---------- */
-function cardHTML(p, lang){
-  const title = lang === 'ar' ? p.titleAr : p.titleEn;
-  const city = lang === 'ar' ? p.city : p.cityEn;
-  const tag = lang === 'ar' ? p.tag : p.tagEn;
-  return `
-  <article class="card">
-    <div class="card-media">
-      ${tag ? `<span class="card-tag">${tag}</span>` : ''}
-      ${iconFor(p.type)}
-    </div>
-    <div class="card-body">
-      <h3>${title}</h3>
-      <div class="card-loc">${city}</div>
-      <div class="card-meta">
-        <span>${p.area} ${t('card.area')}</span>
-        ${p.bedrooms ? `<span>${p.bedrooms} ${t('card.bedrooms')}</span>` : ''}
-      </div>
-      <div class="card-price">${formatPrice(p.price, lang)}</div>
-      <a class="card-link" href="property.html?id=${p.id}">${t('card.details')}</a>
-    </div>
-  </article>`;
-}
-
 /* ---------- بطاقة مشروع ---------- */
 function projectCardHTML(pr, lang){
   const name = lang === 'ar' ? pr.nameAr : pr.nameEn;
@@ -166,6 +142,14 @@ function projectCardHTML(pr, lang){
   const areaLine = pr.area > 0
     ? `<span>${pr.area} ${t('card.area')}</span>` : '';
 
+  const viewsHTML = `<div class="card-views">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <span>${pr.views || 0}</span>
+  </div>`;
+
   return `
   <article class="card project-card">
     <a href="project.html?id=${pr.id}" class="card-cover-link">
@@ -180,6 +164,7 @@ function projectCardHTML(pr, lang){
       <div class="card-meta">
         <span>${pr.floors} ${t('projects.floors')}</span>
         ${areaLine}
+        ${viewsHTML}
       </div>
       ${priceLine}
       <a class="card-link" href="project.html?id=${pr.id}">${t('card.details')}</a>
@@ -193,7 +178,7 @@ async function renderFeatured(){
   if(!el) return;
   const lang = getLang();
   const list = await getProperties();
-  el.innerHTML = list.slice(0, 3).map(p => cardHTML(p, lang)).join('');
+  el.innerHTML = list.slice(0, 3).map(p => projectCardHTML(p, lang)).join('');
 }
 
 async function renderProjects(){
@@ -204,99 +189,25 @@ async function renderProjects(){
   el.innerHTML = list.map(pr => projectCardHTML(pr, lang)).join('');
 }
 
-/* ---------- صفحة العقارات ---------- */
-async function renderPropertiesPage(){
-  const grid = document.getElementById('propsGrid');
-  if(!grid) return;
-
-  const typeSel = document.getElementById('fType');
-  const citySel = document.getElementById('fCity');
-  const searchInput = document.getElementById('fSearch');
-  const applyBtn = document.getElementById('fApply');
-  const emptyState = document.getElementById('emptyState');
-
-  let allList = await getProperties();
-
-  function populateCities(){
-    const lang = getLang();
-    const cities = [...new Set(allList.map(p => lang === 'ar' ? p.city : p.cityEn))];
-    citySel.innerHTML = `<option value="">${t('filter.all')}</option>` +
-      cities.map(c => `<option value="${c}">${c}</option>`).join('');
-  }
-
-  function draw(){
-    const lang = getLang();
-    let list = allList;
-    const type = typeSel.value;
-    const city = citySel.value;
-    const q = (searchInput.value || '').trim();
-    if(type) list = list.filter(p => p.type === type);
-    if(city) list = list.filter(p => (lang === 'ar' ? p.city : p.cityEn) === city);
-    if(q) list = list.filter(p => (p.titleAr + p.titleEn).toLowerCase().includes(q.toLowerCase()));
-
-    if(list.length === 0){
-      grid.innerHTML = '';
-      emptyState.classList.remove('hide');
-    } else {
-      emptyState.classList.add('hide');
-      grid.innerHTML = list.map(p => cardHTML(p, lang)).join('');
-    }
-  }
-
-  populateCities();
-  draw();
-  applyBtn.addEventListener('click', draw);
-  searchInput.addEventListener('keydown', e => { if(e.key === 'Enter') draw(); });
-  document.addEventListener('langchange', () => { populateCities(); draw(); });
-}
-
-/* ---------- تفاصيل عقار ---------- */
-async function renderPropertyDetail(){
-  const root = document.getElementById('detailRoot');
-  if(!root) return;
-  const params = new URLSearchParams(location.search);
-  const id = params.get('id');
-  const p = await getPropertyById(id);
-
-  if(!p){
-    root.innerHTML = `<div class="empty-state"><h3>${t('empty.title')}</h3></div>`;
-    return;
-  }
-
-  function draw(){
-    const lang = getLang();
-    const title = lang === 'ar' ? p.titleAr : p.titleEn;
-    const desc = lang === 'ar' ? p.descAr : p.descEn;
-    const city = lang === 'ar' ? p.city : p.cityEn;
-    root.innerHTML = `
-      <a class="card-link" href="properties.html" style="margin-bottom:20px;">${t('detail.back')}</a>
-      <div class="detail-grid mt-lg">
-        <div>
-          <div class="detail-media">${iconFor(p.type)}</div>
-          <div class="detail-facts">
-            <div class="fact"><b>${p.area}</b><span>${t('detail.facts.area')} (${t('detail.sqm')})</span></div>
-            <div class="fact"><b>${p.bedrooms || '—'}</b><span>${t('detail.facts.beds')}</span></div>
-            <div class="fact"><b>${city}</b><span>${t('detail.facts.city')}</span></div>
-          </div>
-          <h1>${title}</h1>
-          <p>${desc}</p>
-        </div>
-        <aside class="side-card">
-          <div class="price">${formatPrice(p.price, lang)}</div>
-          <a class="btn" href="contact.html" style="width:100%; text-align:center; display:block;">${t('detail.request')}</a>
-        </aside>
-      </div>`;
-  }
-  draw();
-  document.addEventListener('langchange', draw);
-}
-
 /* ---------- تفاصيل مشروع ---------- */
 async function renderProjectDetail(){
   const root = document.getElementById('projectDetailRoot');
   if(!root) return;
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
+
+  // 🔢 زيادة عدّاد المشاهدات (مرة وحدة لكل زائر)
+  if(id){
+    const cookieKey = `viewed_pr_${id}`;
+    const alreadyViewed = document.cookie.split('; ').some(c => c.startsWith(cookieKey + '='));
+    if(!alreadyViewed){
+      await incrementProjectViews(id);
+      // ضع cookie لمدة سنة
+      const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+      document.cookie = `${cookieKey}=1; expires=${expires}; path=/`;
+    }
+  }
+
   const pr = await getProjectById(id);
 
   if(!pr){
@@ -322,6 +233,8 @@ async function renderProjectDetail(){
     const priceHTML = pr.price > 0 ? `<div class="project-price">${formatPrice(pr.price, lang)}</div>` : '';
     const areaHTML = pr.area > 0 ? `<div class="fact"><b>${pr.area}</b><span>${t('projects.area')} (${t('detail.sqm')})</span></div>` : '';
 
+    const viewsHTML = `<div class="fact"><b>${pr.views || 0}</b><span>${t('projects.views')}</span></div>`;
+
     root.innerHTML = `
       <a class="card-link" href="index.html#projects" style="margin-bottom:20px;">${t('projects.back')}</a>
       <div class="project-detail-head mt-lg">
@@ -332,6 +245,7 @@ async function renderProjectDetail(){
         <div class="fact"><b>${loc}</b><span>${t('projects.location')}</span></div>
         <div class="fact"><b>${pr.floors}</b><span>${t('projects.floors')}</span></div>
         ${areaHTML}
+        ${viewsHTML}
       </div>
       ${galleryHTML}
       ${priceHTML}
@@ -369,9 +283,6 @@ async function initAdmin(){
   const enterBtn = document.getElementById('adminEnter');
   const wrongMsg = document.getElementById('adminWrong');
   const logoutBtn = document.getElementById('adminLogout');
-  const form = document.getElementById('adminForm');
-  const listEl = document.getElementById('adminList');
-  const addedMsg = document.getElementById('adminAdded');
 
   const projForm = document.getElementById('adminProjectForm');
   const projListEl = document.getElementById('adminProjectList');
@@ -380,7 +291,6 @@ async function initAdmin(){
   async function showPanel(){
     gate.classList.add('hide');
     panel.classList.remove('hide');
-    await renderList();
     await renderProjectList();
   }
 
@@ -401,51 +311,6 @@ async function initAdmin(){
     gate.classList.remove('hide');
   });
 
-  /* --- قائمة العقارات --- */
-  async function renderList(){
-    const lang = getLang();
-    const list = await getProperties();
-    listEl.innerHTML = list.map(p => `
-      <div class="admin-row">
-        <div class="info">
-          <b>${lang === 'ar' ? p.titleAr : p.titleEn}</b>
-          <span>${getTypeLabel(p.type, lang)} · ${lang === 'ar' ? p.city : p.cityEn} · ${formatPrice(p.price, lang)}</span>
-        </div>
-        <div class="actions">
-          <button class="danger" data-id="${p.id}">${t('admin.delete')}</button>
-        </div>
-      </div>`).join('');
-    listEl.querySelectorAll('button.danger').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try{
-          await deleteProperty(btn.getAttribute('data-id'));
-          await renderList();
-        }catch(e){ alert('فشل الحذف: ' + e.message); }
-      });
-    });
-  }
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(form);
-    try{
-      await addProperty({
-        type: fd.get('type'),
-        city: fd.get('city'), cityEn: fd.get('cityEn'),
-        titleAr: fd.get('titleAr'), titleEn: fd.get('titleEn'),
-        price: Number(fd.get('price')), area: Number(fd.get('area')),
-        bedrooms: fd.get('bedrooms') ? Number(fd.get('bedrooms')) : null,
-        stage: fd.get('stage') || '',
-        descAr: fd.get('descAr'), descEn: fd.get('descEn'),
-        tag: fd.get('tag') || '', tagEn: fd.get('tagEn') || ''
-      });
-      form.reset();
-      addedMsg.classList.remove('hide');
-      await renderList();
-      setTimeout(() => addedMsg.classList.add('hide'), 3000);
-    }catch(e){ alert('فشل الإضافة: ' + e.message); }
-  });
-
   /* --- قائمة المشاريع --- */
   async function renderProjectList(){
     if(!projListEl) return;
@@ -455,30 +320,150 @@ async function initAdmin(){
       <div class="admin-row">
         <div class="info">
           <b>${lang === 'ar' ? pr.nameAr : pr.nameEn}</b>
-          <span>${lang === 'ar' ? pr.locationAr : pr.locationEn} · ${pr.floors} ${t('projects.floors')} · ${getStageLabel(pr.stage, lang)}</span>
+          <span>${lang === 'ar' ? pr.locationAr : pr.locationEn} · ${pr.floors} ${t('projects.floors')} · ${getStageLabel(pr.stage, lang)} · ${pr.views || 0} ${t('projects.views')}</span>
         </div>
         <div class="actions">
+          <button class="edit" data-id="${pr.id}">${t('admin.edit')}</button>
           <button class="danger" data-id="${pr.id}">${t('admin.delete')}</button>
         </div>
       </div>`).join('');
+
+    // زر الحذف
     projListEl.querySelectorAll('button.danger').forEach(btn => {
       btn.addEventListener('click', async () => {
+        if(!confirm(t('admin.confirmDelete'))) return;
         try{
           await deleteProject(btn.getAttribute('data-id'));
           await renderProjectList();
         }catch(e){ alert('فشل الحذف: ' + e.message); }
       });
     });
+
+    // زر التعديل
+    projListEl.querySelectorAll('button.edit').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const pr = list.find(p => String(p.id) === String(id));
+        if(pr) openEditModal(pr);
+      });
+    });
   }
 
+  /* --- نافذة التعديل --- */
+  function openEditModal(pr){
+    // احذف أي modal قديم
+    const existing = document.getElementById('editModal');
+    if(existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'editModal';
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <div class="modal-box">
+        <button class="modal-close" id="modalClose">✕</button>
+        <h2>${t('admin.editTitle')}</h2>
+        <form id="editForm" class="form-grid">
+          <div class="field">
+            <label>${t('admin.project.f.nameAr')}</label>
+            <input type="text" name="nameAr" value="${pr.nameAr || ''}" required>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.nameEn')}</label>
+            <input type="text" name="nameEn" value="${pr.nameEn || ''}" required>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.type')}</label>
+            <select name="type" required>
+              <option value="villa" ${pr.type === 'villa' ? 'selected' : ''}>فيلا</option>
+              <option value="apartment" ${pr.type === 'apartment' ? 'selected' : ''}>شقة</option>
+              <option value="floor" ${pr.type === 'floor' ? 'selected' : ''}>أدوار</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.floors')}</label>
+            <input type="number" name="floors" value="${pr.floors || 1}" min="1" required>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.locationAr')}</label>
+            <input type="text" name="locationAr" value="${pr.locationAr || ''}" required>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.locationEn')}</label>
+            <input type="text" name="locationEn" value="${pr.locationEn || ''}" required>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.stage')}</label>
+            <select name="stage" required>
+              <option value="sale" ${pr.stage === 'sale' ? 'selected' : ''}>مرحلة البيع</option>
+              <option value="finishing" ${pr.stage === 'finishing' ? 'selected' : ''}>مرحلة التشطيب</option>
+              <option value="structure" ${pr.stage === 'structure' ? 'selected' : ''}>مرحلة العظم</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.price')}</label>
+            <input type="number" name="price" value="${pr.price || 0}" min="0">
+          </div>
+          <div class="field">
+            <label>${t('admin.project.f.area')}</label>
+            <input type="number" name="area" value="${pr.area || 0}" min="0">
+          </div>
+          <div class="field"></div>
+          <div class="field full">
+            <label>${t('admin.project.f.descAr')}</label>
+            <textarea name="descAr">${pr.descAr || ''}</textarea>
+          </div>
+          <div class="field full">
+            <label>${t('admin.project.f.descEn')}</label>
+            <textarea name="descEn">${pr.descEn || ''}</textarea>
+          </div>
+          <div class="field full" style="display:flex; gap:10px;">
+            <button type="submit" class="btn">${t('admin.saveChanges')}</button>
+            <button type="button" class="btn ghost" id="modalCancel">${t('admin.cancel')}</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // إغلاق
+    const close = () => modal.remove();
+    document.getElementById('modalClose').addEventListener('click', close);
+    document.getElementById('modalCancel').addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if(e.target === modal) close(); });
+
+    // حفظ
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      try{
+        await updateProject(pr.id, {
+          nameAr: fd.get('nameAr'), nameEn: fd.get('nameEn'),
+          type: fd.get('type'),
+          floors: Number(fd.get('floors')),
+          locationAr: fd.get('locationAr'), locationEn: fd.get('locationEn'),
+          stage: fd.get('stage'),
+          price: Number(fd.get('price')) || 0,
+          area: Number(fd.get('area')) || 0,
+          descAr: fd.get('descAr') || '', descEn: fd.get('descEn') || ''
+        });
+        close();
+        await renderProjectList();
+        alert(t('admin.savedSuccess'));
+      }catch(err){
+        alert('فشل التعديل: ' + err.message);
+      }
+    });
+  }
+
+  /* --- نموذج إضافة مشروع --- */
   if(projForm){
     projForm.addEventListener('submit', async e => {
       e.preventDefault();
       const fd = new FormData(projForm);
 
-      // ⬇️ رفع الصور
       const coverFile = fd.get('coverFile');
-const galleryFiles = fd.getAll('galleryFiles');
+      const galleryFiles = fd.getAll('galleryFiles');
+
       const btn = projForm.querySelector('button[type="submit"]');
       const origText = btn.textContent;
       btn.disabled = true;
@@ -488,12 +473,10 @@ const galleryFiles = fd.getAll('galleryFiles');
         let coverUrl = '';
         let imagesArr = [];
 
-        // رفع صورة الغلاف
         if(coverFile && coverFile.size > 0){
           coverUrl = await sbUpload(coverFile);
         }
 
-        // رفع باقي الصور
         if(galleryFiles && galleryFiles.length > 0){
           for(const file of galleryFiles){
             if(file.size > 0){
@@ -517,6 +500,8 @@ const galleryFiles = fd.getAll('galleryFiles');
         });
 
         projForm.reset();
+        document.getElementById('coverPreview').innerHTML = '';
+        document.getElementById('galleryPreview').innerHTML = '';
         if(projAddedMsg){
           projAddedMsg.classList.remove('hide');
           setTimeout(() => projAddedMsg.classList.add('hide'), 3000);
@@ -533,7 +518,6 @@ const galleryFiles = fd.getAll('galleryFiles');
 
   document.addEventListener('langchange', async () => {
     if(!panel.classList.contains('hide')){
-      await renderList();
       await renderProjectList();
     }
   });
@@ -545,8 +529,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   initNav();
   await renderFeatured();
   await renderProjects();
-  await renderPropertiesPage();
-  await renderPropertyDetail();
   await renderProjectDetail();
   initContactForm();
   await initAdmin();

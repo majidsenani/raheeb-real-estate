@@ -1,4 +1,4 @@
-/* بيانات العقارات والمشاريع — Supabase version */
+/* بيانات المشاريع + صور الخلفية — Supabase version */
 
 /* ========== الأنواع ========== */
 const TYPES = [
@@ -15,70 +15,8 @@ const STAGES = [
 ];
 
 /* ========== كاش داخلي ========== */
-let _propertiesCache = null;
 let _projectsCache = null;
-
-/* =========================================================
-   دوال العقارات
-   ========================================================= */
-
-async function getProperties(){
-  if(_propertiesCache) return _propertiesCache;
-  try{
-    const data = await sbSelect('properties');
-    _propertiesCache = data.map(p => ({
-      id: p.id,
-      type: p.type,
-      city: p.city, cityEn: p.city_en,
-      titleAr: p.title_ar, titleEn: p.title_en,
-      price: p.price, area: p.area,
-      bedrooms: p.bedrooms,
-      tag: p.tag, tagEn: p.tag_en,
-      stage: p.stage,
-      descAr: p.desc_ar, descEn: p.desc_en
-    }));
-    return _propertiesCache;
-  }catch(e){
-    console.error('getProperties:', e);
-    return [];
-  }
-}
-
-async function addProperty(prop){
-  try{
-    const row = {
-      title_ar: prop.titleAr, title_en: prop.titleEn,
-      city: prop.city, city_en: prop.cityEn,
-      price: prop.price || 0, area: prop.area || 0,
-      bedrooms: prop.bedrooms || null,
-      type: prop.type,
-      stage: prop.stage || '',
-      tag: prop.tag || '', tag_en: prop.tagEn || '',
-      desc_ar: prop.descAr || '', desc_en: prop.descEn || ''
-    };
-    const result = await sbInsert('properties', row);
-    _propertiesCache = null;
-    return result;
-  }catch(e){
-    console.error('addProperty:', e);
-    throw e;
-  }
-}
-
-async function deleteProperty(id){
-  try{
-    await sbDelete('properties', id);
-    _propertiesCache = null;
-  }catch(e){
-    console.error('deleteProperty:', e);
-    throw e;
-  }
-}
-
-async function getPropertyById(id){
-  const list = await getProperties();
-  return list.find(p => String(p.id) === String(id));
-}
+let _heroCache = null;
 
 /* =========================================================
    دوال المشاريع
@@ -148,7 +86,6 @@ async function getProjectById(id){
 /* ---------- زيادة عدّاد المشاهدات ---------- */
 async function incrementProjectViews(id){
   try{
-    // جلب القيمة الحالية
     const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}&select=views`, {
       headers: {
         'apikey': SUPABASE_KEY,
@@ -161,7 +98,6 @@ async function incrementProjectViews(id){
     const currentViews = data[0].views || 0;
     const newViews = currentViews + 1;
 
-    // تحديث القيمة
     await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}`, {
       method: 'PATCH',
       headers: {
@@ -172,9 +108,7 @@ async function incrementProjectViews(id){
       body: JSON.stringify({ views: newViews })
     });
 
-    // امسح الكاش
     _projectsCache = null;
-
     return newViews;
   }catch(e){
     console.error('incrementViews:', e);
@@ -220,6 +154,51 @@ async function updateProject(id, updates){
 }
 
 /* =========================================================
+   دوال صور الخلفية (Hero Images)
+   ========================================================= */
+
+async function getHeroImages(){
+  if(_heroCache) return _heroCache;
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/hero_images?select=*&order=created_at.asc`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if(!res.ok) throw new Error('فشل في جلب الصور');
+    const data = await res.json();
+    _heroCache = data;
+    return _heroCache;
+  }catch(e){
+    console.error('getHeroImages:', e);
+    return [];
+  }
+}
+
+async function addHeroImage(url){
+  try{
+    const row = { url: url };
+    const result = await sbInsert('hero_images', row);
+    _heroCache = null;
+    return result;
+  }catch(e){
+    console.error('addHeroImage:', e);
+    throw e;
+  }
+}
+
+async function deleteHeroImage(id){
+  try{
+    await sbDelete('hero_images', id);
+    _heroCache = null;
+  }catch(e){
+    console.error('deleteHeroImage:', e);
+    throw e;
+  }
+}
+
+/* =========================================================
    دوال مساعدة
    ========================================================= */
 
@@ -239,6 +218,6 @@ function getStageLabel(stage, lang){
    إعادة تعيين الكاش
    ========================================================= */
 function clearCache(){
-  _propertiesCache = null;
   _projectsCache = null;
+  _heroCache = null;
 }

@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كل العقارات | رحيب المنازل للتطوير العقاري</title>
-<meta name="description" content="تصفح كل العقارات المتوفرة — فلل، شقق، أدوار.">
+<title>كل المشاريع | رحيب المنازل للتطوير العقاري</title>
+<meta name="description" content="تصفح كل المشاريع — فلل، شقق، أدوار.">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,46 +15,43 @@
 
 <div id="siteHeader"></div>
 
-<!-- ============ كل العقارات ============ -->
+<!-- ============ المشاريع ============ -->
 <section>
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" data-i18n="props.title">كل العقارات</span>
-      <h2 data-i18n="props.lead">استخدم الفلاتر لتضييق نتائج البحث.</h2>
+      <span class="kicker" data-i18n="props.kicker">المشاريع</span>
+      <h2 id="pageTitle" data-i18n="props.title">كل المشاريع</h2>
+      <p data-i18n="props.lead">تصفح المشاريع حسب النوع.</p>
     </div>
 
-    <!-- الفلاتر -->
-    <div class="filters">
-      <select id="fType">
-        <option value="" data-i18n="filter.all">الكل</option>
-        <option value="villa" data-i18n="filter.villa">فيلا</option>
-        <option value="apartment" data-i18n="filter.apartment">شقة</option>
-        <option value="floor" data-i18n="filter.floor">أدوار</option>
-      </select>
-      <select id="fCity"></select>
-      <input type="text" id="fSearch" data-i18n-ph="filter.search" placeholder="ابحث بالاسم...">
-      <button id="fApply" data-i18n="filter.apply">تطبيق الفلتر</button>
+    <!-- أزرار الفلترة -->
+    <div class="filter-tabs" id="filterTabs">
+      <button data-type="" class="active">الكل</button>
+      <button data-type="villa">فلل</button>
+      <button data-type="apartment">شقق</button>
+      <button data-type="floor">أدوار</button>
     </div>
 
-    <!-- شبكة العقارات -->
+    <!-- شبكة المشاريع -->
     <div class="grid" id="propsGrid"></div>
 
     <!-- حالة "لا توجد نتائج" -->
     <div class="empty-state hide" id="emptyState">
-      <h3 data-i18n="empty.title">لا توجد عقارات مطابقة</h3>
-      <p data-i18n="empty.lead">جرّب تعديل الفلاتر أو أعد تعيينها.</p>
+      <h3 data-i18n="empty.title">لا توجد نتائج</h3>
+      <p data-i18n="empty.lead">جرّب تعديل الفلتر.</p>
     </div>
   </div>
 </section>
 
+<!-- ============ Footer ============ -->
 <footer>
   <div class="wrap">
     <div class="footer-grid">
       <div><h4>رحيب المنازل</h4><p data-i18n="footer.about" style="max-width:34ch;">شركة رحيب المنازل للتطوير العقاري.</p></div>
       <div><h4 data-i18n="footer.links">روابط</h4><ul>
-        <li><a href="properties.html" data-i18n="nav.properties">العقارات</a></li>
+        <li><a href="index.html" data-i18n="nav.home">الرئيسية</a></li>
+        <li><a href="index.html#projects" data-i18n="nav.projects">مشاريعنا</a></li>
         <li><a href="contact.html" data-i18n="nav.contact">تواصل معنا</a></li>
-        <li><a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a></li>
       </ul></div>
       <div><h4 data-i18n="footer.contact">تواصل</h4><ul>
         <li class="js-email">info@raheeb-almanazil.example</li>
@@ -64,9 +62,79 @@
   </div>
 </footer>
 
+<script src="js/supabase.js"></script>
 <script src="js/data.js"></script>
 <script src="js/lang.js"></script>
 <script src="js/main.js"></script>
 <script src="js/effects.js"></script>
+
+<script>
+  // ============ صفحة المشاريع مع الفلترة ============
+  document.addEventListener('DOMContentLoaded', async () => {
+    const grid = document.getElementById('propsGrid');
+    const emptyState = document.getElementById('emptyState');
+    const filterTabs = document.getElementById('filterTabs');
+    const pageTitle = document.getElementById('pageTitle');
+
+    if(!grid) return;
+
+    // جلب كل المشاريع
+    const allProjects = await getProjects();
+
+    // قراءة الفلتر من الرابط
+    const params = new URLSearchParams(location.search);
+    let currentType = params.get('type') || '';
+
+    // تحديث العنوان حسب الفلتر
+    const titles = {
+      '': 'كل المشاريع',
+      'villa': 'الفلل',
+      'apartment': 'الشقق',
+      'floor': 'الأدوار'
+    };
+
+    function draw(){
+      const lang = getLang();
+      let list = allProjects;
+      if(currentType){
+        list = list.filter(p => p.type === currentType);
+      }
+
+      pageTitle.textContent = titles[currentType] || 'كل المشاريع';
+
+      // فعّل الزر المناسب
+      filterTabs.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b.dataset.type === currentType);
+      });
+
+      if(list.length === 0){
+        grid.innerHTML = '';
+        emptyState.classList.remove('hide');
+      } else {
+        emptyState.classList.add('hide');
+        grid.innerHTML = list.map(pr => projectCardHTML(pr, lang)).join('');
+      }
+    }
+
+    // تغيير الفلتر بالضغط على الأزرار
+    filterTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if(!btn) return;
+      currentType = btn.dataset.type || '';
+      // حدّث الرابط بدون reload
+      const newUrl = currentType
+        ? `${location.pathname}?type=${currentType}`
+        : location.pathname;
+      history.replaceState(null, '', newUrl);
+      draw();
+    });
+
+    draw();
+
+    // إعادة الرسم عند تغيير اللغة
+    document.addEventListener('langchange', draw);
+  });
+</script>
+
 </body>
 </html>

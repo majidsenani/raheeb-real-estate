@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة التحكم | رحيب المنازل للتطوير العقاري</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -35,86 +36,6 @@
         <h1 style="margin:0;">لوحة التحكم</h1>
         <button id="adminLogout" class="btn ghost" data-i18n="admin.logout">خروج</button>
       </div>
-
-      <!-- ========== قسم العقارات ========== -->
-      <section class="admin-block mt-lg">
-        <h2 data-i18n="admin.title">إضافة عقار جديد</h2>
-
-        <form id="adminForm" class="form-grid">
-          <div class="field">
-            <label data-i18n="admin.f.titleAr">العنوان (عربي)</label>
-            <input type="text" name="titleAr" required>
-          </div>
-          <div class="field">
-            <label data-i18n="admin.f.titleEn">العنوان (إنجليزي)</label>
-            <input type="text" name="titleEn" required>
-          </div>
-
-          <div class="field">
-            <label data-i18n="admin.f.type">النوع</label>
-            <select name="type" required>
-              <option value="villa">فيلا</option>
-              <option value="apartment">شقة</option>
-              <option value="floor">أدوار</option>
-            </select>
-          </div>
-          <div class="field">
-            <label data-i18n="admin.f.beds">عدد الغرف</label>
-            <input type="number" name="bedrooms" min="0">
-          </div>
-
-          <div class="field">
-            <label data-i18n="admin.f.city">المدينة (عربي)</label>
-            <input type="text" name="city" required>
-          </div>
-          <div class="field">
-            <label data-i18n="admin.f.cityEn">المدينة (إنجليزي)</label>
-            <input type="text" name="cityEn" required>
-          </div>
-
-          <div class="field">
-            <label data-i18n="admin.f.price">السعر (ريال)</label>
-            <input type="number" name="price" min="0" required>
-          </div>
-          <div class="field">
-            <label data-i18n="admin.f.area">المساحة (م²)</label>
-            <input type="number" name="area" min="0" required>
-          </div>
-
-          <div class="field">
-            <label data-i18n="admin.f.stage">المرحلة</label>
-            <select name="stage">
-              <option value="">—</option>
-              <option value="sale">مرحلة البيع</option>
-              <option value="finishing">مرحلة التشطيب</option>
-              <option value="structure">مرحلة العظم</option>
-            </select>
-          </div>
-          <div class="field">
-            <label data-i18n="admin.f.tag">وسم مميز (اختياري، عربي)</label>
-            <input type="text" name="tag">
-          </div>
-
-          <div class="field full">
-            <label data-i18n="admin.f.descAr">الوصف (عربي)</label>
-            <textarea name="descAr" required></textarea>
-          </div>
-          <div class="field full">
-            <label data-i18n="admin.f.descEn">الوصف (إنجليزي)</label>
-            <textarea name="descEn" required></textarea>
-          </div>
-
-          <div class="field full">
-            <button type="submit" class="btn" data-i18n="admin.save">حفظ العقار</button>
-            <p id="adminAdded" class="admin-note hide" style="margin-top:14px;" data-i18n="admin.added">تمت إضافة العقار بنجاح.</p>
-          </div>
-        </form>
-
-        <div class="admin-list">
-          <h2 data-i18n="admin.list.title">العقارات الحالية</h2>
-          <div id="adminList" class="mt-lg"></div>
-        </div>
-      </section>
 
       <!-- ========== قسم المشاريع ========== -->
       <section class="admin-block mt-lg">

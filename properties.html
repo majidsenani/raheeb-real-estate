@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كل المشاريع | رحيب المنازل للتطوير العقاري</title>
-<meta name="description" content="تصفح كل المشاريع — فلل، شقق، أدوار.">
+<title>المشاريع | رحيب المنازل للتطوير العقاري</title>
+<meta name="description" content="تصفح المشاريع — فلل، شقق، أدوار.">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,16 +20,7 @@
   <div class="wrap">
     <div class="section-head">
       <span class="kicker" data-i18n="props.kicker">المشاريع</span>
-      <h2 id="pageTitle" data-i18n="props.title">كل المشاريع</h2>
-      <p data-i18n="props.lead">تصفح المشاريع حسب النوع.</p>
-    </div>
-
-    <!-- أزرار الفلترة -->
-    <div class="filter-tabs" id="filterTabs">
-      <button data-type="" class="active">الكل</button>
-      <button data-type="villa">فلل</button>
-      <button data-type="apartment">شقق</button>
-      <button data-type="floor">أدوار</button>
+      <h2 id="pageTitle">المشاريع</h2>
     </div>
 
     <!-- شبكة المشاريع -->
@@ -38,7 +29,6 @@
     <!-- حالة "لا توجد نتائج" -->
     <div class="empty-state hide" id="emptyState">
       <h3 data-i18n="empty.title">لا توجد نتائج</h3>
-      <p data-i18n="empty.lead">جرّب تعديل الفلتر.</p>
     </div>
   </div>
 </section>
@@ -69,11 +59,10 @@
 <script src="js/effects.js"></script>
 
 <script>
-  // ============ صفحة المشاريع مع الفلترة ============
+  // ============ صفحة المشاريع (فلترة من الرابط فقط) ============
   document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('propsGrid');
     const emptyState = document.getElementById('emptyState');
-    const filterTabs = document.getElementById('filterTabs');
     const pageTitle = document.getElementById('pageTitle');
 
     if(!grid) return;
@@ -83,11 +72,11 @@
 
     // قراءة الفلتر من الرابط
     const params = new URLSearchParams(location.search);
-    let currentType = params.get('type') || '';
+    const currentType = params.get('type') || '';
 
-    // تحديث العنوان حسب الفلتر
+    // العناوين حسب الفلتر
     const titles = {
-      '': 'كل المشاريع',
+      '': 'المشاريع',
       'villa': 'الفلل',
       'apartment': 'الشقق',
       'floor': 'الأدوار'
@@ -100,12 +89,7 @@
         list = list.filter(p => p.type === currentType);
       }
 
-      pageTitle.textContent = titles[currentType] || 'كل المشاريع';
-
-      // فعّل الزر المناسب
-      filterTabs.querySelectorAll('button').forEach(b => {
-        b.classList.toggle('active', b.dataset.type === currentType);
-      });
+      pageTitle.textContent = titles[currentType] || 'المشاريع';
 
       if(list.length === 0){
         grid.innerHTML = '';
@@ -116,22 +100,7 @@
       }
     }
 
-    // تغيير الفلتر بالضغط على الأزرار
-    filterTabs.addEventListener('click', (e) => {
-      const btn = e.target.closest('button');
-      if(!btn) return;
-      currentType = btn.dataset.type || '';
-      // حدّث الرابط بدون reload
-      const newUrl = currentType
-        ? `${location.pathname}?type=${currentType}`
-        : location.pathname;
-      history.replaceState(null, '', newUrl);
-      draw();
-    });
-
     draw();
-
-    // إعادة الرسم عند تغيير اللغة
     document.addEventListener('langchange', draw);
   });
 </script>

@@ -14,7 +14,7 @@ const STAGES = [
   { value: 'structure', ar: 'مرحلة العظم',    en: 'Structure' }
 ];
 
-/* ========== كاش داخلي (لتقليل الطلبات) ========== */
+/* ========== كاش داخلي ========== */
 let _propertiesCache = null;
 let _projectsCache = null;
 
@@ -26,7 +26,6 @@ async function getProperties(){
   if(_propertiesCache) return _propertiesCache;
   try{
     const data = await sbSelect('properties');
-    // حوّل أسماء الأعمدة من snake_case إلى camelCase
     _propertiesCache = data.map(p => ({
       id: p.id,
       type: p.type,
@@ -58,7 +57,7 @@ async function addProperty(prop){
       desc_ar: prop.descAr || '', desc_en: prop.descEn || ''
     };
     const result = await sbInsert('properties', row);
-    _propertiesCache = null; // امسح الكاش
+    _propertiesCache = null;
     return result;
   }catch(e){
     console.error('addProperty:', e);
@@ -98,7 +97,8 @@ async function getProjects(){
       price: p.price || 0, area: p.area || 0,
       cover: p.cover || '',
       images: p.images ? p.images.split('\n').filter(s => s.trim()) : [],
-      descAr: p.desc_ar, descEn: p.desc_en
+      descAr: p.desc_ar, descEn: p.desc_en,
+      views: p.views || 0
     }));
     return _projectsCache;
   }catch(e){
@@ -145,6 +145,80 @@ async function getProjectById(id){
   return list.find(p => String(p.id) === String(id));
 }
 
+/* ---------- زيادة عدّاد المشاهدات ---------- */
+async function incrementProjectViews(id){
+  try{
+    // جلب القيمة الحالية
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}&select=views`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    const data = await res.json();
+    if(!data.length) return;
+
+    const currentViews = data[0].views || 0;
+    const newViews = currentViews + 1;
+
+    // تحديث القيمة
+    await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ views: newViews })
+    });
+
+    // امسح الكاش
+    _projectsCache = null;
+
+    return newViews;
+  }catch(e){
+    console.error('incrementViews:', e);
+    return null;
+  }
+}
+
+/* ---------- تحديث مشروع ---------- */
+async function updateProject(id, updates){
+  try{
+    const row = {};
+    if(updates.nameAr !== undefined) row.name_ar = updates.nameAr;
+    if(updates.nameEn !== undefined) row.name_en = updates.nameEn;
+    if(updates.type !== undefined) row.type = updates.type;
+    if(updates.floors !== undefined) row.floors = updates.floors;
+    if(updates.locationAr !== undefined) row.location_ar = updates.locationAr;
+    if(updates.locationEn !== undefined) row.location_en = updates.locationEn;
+    if(updates.stage !== undefined) row.stage = updates.stage;
+    if(updates.price !== undefined) row.price = updates.price;
+    if(updates.area !== undefined) row.area = updates.area;
+    if(updates.cover !== undefined) row.cover = updates.cover;
+    if(updates.images !== undefined) row.images = Array.isArray(updates.images) ? updates.images.join('\n') : updates.images;
+    if(updates.descAr !== undefined) row.desc_ar = updates.descAr;
+    if(updates.descEn !== undefined) row.desc_en = updates.descEn;
+
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/projects?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(row)
+    });
+    if(!res.ok) throw new Error('فشل في التعديل');
+    _projectsCache = null;
+    return await res.json();
+  }catch(e){
+    console.error('updateProject:', e);
+    throw e;
+  }
+}
+
 /* =========================================================
    دوال مساعدة
    ========================================================= */
@@ -162,7 +236,7 @@ function getStageLabel(stage, lang){
 }
 
 /* =========================================================
-   إعادة تعيين الكاش يدوياً
+   إعادة تعيين الكاش
    ========================================================= */
 function clearCache(){
   _propertiesCache = null;

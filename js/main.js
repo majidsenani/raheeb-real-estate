@@ -74,9 +74,7 @@ function buildHeader(){
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </a>
       <a href="index.html#about" data-i18n="nav.about">من نحن</a>
-      <a href="#" data-i18n="nav.media">المركز الإعلامي</a>
       <a href="#" data-i18n="nav.interest">سجل اهتمامك</a>
-      <a href="#" data-i18n="nav.faq">الأسئلة الشائعة</a>
     </nav>
     <a href="admin.html" class="drawer-login">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">

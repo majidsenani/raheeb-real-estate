@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>رحيب المنازل للتطوير العقاري</title>
-<meta name="description" content="رحيب المنازل للتطوير العقاري — منصة عقارية لتصفح الفلل والشقق والأدوار في أرقى المدن.">
+<meta name="description" content="رحيب المنازل للتطوير العقاري — منصة عقارية لتصفح المشاريع العقارية في أرقى المدن.">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +13,7 @@
 </head>
 <body>
 
-<!-- الهيدر يبنى تلقائياً من main.js -->
+<!-- الهيدر يبنى تلقائياً -->
 <div id="siteHeader"></div>
 
 <!-- ============ Hero — صور متبدلة ============ -->
@@ -25,7 +26,7 @@
     <h1 data-i18n="hero.title">حيث رحابة السكن</h1>
     <p class="lead" data-i18n="hero.lead">نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.</p>
     <div class="hero-actions">
-      <a class="btn" href="properties.html" data-i18n="hero.cta1">تصفح العقارات</a>
+      <a class="btn" href="#projects" data-i18n="hero.cta1">تصفح العقارات</a>
       <a class="btn ghost" href="contact.html" data-i18n="hero.cta2">تواصل معنا</a>
     </div>
     <div class="stats">
@@ -76,21 +77,6 @@
   </div>
 </section>
 
-<!-- ============ أحدث الإدراجات ============ -->
-<section>
-  <div class="wrap">
-    <div class="section-head">
-      <span class="kicker" data-i18n="featured.kicker">عقارات مختارة</span>
-      <h2 data-i18n="featured.title">أحدث الإدراجات</h2>
-      <p data-i18n="featured.lead">نماذج من العقارات المتوفرة حالياً ضمن قائمتنا.</p>
-    </div>
-    <div class="grid" id="featuredGrid"></div>
-    <div class="center mt-lg">
-      <a class="btn ghost" href="properties.html" data-i18n="featured.viewall">عرض جميع العقارات</a>
-    </div>
-  </div>
-</section>
-
 <!-- ============ من نحن ============ -->
 <section id="about">
   <div class="wrap">
@@ -114,7 +100,7 @@
     <div class="footer-grid">
       <div><h4>رحيب المنازل</h4><p data-i18n="footer.about" style="max-width:34ch;">شركة رحيب المنازل للتطوير العقاري.</p></div>
       <div><h4 data-i18n="footer.links">روابط</h4><ul>
-        <li><a href="properties.html" data-i18n="nav.properties">العقارات</a></li>
+        <li><a href="#projects" data-i18n="nav.projects">مشاريعنا</a></li>
         <li><a href="contact.html" data-i18n="nav.contact">تواصل معنا</a></li>
         <li><a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a></li>
       </ul></div>
@@ -126,6 +112,7 @@
     <div class="footer-bottom">© 2026 رحيب المنازل للتطوير العقاري — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
   </div>
 </footer>
+
 <script src="js/supabase.js"></script>
 <script src="js/data.js"></script>
 <script src="js/lang.js"></script>
@@ -146,8 +133,8 @@
     const heroBg = document.getElementById('heroBg');
     if(!heroBg) return;
 
-    const TOTAL_IMAGES = 7;      // عدد الصور
-    const INTERVAL = 5000;       // 5 ثواني
+    const TOTAL_IMAGES = 7;
+    const INTERVAL = 5000;
 
     const slides = [];
     for(let i = 1; i <= TOTAL_IMAGES; i++){

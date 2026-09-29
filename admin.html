@@ -37,6 +37,29 @@
         <button id="adminLogout" class="btn ghost" data-i18n="admin.logout">خروج</button>
       </div>
 
+      <!-- ========== قسم صور الخلفية ========== -->
+      <section class="admin-block mt-lg">
+        <h2 data-i18n="admin.hero.title">صور الخلفية (Hero)</h2>
+        <p class="admin-note" data-i18n="admin.hero.note">هذي الصور تتبدّل تلقائياً في أعلى الصفحة الرئيسية.</p>
+
+        <form id="heroForm" class="form-grid">
+          <div class="field full">
+            <label data-i18n="admin.hero.upload">اختر صورة (أو عدة صور)</label>
+            <input type="file" name="heroFiles" accept="image/*" multiple id="heroFilesInput">
+            <div id="heroPreview" class="upload-preview"></div>
+          </div>
+          <div class="field full">
+            <button type="submit" class="btn" data-i18n="admin.hero.save">رفع الصور</button>
+            <p id="heroAdded" class="admin-note hide" style="margin-top:14px;" data-i18n="admin.hero.added">تم رفع الصور بنجاح.</p>
+          </div>
+        </form>
+
+        <div class="admin-list">
+          <h2 data-i18n="admin.hero.list.title">الصور الحالية</h2>
+          <div id="heroList" class="mt-lg"></div>
+        </div>
+      </section>
+
       <!-- ========== قسم المشاريع ========== -->
       <section class="admin-block mt-lg">
         <h2 data-i18n="admin.project.title">إضافة مشروع جديد</h2>
@@ -143,34 +166,25 @@
 <script src="js/effects.js"></script>
 
 <script>
-  // معاينة صورة الغلاف
+  // ============ معاينات الصور ============
   document.addEventListener('DOMContentLoaded', () => {
-    const coverInput = document.getElementById('coverFileInput');
-    const coverPreview = document.getElementById('coverPreview');
-    if(coverInput && coverPreview){
-      coverInput.addEventListener('change', () => {
-        coverPreview.innerHTML = '';
-        if(coverInput.files[0]){
-          const img = document.createElement('img');
-          img.src = URL.createObjectURL(coverInput.files[0]);
-          coverPreview.appendChild(img);
-        }
-      });
-    }
-
-    // معاينة باقي الصور
-    const galleryInput = document.getElementById('galleryFilesInput');
-    const galleryPreview = document.getElementById('galleryPreview');
-    if(galleryInput && galleryPreview){
-      galleryInput.addEventListener('change', () => {
-        galleryPreview.innerHTML = '';
-        Array.from(galleryInput.files).forEach(file => {
-          const img = document.createElement('img');
-          img.src = URL.createObjectURL(file);
-          galleryPreview.appendChild(img);
+    function bindPreview(inputId, previewId){
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+      if(input && preview){
+        input.addEventListener('change', () => {
+          preview.innerHTML = '';
+          Array.from(input.files).forEach(file => {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            preview.appendChild(img);
+          });
         });
-      });
+      }
     }
+    bindPreview('coverFileInput', 'coverPreview');
+    bindPreview('galleryFilesInput', 'galleryPreview');
+    bindPreview('heroFilesInput', 'heroPreview');
   });
 </script>
 

@@ -172,15 +172,7 @@ function projectCardHTML(pr, lang){
   </article>`;
 }
 
-/* ---------- الصفحة الرئيسية ---------- */
-async function renderFeatured(){
-  const el = document.getElementById('featuredGrid');
-  if(!el) return;
-  const lang = getLang();
-  const list = await getProperties();
-  el.innerHTML = list.slice(0, 3).map(p => projectCardHTML(p, lang)).join('');
-}
-
+/* ---------- عرض المشاريع ---------- */
 async function renderProjects(){
   const el = document.getElementById('projectsGrid');
   if(!el) return;
@@ -196,13 +188,11 @@ async function renderProjectDetail(){
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
 
-  // 🔢 زيادة عدّاد المشاهدات (مرة وحدة لكل زائر)
   if(id){
     const cookieKey = `viewed_pr_${id}`;
     const alreadyViewed = document.cookie.split('; ').some(c => c.startsWith(cookieKey + '='));
     if(!alreadyViewed){
       await incrementProjectViews(id);
-      // ضع cookie لمدة سنة
       const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
       document.cookie = `${cookieKey}=1; expires=${expires}; path=/`;
     }
@@ -232,7 +222,6 @@ async function renderProjectDetail(){
 
     const priceHTML = pr.price > 0 ? `<div class="project-price">${formatPrice(pr.price, lang)}</div>` : '';
     const areaHTML = pr.area > 0 ? `<div class="fact"><b>${pr.area}</b><span>${t('projects.area')} (${t('detail.sqm')})</span></div>` : '';
-
     const viewsHTML = `<div class="fact"><b>${pr.views || 0}</b><span>${t('projects.views')}</span></div>`;
 
     root.innerHTML = `
@@ -288,10 +277,16 @@ async function initAdmin(){
   const projListEl = document.getElementById('adminProjectList');
   const projAddedMsg = document.getElementById('adminProjectAdded');
 
+  // Hero images
+  const heroForm = document.getElementById('heroForm');
+  const heroListEl = document.getElementById('heroList');
+  const heroAddedMsg = document.getElementById('heroAdded');
+
   async function showPanel(){
     gate.classList.add('hide');
     panel.classList.remove('hide');
     await renderProjectList();
+    await renderHeroList();
   }
 
   if(sessionStorage.getItem('raheeb_admin_ok') === '1') await showPanel();
@@ -328,7 +323,6 @@ async function initAdmin(){
         </div>
       </div>`).join('');
 
-    // زر الحذف
     projListEl.querySelectorAll('button.danger').forEach(btn => {
       btn.addEventListener('click', async () => {
         if(!confirm(t('admin.confirmDelete'))) return;
@@ -339,7 +333,6 @@ async function initAdmin(){
       });
     });
 
-    // زر التعديل
     projListEl.querySelectorAll('button.edit').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
@@ -349,9 +342,74 @@ async function initAdmin(){
     });
   }
 
-  /* --- نافذة التعديل --- */
+  /* --- قائمة صور الخلفية --- */
+  async function renderHeroList(){
+    if(!heroListEl) return;
+    const list = await getHeroImages();
+    if(!list.length){
+      heroListEl.innerHTML = `<div class="empty-state"><p>${t('admin.hero.empty')}</p></div>`;
+      return;
+    }
+    heroListEl.innerHTML = `<div class="hero-images-grid">
+      ${list.map(img => `
+        <div class="hero-image-item">
+          <img src="${img.url}" alt="Hero image">
+          <button class="hero-delete" data-id="${img.id}" aria-label="حذف">✕</button>
+        </div>
+      `).join('')}
+    </div>`;
+
+    heroListEl.querySelectorAll('.hero-delete').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if(!confirm(t('admin.hero.confirmDelete'))) return;
+        try{
+          await deleteHeroImage(btn.getAttribute('data-id'));
+          await renderHeroList();
+        }catch(e){ alert('فشل الحذف: ' + e.message); }
+      });
+    });
+  }
+
+  /* --- نموذج رفع صور الخلفية --- */
+  if(heroForm){
+    heroForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const input = document.getElementById('heroFilesInput');
+      const files = input.files;
+
+      if(!files || !files.length){
+        alert('اختر صور أولاً');
+        return;
+      }
+
+      const btn = heroForm.querySelector('button[type="submit"]');
+      const origText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'جاري الرفع...';
+
+      try{
+        for(const file of files){
+          const url = await sbUpload(file);
+          await addHeroImage(url);
+        }
+        heroForm.reset();
+        document.getElementById('heroPreview').innerHTML = '';
+        if(heroAddedMsg){
+          heroAddedMsg.classList.remove('hide');
+          setTimeout(() => heroAddedMsg.classList.add('hide'), 3000);
+        }
+        await renderHeroList();
+      }catch(err){
+        alert('فشل الرفع: ' + err.message);
+      }finally{
+        btn.disabled = false;
+        btn.textContent = origText;
+      }
+    });
+  }
+
+  /* --- نافذة تعديل المشروع --- */
   function openEditModal(pr){
-    // احذف أي modal قديم
     const existing = document.getElementById('editModal');
     if(existing) existing.remove();
 
@@ -425,13 +483,11 @@ async function initAdmin(){
     `;
     document.body.appendChild(modal);
 
-    // إغلاق
     const close = () => modal.remove();
     document.getElementById('modalClose').addEventListener('click', close);
     document.getElementById('modalCancel').addEventListener('click', close);
     modal.addEventListener('click', (e) => { if(e.target === modal) close(); });
 
-    // حفظ
     document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(e.target);
@@ -519,6 +575,7 @@ async function initAdmin(){
   document.addEventListener('langchange', async () => {
     if(!panel.classList.contains('hide')){
       await renderProjectList();
+      await renderHeroList();
     }
   });
 }
@@ -527,7 +584,6 @@ async function initAdmin(){
 document.addEventListener('DOMContentLoaded', async () => {
   buildHeader();
   initNav();
-  await renderFeatured();
   await renderProjects();
   await renderProjectDetail();
   initContactForm();
@@ -535,6 +591,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 document.addEventListener('langchange', async () => {
-  await renderFeatured();
   await renderProjects();
 });

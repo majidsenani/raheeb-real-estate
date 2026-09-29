@@ -3,7 +3,6 @@
 const DICT = {
   ar: {
     'nav.home': 'الرئيسية',
-    'nav.properties': 'العقارات',
     'nav.projects': 'مشاريعنا',
     'nav.about': 'من نحن',
     'nav.media': 'المركز الإعلامي',
@@ -19,7 +18,7 @@ const DICT = {
     'hero.eyebrow': 'رحيب المنازل',
     'hero.title': 'حيث رحابة السكن',
     'hero.lead': 'نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.',
-    'hero.cta1': 'تصفح العقارات', 'hero.cta2': 'تواصل معنا',
+    'hero.cta1': 'تصفح المشاريع', 'hero.cta2': 'تواصل معنا',
     'hero.stat1n': '+120', 'hero.stat1l': 'عقار مُدرج',
     'hero.stat2n': '+8', 'hero.stat2l': 'مدن مغطاة',
     'hero.stat3n': '15', 'hero.stat3l': 'سنة خبرة',
@@ -38,10 +37,6 @@ const DICT = {
     'projects.views': 'مشاهدة',
     'projects.back': '← عودة للمشاريع',
 
-    'featured.kicker': 'عقارات مختارة', 'featured.title': 'أحدث الإدراجات',
-    'featured.lead': 'نماذج من العقارات المتوفرة حالياً ضمن قائمتنا.',
-    'featured.viewall': 'عرض جميع العقارات',
-
     'about.kicker': 'من نحن', 'about.title': 'رحيب المنازل للتطوير العقاري',
     'about.p1': 'نعمل منذ سنوات في تسويق العقارات وربط الملاك بالباحثين عن منزل أو فرصة استثمارية، بأسلوب واضح وموثوق.',
     'about.p2': 'فريقنا يتابع كل عقار من الإدراج حتى إتمام الصفقة، مع حرص دائم على دقة المعلومة وسهولة التواصل.',
@@ -53,12 +48,9 @@ const DICT = {
     'contact.info.title': 'معلومات التواصل',
     'contact.sent': 'تم استلام رسالتك، سنتواصل معك قريباً.',
 
-    'props.title': 'كل العقارات', 'props.lead': 'استخدم الفلاتر لتضييق نتائج البحث.',
-    'filter.type': 'النوع', 'filter.all': 'الكل',
-    'filter.villa': 'فيلا', 'filter.apartment': 'شقة', 'filter.floor': 'أدوار',
-    'filter.city': 'المدينة', 'filter.search': 'ابحث بالاسم...', 'filter.apply': 'تطبيق الفلتر',
+    'props.kicker': 'المشاريع', 'props.title': 'كل المشاريع', 'props.lead': 'تصفح المشاريع حسب النوع.',
     'card.bedrooms': 'غرف', 'card.area': 'م²', 'card.details': 'التفاصيل ←',
-    'empty.title': 'لا توجد نتائج', 'empty.lead': 'جرّب تعديل الفلاتر أو أعد تعيينها.',
+    'empty.title': 'لا توجد نتائج', 'empty.lead': 'جرّب تعديل الفلتر.',
 
     'detail.facts.area': 'المساحة', 'detail.facts.beds': 'الغرف', 'detail.facts.city': 'المدينة',
     'detail.back': '→ عودة لكل العقارات', 'detail.request': 'اطلب معاينة',
@@ -67,16 +59,17 @@ const DICT = {
     'admin.gate.title': 'دخول لوحة التحكم', 'admin.gate.lead': 'هذه اللوحة تخزن البيانات في Supabase — تظهر لكل الزوار.',
     'admin.gate.pass': 'كلمة المرور', 'admin.gate.enter': 'دخول',
     'admin.gate.wrong': 'كلمة المرور غير صحيحة',
+
     'admin.title': 'إضافة مشروع جديد', 'admin.list.title': 'المشاريع الحالية',
-    'admin.f.titleAr': 'العنوان (عربي)', 'admin.f.titleEn': 'العنوان (إنجليزي)',
-    'admin.f.type': 'النوع', 'admin.f.city': 'المدينة (عربي)', 'admin.f.cityEn': 'المدينة (إنجليزي)',
-    'admin.f.price': 'السعر (ريال)', 'admin.f.area': 'المساحة (م²)', 'admin.f.beds': 'عدد الغرف',
-    'admin.f.stage': 'المرحلة',
-    'admin.f.descAr': 'الوصف (عربي)', 'admin.f.descEn': 'الوصف (إنجليزي)',
-    'admin.f.tag': 'وسم مميز (اختياري، عربي)', 'admin.f.tagEn': 'وسم مميز (اختياري، إنجليزي)',
-    'admin.save': 'حفظ العقار', 'admin.reset': 'إعادة تعيين البيانات الافتراضية',
-    'admin.delete': 'حذف', 'admin.logout': 'خروج',
-    'admin.added': 'تمت إضافة العقار بنجاح.',
+
+    'admin.hero.title': 'صور الخلفية (Hero)',
+    'admin.hero.note': 'هذي الصور تتبدّل تلقائياً في أعلى الصفحة الرئيسية.',
+    'admin.hero.upload': 'اختر صورة (أو عدة صور)',
+    'admin.hero.save': 'رفع الصور',
+    'admin.hero.added': 'تم رفع الصور بنجاح.',
+    'admin.hero.list.title': 'الصور الحالية',
+    'admin.hero.empty': 'لا توجد صور حالياً',
+    'admin.hero.confirmDelete': 'حذف هذه الصورة؟',
 
     'admin.project.title': 'إضافة مشروع جديد',
     'admin.project.list.title': 'المشاريع الحالية',
@@ -94,7 +87,6 @@ const DICT = {
     'admin.project.f.descAr': 'وصف مختصر (عربي)',
     'admin.project.f.descEn': 'وصف مختصر (إنجليزي)',
     'admin.project.save': 'حفظ المشروع',
-    'admin.project.reset': 'إعادة تعيين المشاريع الافتراضية',
     'admin.project.added': 'تمت إضافة المشروع بنجاح.',
 
     'admin.edit': 'تعديل',
@@ -103,6 +95,8 @@ const DICT = {
     'admin.cancel': 'إلغاء',
     'admin.confirmDelete': 'هل تريد حذف هذا المشروع؟',
     'admin.savedSuccess': 'تم الحفظ بنجاح',
+    'admin.delete': 'حذف',
+    'admin.logout': 'خروج',
 
     'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى المدن.',
     'footer.links': 'روابط', 'footer.contact': 'تواصل',
@@ -110,7 +104,6 @@ const DICT = {
   },
   en: {
     'nav.home': 'Home',
-    'nav.properties': 'Properties',
     'nav.projects': 'Our Projects',
     'nav.about': 'About',
     'nav.media': 'Media Center',
@@ -126,7 +119,7 @@ const DICT = {
     'hero.eyebrow': 'Raheeb Al-Manazil',
     'hero.title': 'Where the spaciousness of living is',
     'hero.lead': 'We help you find the villa, apartment, or floor that fits your life, from a curated selection across the finest neighborhoods and cities.',
-    'hero.cta1': 'Browse properties', 'hero.cta2': 'Contact us',
+    'hero.cta1': 'Browse Projects', 'hero.cta2': 'Contact us',
     'hero.stat1n': '120+', 'hero.stat1l': 'Listings',
     'hero.stat2n': '8+', 'hero.stat2l': 'Cities covered',
     'hero.stat3n': '15', 'hero.stat3l': 'Years of experience',
@@ -145,10 +138,6 @@ const DICT = {
     'projects.views': 'views',
     'projects.back': '← Back to projects',
 
-    'featured.kicker': 'Featured', 'featured.title': 'Latest listings',
-    'featured.lead': 'Examples of properties currently available on our list.',
-    'featured.viewall': 'View all properties',
-
     'about.kicker': 'About us', 'about.title': 'Raheeb Al-Manazil Real Estate Development',
     'about.p1': 'For years we have connected owners with people looking for a home or investment opportunity, with a clear and reliable approach.',
     'about.p2': 'Our team follows each listing from posting through closing, with constant attention to accuracy and easy communication.',
@@ -160,12 +149,9 @@ const DICT = {
     'contact.info.title': 'Contact information',
     'contact.sent': 'Your message has been received, we will be in touch soon.',
 
-    'props.title': 'All properties', 'props.lead': 'Use the filters to narrow your search.',
-    'filter.type': 'Type', 'filter.all': 'All',
-    'filter.villa': 'Villa', 'filter.apartment': 'Apartment', 'filter.floor': 'Floors',
-    'filter.city': 'City', 'filter.search': 'Search by name...', 'filter.apply': 'Apply filters',
+    'props.kicker': 'Projects', 'props.title': 'All Projects', 'props.lead': 'Browse projects by type.',
     'card.bedrooms': 'beds', 'card.area': 'sqm', 'card.details': 'Details →',
-    'empty.title': 'No results', 'empty.lead': 'Try adjusting or resetting the filters.',
+    'empty.title': 'No results', 'empty.lead': 'Try adjusting the filter.',
 
     'detail.facts.area': 'Area', 'detail.facts.beds': 'Bedrooms', 'detail.facts.city': 'City',
     'detail.back': '← Back to all properties', 'detail.request': 'Request a viewing',
@@ -174,16 +160,17 @@ const DICT = {
     'admin.gate.title': 'Admin sign-in', 'admin.gate.lead': 'Data is stored in Supabase — visible to all visitors.',
     'admin.gate.pass': 'Password', 'admin.gate.enter': 'Enter',
     'admin.gate.wrong': 'Incorrect password',
+
     'admin.title': 'Add a new project', 'admin.list.title': 'Current projects',
-    'admin.f.titleAr': 'Title (Arabic)', 'admin.f.titleEn': 'Title (English)',
-    'admin.f.type': 'Type', 'admin.f.city': 'City (Arabic)', 'admin.f.cityEn': 'City (English)',
-    'admin.f.price': 'Price (SAR)', 'admin.f.area': 'Area (sqm)', 'admin.f.beds': 'Bedrooms',
-    'admin.f.stage': 'Stage',
-    'admin.f.descAr': 'Description (Arabic)', 'admin.f.descEn': 'Description (English)',
-    'admin.f.tag': 'Highlight tag (optional, Arabic)', 'admin.f.tagEn': 'Highlight tag (optional, English)',
-    'admin.save': 'Save property', 'admin.reset': 'Reset to default data',
-    'admin.delete': 'Delete', 'admin.logout': 'Log out',
-    'admin.added': 'Property added successfully.',
+
+    'admin.hero.title': 'Hero Images',
+    'admin.hero.note': 'These images rotate automatically at the top of the homepage.',
+    'admin.hero.upload': 'Select image(s)',
+    'admin.hero.save': 'Upload',
+    'admin.hero.added': 'Images uploaded successfully.',
+    'admin.hero.list.title': 'Current Images',
+    'admin.hero.empty': 'No images yet',
+    'admin.hero.confirmDelete': 'Delete this image?',
 
     'admin.project.title': 'Add a new project',
     'admin.project.list.title': 'Current projects',
@@ -201,7 +188,6 @@ const DICT = {
     'admin.project.f.descAr': 'Short description (Arabic)',
     'admin.project.f.descEn': 'Short description (English)',
     'admin.project.save': 'Save project',
-    'admin.project.reset': 'Reset default projects',
     'admin.project.added': 'Project added successfully.',
 
     'admin.edit': 'Edit',
@@ -210,6 +196,8 @@ const DICT = {
     'admin.cancel': 'Cancel',
     'admin.confirmDelete': 'Delete this project?',
     'admin.savedSuccess': 'Saved successfully',
+    'admin.delete': 'Delete',
+    'admin.logout': 'Log out',
 
     'footer.about': 'Raheeb Al-Manazil Real Estate Development — curated properties across the finest cities.',
     'footer.links': 'Links', 'footer.contact': 'Contact',

@@ -98,6 +98,7 @@ const DICT = {
 
     'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى المدن.',
     'footer.links': 'روابط', 'footer.contact': 'تواصل',
+    'footer.follow': 'تابعنا',
     'footer.rights': 'جميع الحقوق محفوظة'
   },
   en: {
@@ -197,6 +198,7 @@ const DICT = {
 
     'footer.about': 'Raheeb Al-Manazil Real Estate Development — curated properties across the finest cities.',
     'footer.links': 'Links', 'footer.contact': 'Contact',
+    'footer.follow': 'Follow us',
     'footer.rights': 'All rights reserved'
   }
 };

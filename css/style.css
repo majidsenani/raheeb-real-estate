@@ -924,7 +924,18 @@ html[lang="en"] .fact b{ font-family:var(--serif-en); }
    Footer
    ========================================================= */
 footer{ border-top:1px solid var(--line); margin-top:60px; padding:40px 0 28px; color:var(--ink-soft); }
-.footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:24px; }
+.footer-grid{ 
+  display:grid; 
+  grid-template-columns:1.5fr 1fr 1fr 1fr; 
+  gap:32px; 
+  margin-bottom:24px; 
+}
+@media (max-width:900px){
+  .footer-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:600px){
+  .footer-grid{ grid-template-columns:1fr; }
+}
 .footer-grid h4{ font-family:var(--serif-ar); color:var(--ink); margin:0 0 10px; font-size:1.05rem; }
 html[lang="en"] .footer-grid h4{ font-family:var(--serif-en); }
 .footer-grid ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; font-size:.9rem; }

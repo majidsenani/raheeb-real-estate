@@ -371,13 +371,30 @@ header.site{
 .drawer-login svg{ width:18px; height:18px; position:relative; z-index:1; }
 .drawer-login span{ position:relative; z-index:1; }
 
+/* =========================================================
+   السوشيال
+   ========================================================= */
 .drawer-social{
-  display:flex;
-  gap:10px;
   padding-top:20px;
   border-top:1px solid var(--line);
   margin-top:auto;
 }
+
+.social-username{
+  display:block;
+  font-family:var(--sans-ar);
+  font-size:.85rem;
+  color:var(--ink-soft);
+  margin-bottom:12px;
+  letter-spacing:.03em;
+  text-align:start;
+}
+
+.social-icons{
+  display:flex;
+  gap:10px;
+}
+
 .social-btn{
   width:44px; height:44px;
   display:flex; align-items:center; justify-content:center;
@@ -393,6 +410,10 @@ header.site{
   background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
   border-color:#bc1888;
 }
+.social-btn.tiktok:hover{
+  background:#000;
+  border-color:#000;
+}
 .social-btn:active{ transform:translateY(-1px) scale(.95); }
 
 .drawer.open .drawer-brand,
@@ -406,10 +427,8 @@ header.site{
 .drawer.open .drawer-nav a:nth-child(2){ animation-delay:.19s; }
 .drawer.open .drawer-nav a:nth-child(3){ animation-delay:.24s; }
 .drawer.open .drawer-nav a:nth-child(4){ animation-delay:.29s; }
-.drawer.open .drawer-nav a:nth-child(5){ animation-delay:.34s; }
-.drawer.open .drawer-nav a:nth-child(6){ animation-delay:.39s; }
-.drawer.open .drawer-login{ animation-delay:.45s; }
-.drawer.open .drawer-social{ animation-delay:.52s; }
+.drawer.open .drawer-login{ animation-delay:.35s; }
+.drawer.open .drawer-social{ animation-delay:.42s; }
 
 @keyframes drawerItemIn{
   from{ opacity:0; transform:translateX(20px); }
@@ -620,7 +639,6 @@ section{ padding:56px 0; }
 html[lang="en"] .card-price{ font-family:var(--serif-en); }
 .card-link{ display:inline-block; margin-top:12px; font-size:.85rem; color:var(--deep); width:fit-content; }
 
-/* عدّاد المشاهدات */
 .card-views{
   display:inline-flex;
   align-items:center;
@@ -736,7 +754,6 @@ html[lang="en"] .fact b{ font-family:var(--serif-en); }
   cursor:pointer;
 }
 
-/* معاينة الصور */
 .upload-preview{
   display:flex;
   flex-wrap:wrap;
@@ -789,7 +806,6 @@ html[lang="en"] .fact b{ font-family:var(--serif-en); }
   margin-bottom:24px;
 }
 
-/* شبكة صور Hero في لوحة التحكم */
 .hero-images-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));

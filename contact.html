@@ -23,40 +23,28 @@
       <p data-i18n="contact.lead">سنرد عليك خلال يوم عمل واحد.</p>
     </div>
 
-    <div class="detail-grid">
-      <form id="contactForm" class="form-grid">
-        <div class="field">
-          <label data-i18n="contact.name">الاسم الكامل</label>
-          <input type="text" required>
-        </div>
-        <div class="field">
-          <label data-i18n="contact.phone">رقم الجوال</label>
-          <input type="tel" required>
-        </div>
-        <div class="field full">
-          <label data-i18n="contact.email">البريد الإلكتروني</label>
-          <input type="email" required>
-        </div>
-        <div class="field full">
-          <label data-i18n="contact.msg">رسالتك</label>
-          <textarea required></textarea>
-        </div>
-        <div class="field full">
-          <button type="submit" class="btn" data-i18n="contact.send">إرسال الطلب</button>
-          <p id="contactSent" class="admin-note hide" style="margin-top:14px;"></p>
-        </div>
-      </form>
-
-      <aside class="side-card">
-        <h3 data-i18n="contact.info.title">معلومات التواصل</h3>
-        <p class="js-email" style="margin:14px 0;">
-          <a href="mailto:a.aldayel@raheebalmanazel.com">a.aldayel@raheebalmanazel.com</a>
-        </p>
-        <p class="js-phone" dir="ltr" style="margin:14px 0;">
-          <a href="tel:0552144999">0552144999</a>
-        </p>
-      </aside>
-    </div>
+    <form id="contactForm" class="form-grid" style="max-width:640px; margin:0 auto;">
+      <div class="field">
+        <label data-i18n="contact.name">الاسم الكامل</label>
+        <input type="text" required>
+      </div>
+      <div class="field">
+        <label data-i18n="contact.phone">رقم الجوال</label>
+        <input type="tel" required>
+      </div>
+      <div class="field full">
+        <label data-i18n="contact.email">البريد الإلكتروني</label>
+        <input type="email" required>
+      </div>
+      <div class="field full">
+        <label data-i18n="contact.msg">رسالتك</label>
+        <textarea required></textarea>
+      </div>
+      <div class="field full">
+        <button type="submit" class="btn" data-i18n="contact.send">إرسال الطلب</button>
+        <p id="contactSent" class="admin-note hide" style="margin-top:14px;"></p>
+      </div>
+    </form>
   </div>
 </section>
 

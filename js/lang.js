@@ -5,7 +5,6 @@ const DICT = {
     'nav.home': 'الرئيسية',
     'nav.projects': 'مشاريعنا',
     'nav.about': 'من نحن',
-    'nav.interest': 'سجل اهتمامك',
     'nav.contact': 'تواصل معنا',
     'nav.admin': 'لوحة التحكم',
     'lang.switch': 'EN',
@@ -15,11 +14,8 @@ const DICT = {
 
     'hero.eyebrow': 'رحيب المنازل',
     'hero.title': 'حيث رحابة السكن',
-    'hero.lead': 'نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء.',
+    'hero.lead': 'نساعدك على إيجاد الفيلا أو الشقة أو الأدوار التي تناسب حياتك، عبر مجموعة مختارة من العقارات في أرقى الأحياء والمدن.',
     'hero.cta1': 'تصفح المشاريع', 'hero.cta2': 'تواصل معنا',
-    'hero.stat1n': '+120', 'hero.stat1l': 'عقار مُدرج',
-    'hero.stat2n': '+8', 'hero.stat2l': 'مدن مغطاة',
-    'hero.stat3n': '15', 'hero.stat3l': 'سنة خبرة',
 
     'cats.kicker': 'التصنيفات', 'cats.title': 'ابحث حسب نوع العقار',
     'cats.lead': 'ثلاث فئات رئيسية تغطي معظم احتياجات عملائنا.',
@@ -96,7 +92,7 @@ const DICT = {
     'admin.delete': 'حذف',
     'admin.logout': 'خروج',
 
-    'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى الاحياء.',
+    'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى المدن.',
     'footer.links': 'روابط', 'footer.contact': 'تواصل',
     'footer.follow': 'تابعنا',
     'footer.rights': 'جميع الحقوق محفوظة'
@@ -105,7 +101,6 @@ const DICT = {
     'nav.home': 'Home',
     'nav.projects': 'Our Projects',
     'nav.about': 'About',
-    'nav.interest': 'Register Interest',
     'nav.contact': 'Contact',
     'nav.admin': 'Admin',
     'lang.switch': 'العربية',
@@ -117,9 +112,6 @@ const DICT = {
     'hero.title': 'Where the spaciousness of living is',
     'hero.lead': 'We help you find the villa, apartment, or floor that fits your life, from a curated selection across the finest neighborhoods and cities.',
     'hero.cta1': 'Browse Projects', 'hero.cta2': 'Contact us',
-    'hero.stat1n': '120+', 'hero.stat1l': 'Listings',
-    'hero.stat2n': '8+', 'hero.stat2l': 'Cities covered',
-    'hero.stat3n': '15', 'hero.stat3l': 'Years of experience',
 
     'cats.kicker': 'Categories', 'cats.title': 'Search by property type',
     'cats.lead': 'Three core categories covering most of our clients\u2019 needs.',

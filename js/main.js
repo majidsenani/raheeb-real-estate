@@ -580,6 +580,7 @@ async function initAdmin(){
 /* ---------- التشغيل ---------- */
 document.addEventListener('DOMContentLoaded', async () => {
   buildHeader();
+  applyLang(getLang());
   initNav();
   await renderProjects();
   await renderProjectDetail();
@@ -588,5 +589,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 document.addEventListener('langchange', async () => {
+  applyLang(getLang());
   await renderProjects();
 });

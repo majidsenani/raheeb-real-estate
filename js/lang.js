@@ -92,6 +92,7 @@ const DICT = {
     'admin.delete': 'حذف',
     'admin.logout': 'خروج',
 
+    'footer.brand': 'رحيب المنازل',
     'footer.about': 'شركة رحيب المنازل للتطوير العقاري — عقارات مختارة في أرقى المدن.',
     'footer.links': 'روابط', 'footer.contact': 'تواصل',
     'footer.follow': 'تابعنا',
@@ -188,6 +189,7 @@ const DICT = {
     'admin.delete': 'Delete',
     'admin.logout': 'Log out',
 
+    'footer.brand': 'Raheeb Al-Manazil',
     'footer.about': 'Raheeb Al-Manazil Real Estate Development — curated properties across the finest cities.',
     'footer.links': 'Links', 'footer.contact': 'Contact',
     'footer.follow': 'Follow us',

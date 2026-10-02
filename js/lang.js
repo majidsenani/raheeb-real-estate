@@ -235,4 +235,8 @@ function initLangToggle(){
   }
 }
 
-document.addEventListener('DOMContentLoaded', initLangToggle);
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', initLangToggle);
+} else {
+  initLangToggle();
+}
